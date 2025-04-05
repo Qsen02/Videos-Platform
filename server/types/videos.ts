@@ -1,7 +1,7 @@
 import { Comments } from "./comments";
 import { User } from "./users";
 
-export interface Videos{
+export interface VideosType{
     _id:string,
     title:string,
     videoUrl:string,

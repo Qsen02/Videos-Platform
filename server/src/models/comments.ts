@@ -15,6 +15,10 @@ const commentSchema = new mongoose.Schema({
             ref: "Users",
             default: [],
         },
+        videoId:{
+            type:mongoose.SchemaTypes.ObjectId,
+            ref: "Videos",
+        }
     },
 });
 
