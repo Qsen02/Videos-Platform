@@ -34,12 +34,6 @@ const videoSchema=new mongoose.Schema({
     }
 })
 
-videoSchema.pre("deleteOne",{document:true,query:false},async function(next){
-    const videoId=this._id;
-    await mongoose.model("Comments").deleteMany({videoId:videoId});
-    next();
-})
-
 const Videos=mongoose.model("Videos",videoSchema);
 
 export {

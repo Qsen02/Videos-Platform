@@ -1,5 +1,6 @@
 import { UserAttributes } from "../../types/users";
 import { VideosType } from "../../types/videos";
+import { Comments } from "../models/comments";
 import { Videos } from "../models/videos";
 
 export async function getVideoById(videoId: string) {
@@ -58,6 +59,7 @@ export async function createVideo(
 
 export async function deleteVideo(videoId: string) {
     const video = await Videos.findById(videoId);
+    await Comments.deleteMany({videoId:video?._id});
     await video?.deleteOne();
 }
 
