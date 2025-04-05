@@ -1,5 +1,5 @@
-import { UserAttributes } from "../../types/users";
-import { VideosType } from "../../types/videos";
+import { UserAttributes } from "../types/users";
+import { VideosType } from "../types/videos";
 import { Comments } from "../models/comments";
 import { Videos } from "../models/videos";
 

@@ -1,4 +1,4 @@
-import { User, UserAttributes } from "../../types/users";
+import { User, UserAttributes } from "../types/users";
 import { Users } from "../models/users";
 import bcrypt from "bcrypt";
 import { Videos } from "../models/videos";
@@ -6,7 +6,8 @@ import { Videos } from "../models/videos";
 export async function register(
     username: string,
     email: string,
-    password: string
+    password: string,
+    profileImage?: string
 ) {
     const isUsernameExist = await Users.findOne({ username: username }).lean();
     if (isUsernameExist) {
@@ -20,14 +21,14 @@ export async function register(
         username: username,
         email: email,
         password: await bcrypt.hash(password, 10),
-        profileImage: "",
+        profileImage: profileImage || "",
     });
 
     return newUser;
 }
 
 export async function login(username: string, password: string) {
-    const user = await Users.findOne({ username: username }).lean();
+    const user = await Users.findOne({ username: username });
     if (!user) {
         throw new Error("Username or password don't match!");
     }

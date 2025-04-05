@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import { validateToken } from "../services/token";
-import { MyRequest } from "../../types/express";
+import { MyRequest } from "../types/express";
 
 export function session() {
     return function (req: MyRequest, res: Response, next: NextFunction) {
