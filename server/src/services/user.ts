@@ -1,4 +1,4 @@
-import { UserAttributes } from "../../types/users";
+import { User, UserAttributes } from "../../types/users";
 import { Users } from "../models/users";
 import bcrypt from "bcrypt";
 import { Videos } from "../models/videos";
@@ -65,8 +65,46 @@ export async function unfollowUser(
     return updatedUser;
 }
 
-export async function getCreatedVideos(userId:string){
-    const videos=await Videos.find({ownerId:userId});
+export async function getCreatedVideos(userId: string) {
+    const videos = await Videos.find({ ownerId: userId }).lean();
 
     return videos;
+}
+
+export async function getUserById(userId: string) {
+    const user = await Users.findById(userId).lean();
+    if (!user) {
+        throw new Error("Resource not found!");
+    }
+    return user;
+}
+
+export async function checkUserId(userId: string) {
+    const user = await Users.findById(userId).lean();
+    if (!user) {
+        return false;
+    }
+
+    return true;
+}
+
+export async function editUser(userId: string, data: Partial<User>) {
+    const updatedUser = await Users.findByIdAndUpdate(userId, {
+        $set: { data },
+    }).lean();
+
+    return updatedUser;
+}
+
+export async function changePassword(userId: string, newPassword: string) {
+    const user = await Users.findById(userId).lean();
+    const isOldPassword = await bcrypt.compare(newPassword, user?.password!);
+    if (isOldPassword) {
+        throw new Error("Old password can't be the new password!");
+    }
+    const updatedUser = await Users.findByIdAndUpdate(userId, {
+        $set: { password: await bcrypt.hash(newPassword, 10) },
+    });
+
+    return updatedUser;
 }
