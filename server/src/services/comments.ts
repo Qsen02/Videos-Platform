@@ -19,7 +19,7 @@ export async function checkCommentId(commentId: string) {
 }
 
 export async function createComment(
-    userId: string,
+    userId: string | null | undefined,
     videoId: string,
     content: string
 ) {
@@ -27,6 +27,10 @@ export async function createComment(
         ownerId: userId,
         videoId: videoId,
         content: content,
+    });
+
+    await Videos.findByIdAndUpdate(videoId, {
+        $push: { comments: newComment._id },
     });
 
     return newComment;
@@ -38,30 +42,48 @@ export async function deleteComment(videoId: string, commentId: string) {
         videoId,
         { $pull: { comments: commentId } },
         { new: true }
-    );
+    ).lean();
     return updatedVideo;
 }
 
 export async function editComment(commentId: string, newContent: string) {
-    const updatedComment = await Comments.findByIdAndUpdate(commentId, {
-        $set: { content: newContent },
-    });
+    const updatedComment = await Comments.findByIdAndUpdate(
+        commentId,
+        {
+            $set: { content: newContent },
+        },
+        { new: true }
+    ).lean();
 
     return updatedComment;
 }
 
-export async function likeComment(userId: string, commentId: string) {
-    const updatedComment = await Comments.findByIdAndUpdate(commentId, {
-        $push: { likes: userId },
-    });
+export async function likeComment(
+    userId: string | null | undefined,
+    commentId: string
+) {
+    const updatedComment = await Comments.findByIdAndUpdate(
+        commentId,
+        {
+            $push: { likes: userId },
+        },
+        { new: true }
+    ).lean();
 
     return updatedComment;
 }
 
-export async function unlikeComment(userId: string, commentId: string) {
-    const updatedComment = await Comments.findByIdAndUpdate(commentId, {
-        $pull: { likes: userId },
-    });
+export async function unlikeComment(
+    userId: string | null | undefined,
+    commentId: string
+) {
+    const updatedComment = await Comments.findByIdAndUpdate(
+        commentId,
+        {
+            $pull: { likes: userId },
+        },
+        { new: true }
+    ).lean();
 
     return updatedComment;
 }
