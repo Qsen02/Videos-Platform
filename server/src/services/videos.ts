@@ -65,7 +65,7 @@ export async function deleteVideo(videoId: string) {
 
 export async function editVideo(videoId: string, data: Partial<VideosType>) {
     const updatedVideos = await Videos.findByIdAndUpdate(videoId, {
-        $set: { data },
+        $set: data ,
     });
 
     return updatedVideos;

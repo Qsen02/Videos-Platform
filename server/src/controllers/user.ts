@@ -1,13 +1,24 @@
 import { Router } from "express";
-import { getUserById, login, register } from "../services/user";
+import {
+    changePassword,
+    checkUserId,
+    editUser,
+    followUser,
+    getCreatedVideos,
+    getUserById,
+    login,
+    register,
+    unfollowUser,
+} from "../services/user";
 import { body, validationResult } from "express-validator";
 import { errorParser } from "../utils/errorParsers";
 import { setToken } from "../services/token";
 import { isUser } from "../middlewares/guard";
+import { MyRequest } from "../types/express";
 
 const userRouter = Router();
 
-userRouter.get("/logout", isUser(),(req, res) => {
+userRouter.get("/logout", isUser(), (req, res) => {
     res.status(200).json({ message: "Logout was successfull!" });
     return;
 });
@@ -25,6 +36,17 @@ userRouter.get("/:userId", async (req, res) => {
         }
         return;
     }
+});
+
+userRouter.get("/created-videos/:userId", isUser(), async (req, res) => {
+    const userId = req.params.userId;
+    const isValid = await checkUserId(userId);
+    if (!isValid) {
+        res.status(404).json({ message: "Resource not found!" });
+        return;
+    }
+    const videos = await getCreatedVideos(userId);
+    res.json(videos);
 });
 
 userRouter.post(
@@ -111,6 +133,105 @@ userRouter.post(
                 accessToken: token,
             });
         } catch (err) {
+            if (err instanceof Error) {
+                res.status(400).json({ message: err.message });
+            } else {
+                res.status(400).json({ message: "Error occurd!" });
+            }
+            return;
+        }
+    }
+);
+
+userRouter.post("/follow/:userId", isUser(), async (req: MyRequest, res) => {
+    const userId = req.params.userId;
+    const isValid = await checkUserId(userId);
+    const user = req.user;
+    if (!isValid) {
+        res.status(404).json({ message: "Resource not found!" });
+        return;
+    }
+    const updatedUser = await followUser(user, userId);
+    res.json(updatedUser);
+});
+
+userRouter.post("/unfollow/:userId", isUser(), async (req: MyRequest, res) => {
+    const userId = req.params.userId;
+    const isValid = await checkUserId(userId);
+    const user = req.user;
+    if (!isValid) {
+        res.status(404).json({ message: "Resource not found!" });
+        return;
+    }
+    const updatedUser = await unfollowUser(user, userId);
+    res.json(updatedUser);
+});
+
+userRouter.put(
+    "/edit/:userId",
+    isUser(),
+    body("username")
+        .trim()
+        .isLength({ min: 3 })
+        .withMessage("Username must be at least 3 symbols long!"),
+    body("email").trim().isEmail().withMessage("Email must be valid!"),
+    body("profileImage")
+        .custom(
+            (value: string, { req }) =>
+                value.length == 0 || /^https?:\/\//.test(value)
+        )
+        .withMessage("Image must be valid URL!"),
+    async (req, res) => {
+        const fields = req.body;
+        const userId = req.params.userId;
+        const isValid = await checkUserId(userId);
+        if (!isValid) {
+            res.status(404).json({ message: "Resource not found!" });
+            return;
+        }
+        try {
+            const results = validationResult(req);
+            if (!results.isEmpty()) {
+                throw new Error(errorParser(results));
+            }
+            const updatedUser = await editUser(userId, fields);
+            res.json(updatedUser);
+        } catch (err) {
+            if (err instanceof Error) {
+                res.status(400).json({ message: err.message });
+            } else {
+                res.status(400).json({ message: "Error occurd!" });
+            }
+            return;
+        }
+    }
+);
+
+userRouter.put(
+    "/change-password/:userId",
+    isUser(),
+    body("password")
+        .trim()
+        .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/)
+        .withMessage(
+            "Password must be at least 6 symbols ant must contain digits, letters and at least one capital letter and special symbol!"
+        ),
+    async (req, res) => {
+        const password=req.body.password;
+        const userId = req.params.userId;
+        const isValid = await checkUserId(userId);
+        if (!isValid) {
+            res.status(404).json({ message: "Resource not found!" });
+            return;
+        }
+        try{
+            const results = validationResult(req);
+            if (!results.isEmpty()) {
+                throw new Error(errorParser(results));
+            }
+            const updatedUser=await changePassword(userId,password);
+            res.json(updatedUser);
+        }catch(err){
             if (err instanceof Error) {
                 res.status(400).json({ message: err.message });
             } else {

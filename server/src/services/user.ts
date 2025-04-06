@@ -41,12 +41,12 @@ export async function login(username: string, password: string) {
 }
 
 export async function followUser(
-    curUser: UserAttributes,
+    curUser: UserAttributes | null | undefined,
     followingUserId: string
 ) {
     const updatedUser = await Users.findByIdAndUpdate(
         followingUserId,
-        { $push: { followers: curUser._id } },
+        { $push: { followers: curUser?._id } },
         { new: true }
     );
 
@@ -54,12 +54,12 @@ export async function followUser(
 }
 
 export async function unfollowUser(
-    curUser: UserAttributes,
+    curUser: UserAttributes | null | undefined,
     unfollowingUserId: string
 ) {
     const updatedUser = await Users.findByIdAndUpdate(
         unfollowingUserId,
-        { $pull: { followers: curUser._id } },
+        { $pull: { followers: curUser?._id } },
         { new: true }
     );
 
@@ -90,9 +90,13 @@ export async function checkUserId(userId: string) {
 }
 
 export async function editUser(userId: string, data: Partial<User>) {
-    const updatedUser = await Users.findByIdAndUpdate(userId, {
-        $set: { data },
-    }).lean();
+    const updatedUser = await Users.findByIdAndUpdate(
+        userId,
+        {
+            $set: data ,
+        },
+        { new: true }
+    ).lean();
 
     return updatedUser;
 }
@@ -103,9 +107,13 @@ export async function changePassword(userId: string, newPassword: string) {
     if (isOldPassword) {
         throw new Error("Old password can't be the new password!");
     }
-    const updatedUser = await Users.findByIdAndUpdate(userId, {
-        $set: { password: await bcrypt.hash(newPassword, 10) },
-    });
+    const updatedUser = await Users.findByIdAndUpdate(
+        userId,
+        {
+            $set: { password: await bcrypt.hash(newPassword, 10) },
+        },
+        { new: true }
+    ).lean();
 
     return updatedUser;
 }

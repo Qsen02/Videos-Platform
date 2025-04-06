@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import { User, UserAttributes } from "../types/users";
+import { UserAttributes } from "../types/users";
 import { Document, Types } from "mongoose";
 
 dotenv.config();
@@ -31,18 +31,22 @@ export function setToken(
         profileImage: user.profileImage,
     };
 
-
-    const token = jwt.sign(payload, process.env.SECRET!, {
-        expiresIn: "3d",
-    });
-
-    console.log(token);
-
-    return token;
+    if (process.env.SECRET) {
+        const token = jwt.sign(payload, process.env.SECRET, {
+            expiresIn: "3d",
+        });
+        return token;
+    } else {
+        return null;
+    }
 }
 
 export function validateToken(token: string) {
-    const isValid = jwt.verify(token, process.env.SECRET!) as UserAttributes;
+    if (process.env.SECRET) {
+        const isValid = jwt.verify(token, process.env.SECRET) as UserAttributes;
 
-    return isValid;
+        return isValid;
+    } else {
+        return null;
+    }
 }
