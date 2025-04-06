@@ -36,7 +36,7 @@ export async function pagination(page: number) {
 }
 
 export async function searchVideos(title: string) {
-    const videos = await Videos.find({ title: new RegExp(title, "i") });
+    const videos = await Videos.find({ title: new RegExp(title, "i") }).lean();
 
     return videos;
 }
@@ -45,13 +45,13 @@ export async function createVideo(
     title: string,
     videoUrl: string,
     description: string,
-    user: UserAttributes
+    user: UserAttributes | null | undefined
 ) {
     const newVideo = await Videos.create({
         title: title,
         videoUrl: videoUrl,
         description: description,
-        ownerId: user._id,
+        ownerId: user?._id,
     });
 
     return newVideo;
@@ -59,43 +59,59 @@ export async function createVideo(
 
 export async function deleteVideo(videoId: string) {
     const video = await Videos.findById(videoId);
-    await Comments.deleteMany({videoId:video?._id});
+    await Comments.deleteMany({ videoId: video?._id });
     await video?.deleteOne();
 }
 
 export async function editVideo(videoId: string, data: Partial<VideosType>) {
-    const updatedVideos = await Videos.findByIdAndUpdate(videoId, {
-        $set: data ,
-    });
+    const updatedVideos = await Videos.findByIdAndUpdate(
+        videoId,
+        {
+            $set: data,
+        },
+        { new: true }
+    ).lean();
 
     return updatedVideos;
 }
 
-export async function likeVideo(user: UserAttributes, videoId: string) {
+export async function likeVideo(
+    user: UserAttributes | null | undefined,
+    videoId: string
+) {
     const updatedVideos = await Videos.findByIdAndUpdate(videoId, {
-        $push: { likes: user._id },
-    });
+        $push: { likes: user?._id },
+    },{new:true}).lean();
 
     return updatedVideos;
 }
-export async function unlikeVideo(user: UserAttributes, videoId: string) {
+export async function unlikeVideo(
+    user: UserAttributes | null | undefined,
+    videoId: string
+) {
     const updatedVideos = await Videos.findByIdAndUpdate(videoId, {
-        $pull: { likes: user._id },
-    });
+        $pull: { likes: user?._id },
+    },{new:true}).lean();
 
     return updatedVideos;
 }
-export async function dislikeVideo(user: UserAttributes, videoId: string) {
+export async function dislikeVideo(
+    user: UserAttributes | null | undefined,
+    videoId: string
+) {
     const updatedVideos = await Videos.findByIdAndUpdate(videoId, {
-        $push: { dislikes: user._id },
-    });
+        $push: { dislikes: user?._id },
+    },{new:true}).lean();
 
     return updatedVideos;
 }
-export async function undislikeVideo(user: UserAttributes, videoId: string) {
+export async function undislikeVideo(
+    user: UserAttributes | null | undefined,
+    videoId: string
+) {
     const updatedVideos = await Videos.findByIdAndUpdate(videoId, {
-        $pull: { dislikes: user._id },
-    });
+        $pull: { dislikes: user?._id },
+    },{new:true}).lean();
 
     return updatedVideos;
 }
