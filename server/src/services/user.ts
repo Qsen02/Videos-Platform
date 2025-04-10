@@ -93,7 +93,7 @@ export async function editUser(userId: string, data: Partial<User>) {
     const updatedUser = await Users.findByIdAndUpdate(
         userId,
         {
-            $set: data ,
+            $set: data,
         },
         { new: true }
     ).lean();
@@ -116,4 +116,9 @@ export async function changePassword(userId: string, newPassword: string) {
     ).lean();
 
     return updatedUser;
+}
+
+export async function searchUsers(name: string) {
+    const users = await Users.find({ username: new RegExp(name, "i") }).lean();
+    return users;
 }

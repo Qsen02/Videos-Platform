@@ -8,6 +8,7 @@ import {
     getUserById,
     login,
     register,
+    searchUsers,
     unfollowUser,
 } from "../services/user";
 import { body, validationResult } from "express-validator";
@@ -36,6 +37,15 @@ userRouter.get("/:userId", async (req, res) => {
         }
         return;
     }
+});
+
+userRouter.get("/search/:query", async (req, res) => {
+    let query = req.params.query;
+    if (query == "No value") {
+        query = "";
+    }
+    const users=await searchUsers(query);
+    res.json(users);
 });
 
 userRouter.get("/created-videos/:userId", isUser(), async (req, res) => {
@@ -217,21 +227,21 @@ userRouter.put(
             "Password must be at least 6 symbols ant must contain digits, letters and at least one capital letter and special symbol!"
         ),
     async (req, res) => {
-        const password=req.body.password;
+        const password = req.body.password;
         const userId = req.params.userId;
         const isValid = await checkUserId(userId);
         if (!isValid) {
             res.status(404).json({ message: "Resource not found!" });
             return;
         }
-        try{
+        try {
             const results = validationResult(req);
             if (!results.isEmpty()) {
                 throw new Error(errorParser(results));
             }
-            const updatedUser=await changePassword(userId,password);
+            const updatedUser = await changePassword(userId, password);
             res.json(updatedUser);
-        }catch(err){
+        } catch (err) {
             if (err instanceof Error) {
                 res.status(400).json({ message: err.message });
             } else {
