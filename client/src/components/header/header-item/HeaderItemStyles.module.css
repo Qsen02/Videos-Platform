@@ -1,0 +1,19 @@
+.item a {
+	font-weight: bold;
+	font-size: 18pt;
+}
+
+.item a:hover {
+	color: lightgray;
+}
+
+@media (max-width: 720px) {
+	.item a {
+		font-size: 16pt;
+	}
+}
+@media (max-width: 400px) {
+	.item a {
+		font-size: 14pt;
+	}
+}

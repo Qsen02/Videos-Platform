@@ -6,7 +6,7 @@ function App() {
 	return (
 		<>
          <Header />
-			<main>
+			<main className="darkTheme-darker">
 				<Routes>
                     <Route path="/" element={<Home/>}/>
                 </Routes>

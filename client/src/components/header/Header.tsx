@@ -1,4 +1,5 @@
 import HeaderItem from "./header-item/HeaderItem";
+import styles from "./HeaderStyles.module.css";
 
 export default function Header() {
 	const guestNav = [
@@ -13,13 +14,16 @@ export default function Header() {
 		{ name: "Profile", link: "/profile" },
 		{ name: "Logout", link: "/logout" },
 	];
+
 	return (
-		<header>
-			<ul>
-				{userNav.map((el) => (
+		<header className={styles.header}>
+			<i className="fa-solid fa-video"></i>
+			<ul className={styles.navigation}>
+				{guestNav.map((el) => (
 					<HeaderItem key={el.name} name={el.name} link={el.link} />
 				))}
 			</ul>
+			<i className="fa-solid fa-circle-half-stroke"></i>
 		</header>
 	);
 }
