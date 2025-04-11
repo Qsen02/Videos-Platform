@@ -9,35 +9,54 @@
 .navigation {
 	flex: 0 0 85%;
 	display: flex;
-	gap: 20px;
+	gap: 30px;
 	align-items: center;
 	color: white;
 	list-style: none;
+    margin-left: 50px;
 }
 
-.header i {
-	font-size: 30pt;
+#logo {
+	font-size: 50pt;
 	color: white;
+}
+
+#theme{
+    font-size: 20pt;
+	color: white;
+    cursor: pointer;
 }
 
 @media(max-width:800px){
     .navigation{
         flex: 0 0 80%;
     }
+    #logo {
+        font-size: 40pt;
+        color: white;
+    }
+    
+    #theme{
+        font-size: 15pt;
+        color: white;
+        cursor: pointer;
+    }
 }
 
 @media(max-width:450px){
     .header{
+        padding: 10px;
         flex-direction: column;
         align-items: center;
         gap:10px;
-        text-align: center;
     }
     .navigation{
         flex-direction: column;
-        align-items: center;
+        align-items:center;
+        margin-left: 0;
         gap:10px;
-        text-align: center;
+        margin-bottom: 10px;
+        margin-top: 10px;
     }
 }
 

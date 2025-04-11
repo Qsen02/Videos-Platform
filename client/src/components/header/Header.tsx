@@ -17,13 +17,13 @@ export default function Header() {
 
 	return (
 		<header className={styles.header}>
-			<i className="fa-solid fa-video"></i>
+			<i className="fa-solid fa-video" id={styles.logo}></i>
 			<ul className={styles.navigation}>
 				{guestNav.map((el) => (
 					<HeaderItem key={el.name} name={el.name} link={el.link} />
 				))}
 			</ul>
-			<i className="fa-solid fa-circle-half-stroke"></i>
+			<i className="fa-solid fa-circle-half-stroke" id={styles.theme}></i>
 		</header>
 	);
 }

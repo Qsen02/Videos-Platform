@@ -1,6 +1,7 @@
 .item a {
 	font-weight: bold;
 	font-size: 18pt;
+	align-self: flex-start;
 }
 
 .item a:hover {
