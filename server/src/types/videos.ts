@@ -1,4 +1,4 @@
-import { Comments } from "./comments";
+import { CommentType } from "./comments";
 import { User } from "./users";
 
 export interface VideosType{
@@ -8,6 +8,6 @@ export interface VideosType{
     description:string,
     likes:User[],
     dislikes:User[],
-    comments:Comments[],
+    comments:CommentType[],
     ownerId:User
 }
