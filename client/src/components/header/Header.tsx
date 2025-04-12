@@ -3,7 +3,8 @@ import HeaderItem from "./header-item/HeaderItem";
 import styles from "./HeaderStyles.module.css";
 
 export default function Header() {
-	const { changeTheme } = useUserThemeContext();
+	const { changeTheme, user } = useUserThemeContext();
+
 	const guestNav = [
 		{ name: "Videos", link: "/" },
 		{ name: "Login", link: "/login" },
@@ -27,9 +28,21 @@ export default function Header() {
 		<header className={styles.header}>
 			<i className="fa-solid fa-video" id={styles.logo}></i>
 			<ul className={styles.navigation}>
-				{guestNav.map((el) => (
-					<HeaderItem key={el.name} name={el.name} link={el.link} />
-				))}
+				{user
+					? userNav.map((el) => (
+							<HeaderItem
+								key={el.name}
+								name={el.name}
+								link={el.link}
+							/>
+					  ))
+					: guestNav.map((el) => (
+							<HeaderItem
+								key={el.name}
+								name={el.name}
+								link={el.link}
+							/>
+					  ))}
 			</ul>
 			<i
 				className="fa-solid fa-circle-half-stroke"
