@@ -1,8 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 import { UserThemeType } from "../types/UserAndTheme";
 import { usePresistedUser, userPresistedTheme } from "../hooks/usePresistedState";
 import { UserForAuth } from "../types/user";
-import { removeUserData, setUserData, setUserTheme } from "../utils/userHelper";
+import { removeUserData, setUserData } from "../utils/userHelper";
 import { logout } from "../api/users";
 
 const UserThemeContext = createContext<UserThemeType | null>(null);
