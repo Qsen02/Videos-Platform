@@ -12,6 +12,22 @@ export function getUserData() {
 	return null;
 }
 
-export function removeUserData(key:string){
-    localStorage.removeItem(key);
+export function removeUserData(){
+    localStorage.removeItem("user");
+}
+
+export function setUserTheme(theme:string){
+	localStorage.setItem("theme",JSON.stringify(theme));
+}
+
+export function getUserTheme(){
+	const theme = localStorage.getItem("theme");
+	if (theme) {
+		return JSON.parse(theme);
+	}
+	return null;
+}
+
+export function removeUserTheme(){
+	localStorage.removeItem("theme");
 }

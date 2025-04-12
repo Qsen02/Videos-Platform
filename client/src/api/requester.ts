@@ -1,4 +1,4 @@
-import { getUserData, removeUserData } from "../utils/userHelper";
+import { getUserData, removeUserTheme, removeUserData } from "../utils/userHelper";
 
 const host = "http://localhost:3000/";
 
@@ -25,7 +25,8 @@ async function request(method: string, url: string, data?: object) {
 		const res = await fetch(url, options);
 		if (!res.ok) {
 			if (res.status === 401 || res.status === 403) {
-				removeUserData("user");
+				removeUserData();
+				removeUserTheme();
 			}
 			const err = await res.json();
 			throw new Error(err.message);

@@ -1,8 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import { UserThemeType } from "../types/UserAndTheme";
-import { usePresistedState } from "../hooks/usePresistedState";
+import { usePresistedUser, userPresistedTheme } from "../hooks/usePresistedState";
 import { UserForAuth } from "../types/user";
-import { removeUserData, setUserData } from "../utils/userHelper";
+import { removeUserData, setUserData, setUserTheme } from "../utils/userHelper";
 import { logout } from "../api/users";
 
 const UserThemeContext = createContext<UserThemeType | null>(null);
@@ -10,15 +10,11 @@ const UserThemeContext = createContext<UserThemeType | null>(null);
 export default function UserThemeContextProvider(props: {
 	children: React.ReactNode;
 }) {
-	const [theme, setTheme] = useState<"light" | "dark">("light");
-	const {user,setCurUser}=usePresistedState(null);
+	const {theme,changeCurTheme}=userPresistedTheme(null);
+	const {user,setCurUser}=usePresistedUser(null);
 
 	function changeTheme() {
-		if (theme == "light") {
-			setTheme("dark");
-		} else if (theme == "dark") {
-			setTheme("light");
-		}
+		changeCurTheme();
 	}
 
 	function setUser(user:UserForAuth){
@@ -28,7 +24,7 @@ export default function UserThemeContextProvider(props: {
 
 	async function removeUser(){
 		await logout();
-		removeUserData("user");
+		removeUserData();
 		setCurUser(null);
 	}
 
