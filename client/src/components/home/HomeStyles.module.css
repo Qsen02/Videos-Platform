@@ -1,0 +1,50 @@
+.form{
+    margin: 0 auto;
+    background-color: transparent;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+}
+
+.form p{
+    display: flex;
+    align-items: center;
+}
+
+.form input{
+    width: 350px;
+    height: 40px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border: none;
+    padding-left: 10px;
+    font-size: 14pt;
+}
+
+.form input::placeholder{
+    font-size: 14pt;
+}
+
+.form button{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: none;
+    height: 40px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+.form button i{
+    font-size: 16pt;
+}
+
+.form select{
+    border-radius: 20px;
+    width: 100px;
+    height: 40px;
+    font-size: 14pt;
+    border: none;
+    padding-left: 10px;
+}

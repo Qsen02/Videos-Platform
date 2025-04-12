@@ -15,6 +15,7 @@ a {
 }
 
 main {
+	padding: 30px;
 	min-height: 100vh;
 }
 
@@ -38,11 +39,11 @@ main {
 	color: black;
 }
 .whiteTheme-light {
-	background-color: rgb(253, 253, 253);
+	background-color: rgb(232, 232, 232);
 	color: black;
 }
 
 .whiteTheme-darkWhite {
-	background-color: rgb(240, 240, 240);
+	background-color: rgb(210, 210, 210);
 	color: black;
 }
