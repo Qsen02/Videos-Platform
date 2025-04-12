@@ -15,6 +15,7 @@ export function useGetAllVideos(initialValue: []) {
 			try {
 				setLoading(true);
 				const videos = await getAllVideos();
+				console.log(videos);
                 setVideos(videos);
                 setLoading(false);
 			} catch (err) {

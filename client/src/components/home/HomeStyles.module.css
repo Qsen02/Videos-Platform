@@ -48,3 +48,12 @@
     border: none;
     padding-left: 10px;
 }
+
+.videoContainer{
+    width: 100%;
+    margin: 30px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap:20px;
+}

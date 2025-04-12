@@ -6,6 +6,7 @@ export interface Video {
 	title: string;
 	videoUrl: string;
 	description: string;
+	thumbnail:string;
 	likes: User[];
 	dislikes: User[];
 	comments: Comment[];

@@ -1,10 +1,11 @@
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { useGetAllVideos } from "../../hooks/useVideos";
+import HomeVideos from "./home-videos/HomeVideos";
 import styles from "./HomeStyles.module.css";
 
 export default function Home() {
 	const { theme } = useUserThemeContext();
-	// const { videos, loading, error } = useGetAllVideos([]);
+	const { videos, loading, error } = useGetAllVideos([]);
 	return (
 		<>
 			<form className={styles.form}>
@@ -39,9 +40,21 @@ export default function Home() {
 					<option value="users">Users</option>
 				</select>
 			</form>
-			<div>
-
-			</div>
+			<section className={styles.videoContainer}>
+				{videos.length == 0 ? (
+					<h2>No videos yet.</h2>
+				) : (
+					videos.map((el) => (
+						<HomeVideos
+							key={el._id}
+							id={el._id}
+							title={el.title}
+							thumbnail={el.thumbnail}
+							owner={el.ownerId}
+						/>
+					))
+				)}
+			</section>
 		</>
 	);
 }

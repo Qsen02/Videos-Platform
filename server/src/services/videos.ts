@@ -23,7 +23,7 @@ export async function checkVideoId(videoId: string) {
 }
 
 export async function getAllVideos() {
-    const videos = await Videos.find().lean();
+    const videos = await Videos.find().populate("ownerId").lean();
 
     return videos;
 }
