@@ -45,12 +45,14 @@ export async function createVideo(
     title: string,
     videoUrl: string,
     description: string,
+    thumbnail:string,
     user: UserAttributes | null | undefined
 ) {
     const newVideo = await Videos.create({
         title: title,
         videoUrl: videoUrl,
         description: description,
+        thumbnail:thumbnail,
         ownerId: user?._id,
     });
 

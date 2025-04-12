@@ -13,6 +13,9 @@ const videoSchema=new mongoose.Schema({
         type:String,
         require:true
     },
+    thumbnail:{
+        type:String,
+    },
     likes:{
         type:[mongoose.SchemaTypes.ObjectId],
         ref:"Users",
