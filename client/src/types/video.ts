@@ -6,9 +6,14 @@ export interface Video {
 	title: string;
 	videoUrl: string;
 	description: string;
-	thumbnail:string;
+	thumbnail: string;
 	likes: User[];
 	dislikes: User[];
 	comments: Comment[];
 	ownerId: User;
+}
+
+export interface ActionType {
+	type: "getAll" | "searchVideos";
+	payload: Video[] | [];
 }
