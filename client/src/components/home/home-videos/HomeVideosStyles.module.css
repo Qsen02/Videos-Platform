@@ -33,6 +33,11 @@
     padding-bottom: 20px;
 }
 
+.body h2{
+    font-size: 16pt;
+    text-align: center;
+}
+
 .body img{
     width: 95%;
     height: 300px;
@@ -62,12 +67,12 @@
 @media(max-width:700px){
     #wrapper{
         flex-basis: auto;
-        width: 60vw;
+        width: 75vw;
     }
     .header p{
         font-size: 14pt;
     }
-    .body{
+    .body h2{
         font-size: 14pt;
     }
 }
@@ -82,7 +87,7 @@
     .body a{
         font-size: 12pt;
     }
-    .body{
+    .body h2{
         font-size: 12pt;
     }
     .header img{
