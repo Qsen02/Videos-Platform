@@ -50,6 +50,7 @@ export default function Home() {
 							id={el._id}
 							title={el.title}
 							thumbnail={el.thumbnail}
+							videoUrl={el.videoUrl}
 							owner={el.ownerId}
 						/>
 					))
