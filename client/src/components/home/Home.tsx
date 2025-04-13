@@ -3,7 +3,7 @@ import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { useGetAllVideos, useSearchVideos } from "../../hooks/useVideos";
 import HomeVideos from "./home-videos/HomeVideos";
 import styles from "./HomeStyles.module.css";
-import { Form, Formik, FormikProps } from "formik";
+import { Form, Formik } from "formik";
 import CustomInput from "../../commons/customInput";
 
 export default function Home() {

@@ -1,5 +1,5 @@
 #wrapper{
-    flex: 0 0 28%;
+    flex: 0 0 30%;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -51,4 +51,42 @@
 
 .body a:hover{
     background-color: rgb(178, 1, 1);
+}
+
+@media(max-width:1035px){
+    #wrapper{
+        flex: 0 0 45%;
+    }
+}
+
+@media(max-width:700px){
+    #wrapper{
+        flex-basis: auto;
+        width: 60vw;
+    }
+    .header p{
+        font-size: 14pt;
+    }
+    .body{
+        font-size: 14pt;
+    }
+}
+
+@media(max-width:450px){
+    #wrapper{
+        width: 90vw;
+    }
+    .header p{
+        font-size: 12pt;
+    }
+    .body a{
+        font-size: 12pt;
+    }
+    .body{
+        font-size: 12pt;
+    }
+    .header img{
+        width: 40px;
+        height: 40px;
+    }
 }

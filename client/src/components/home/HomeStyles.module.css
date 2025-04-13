@@ -57,3 +57,15 @@
     justify-content: center;
     gap:20px;
 }
+
+
+@media(max-width:700px){
+    .videoContainer{
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+    .form input{
+        width: 200px;
+    }
+}

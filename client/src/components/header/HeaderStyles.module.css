@@ -7,7 +7,7 @@
 }
 
 .navigation {
-	flex: 0 0 85%;
+	flex: 0 0 80%;
 	display: flex;
 	gap: 30px;
 	align-items: center;
@@ -27,9 +27,9 @@
     cursor: pointer;
 }
 
-@media(max-width:800px){
+@media(max-width:950px){
     .navigation{
-        flex: 0 0 80%;
+        flex: 0 0 70%;
     }
     #logo {
         font-size: 40pt;
@@ -43,7 +43,7 @@
     }
 }
 
-@media(max-width:450px){
+@media(max-width:550px){
     .header{
         padding: 10px;
         flex-direction: column;
