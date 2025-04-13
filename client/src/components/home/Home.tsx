@@ -1,41 +1,74 @@
 import { useState } from "react";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
-import { useGetAllVideos } from "../../hooks/useVideos";
+import { useGetAllVideos, useSearchVideos } from "../../hooks/useVideos";
 import HomeVideos from "./home-videos/HomeVideos";
 import styles from "./HomeStyles.module.css";
+import { Form, Formik, FormikProps } from "formik";
+import CustomInput from "../../commons/customInput";
 
 export default function Home() {
 	const { theme } = useUserThemeContext();
-	const [isSearched,setIsSearched]=useState(false);
-	const { videos, loading, error } = useGetAllVideos([]);
+	const [isSearched, setIsSearched] = useState(false);
+	const { videos, setVideos, loading, setLoading, error, setError } =
+		useGetAllVideos([]);
+	const searchVideos = useSearchVideos();
+
+	async function onSearch(values: { query: string }) {
+		try {
+			setLoading(true);
+			let query = values.query;
+			if (query == "") {
+				query = "No value";
+			}
+			const videos = await searchVideos(query);
+			setVideos({ type: "searchVideos", payload: videos });
+			setIsSearched(true);
+			setLoading(false);
+		} catch (err) {
+			setError(true);
+			setLoading(false);
+		}
+	}
+
 	return (
 		<>
-			<form className={styles.form}>
-				<p>
-					<input
-						type="text"
-						name="query"
-						placeholder="Search videos..."
-						className={
-							theme == "dark"
-								? "darkTheme-dark"
-								: "whiteTheme-light"
-						}
-					/>
-					<button
-						className={
-							theme == "dark"
-								? "darkTheme-dark"
-								: "whiteTheme-light"
-						}
-					>
-						<i className="fa-solid fa-magnifying-glass"></i>
-					</button>
-				</p>
-			</form>
+			<Formik initialValues={{ query: "" }} onSubmit={onSearch}>
+				{(props) => (
+					<Form className={styles.form}>
+						<p>
+							<CustomInput
+								type="text"
+								name="query"
+								placeholder="Search videos..."
+								className={
+									theme == "dark"
+										? "darkTheme-dark"
+										: "whiteTheme-light"
+								}
+							/>
+							<button
+								type="submit"
+								className={
+									theme == "dark"
+										? "darkTheme-dark"
+										: "whiteTheme-light"
+								}
+							>
+								<i className="fa-solid fa-magnifying-glass"></i>
+							</button>
+						</p>
+					</Form>
+				)}
+			</Formik>
 			<section className={styles.videoContainer}>
-				{videos.length == 0 ? (
+				{!error && loading ? (
+					<span className="loader"></span>
+				) : videos.length == 0 && !isSearched && !error ? (
 					<h2>No videos yet.</h2>
+				) : isSearched && videos.length == 0 && !error ? (
+					<h2>No results.</h2>
+				) : error ? (
+					<h2>Something went wrong, please try again later!</h2>
 				) : (
 					videos.map((el) => (
 						<HomeVideos

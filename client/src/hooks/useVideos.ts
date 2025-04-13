@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { ActionType, Video } from "../types/video";
 import { useLoadingError } from "./useLoadingError";
-import { getAllVideos } from "../api/videos";
+import { getAllVideos, searchVideos } from "../api/videos";
 import { homeReducer } from "../components/reducers/homeReducer";
 
 export function useGetAllVideos(initialValue: []) {
@@ -29,7 +29,16 @@ export function useGetAllVideos(initialValue: []) {
 
 	return {
 		videos,
+		setVideos,
 		loading,
+		setLoading,
 		error,
+		setError
 	};
+}
+
+export function useSearchVideos(){
+	return async function searching(query:string){
+		return await searchVideos(query);
+	}
 }
