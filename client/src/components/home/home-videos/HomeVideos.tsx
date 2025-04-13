@@ -7,7 +7,6 @@ interface HomeVideosProp {
 	id: string;
 	title: string;
 	thumbnail: string;
-	videoUrl:string
 	owner: User;
 }
 
@@ -15,7 +14,6 @@ export default function HomeVideos({
 	id,
 	title,
 	thumbnail,
-	videoUrl,
 	owner,
 }: HomeVideosProp) {
     const {theme}=useUserThemeContext();
@@ -30,7 +28,6 @@ export default function HomeVideos({
 				<h2>{title}</h2>
 				<Link to={`/videos/${id}`}>Watch</Link>
 			</div>
-			<iframe src={`https://www.youtube.com/embed/${videoUrl}`} allowFullScreen></iframe>
 		</article>
 	);
 }
