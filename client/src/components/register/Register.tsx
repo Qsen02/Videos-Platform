@@ -12,6 +12,8 @@ export default function Register() {
 	const navigate = useNavigate();
 	const [isErr, setIsErr] = useState(false);
 	const [errMessage, setErrMessage] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
+	const [showRepass, setShowRepass] = useState(false);
 
 	const initialValues = {
 		username: "",
@@ -27,6 +29,22 @@ export default function Register() {
 		profileImage: string;
 		password: string;
 		repass: string;
+	}
+
+	function onShowPassword(){
+		if(showPassword){
+			setShowPassword(false);
+		}else{
+			setShowPassword(true);
+		}
+	}
+
+	function onShowRepass(){
+		if(showRepass){
+			setShowRepass(false);
+		}else{
+			setShowRepass(true);
+		}
 	}
 
 	async function onRegister(
@@ -49,8 +67,8 @@ export default function Register() {
 			if (setUser) {
 				setUser(user);
 			}
-            actions.resetForm();
-            navigate("/");
+			actions.resetForm();
+			navigate("/");
 		} catch (err) {
 			setIsErr(true);
 			if (err instanceof Error) {
@@ -86,6 +104,8 @@ export default function Register() {
 									: "whiteTheme-darkWhite"
 							}
 						/>
+					</p>
+					<p className="input">
 						<CustomInput
 							label="Email"
 							type="text"
@@ -96,6 +116,8 @@ export default function Register() {
 									: "whiteTheme-darkWhite"
 							}
 						/>
+					</p>
+					<p className="input">
 						<CustomInput
 							label="Profile image"
 							type="text"
@@ -106,9 +128,11 @@ export default function Register() {
 									: "whiteTheme-darkWhite"
 							}
 						/>
+					</p>
+					<p className="input">
 						<CustomInput
 							label="Password"
-							type="text"
+							type={showPassword ? "text" : "password"}
 							name="password"
 							className={
 								theme == "dark"
@@ -116,9 +140,16 @@ export default function Register() {
 									: "whiteTheme-darkWhite"
 							}
 						/>
+						{showPassword ? (
+							<i className="fa-regular fa-eye" onClick={onShowPassword}></i>
+						) : (
+							<i className="fa-regular fa-eye-slash" onClick={onShowPassword}></i>
+						)}
+					</p>
+					<p className="input">
 						<CustomInput
 							label="Repeat password"
-							type="text"
+							type={showRepass ? "text" : "password"}
 							name="repass"
 							className={
 								theme == "dark"
@@ -126,6 +157,11 @@ export default function Register() {
 									: "whiteTheme-darkWhite"
 							}
 						/>
+						{showRepass ? (
+							<i className="fa-regular fa-eye" onClick={onShowRepass}></i>
+						) : (
+							<i className="fa-regular fa-eye-slash" onClick={onShowRepass}></i>
+						)}
 					</p>
 					<button type="submit">Submit</button>
 					<p>

@@ -79,7 +79,7 @@ main {
 	}
 }
 
-.form{
+.form {
 	width: 35vw;
 	padding: 20px;
 	margin: 0 auto;
@@ -87,19 +87,21 @@ main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap:20px;
+	gap: 20px;
 	font-size: 14pt;
+	text-align: center;
 }
 
-.form .input{
+.form .input {
+	position: relative;
 	width: 80%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap:10px;
+	gap: 10px;
 }
 
-.form .input input{
+.form .input input {
 	width: 100%;
 	height: 40px;
 	border: none;
@@ -108,18 +110,18 @@ main {
 	font-size: 14pt;
 }
 
-.form button{
+.form button {
 	padding: 10px 20px 10px 20px;
-    background-color: rgb(225, 0, 0);
-    border-radius: 20px;
-    font-size: 14pt;
-    font-weight: bold;
-    color:white;
+	background-color: rgb(225, 0, 0);
+	border-radius: 20px;
+	font-size: 14pt;
+	font-weight: bold;
+	color: white;
 	border: none;
 	cursor: pointer;
 }
 
-.form button:hover{
+.form button:hover {
 	background-color: rgb(178, 1, 1);
 }
 
@@ -127,6 +129,48 @@ main {
 	color: rgb(225, 0, 0);
 }
 
-.form p a:hover{
-	color:rgb(178, 1, 1);
+.form p a:hover {
+	color: rgb(178, 1, 1);
+}
+
+.form .input i {
+	position: absolute;
+	top: 43px;
+	right: 30px;
+	cursor: pointer;
+	
+}
+
+@media (max-width: 950px) {
+	.form {
+		width: 60vw;
+		font-size: 12pt;
+	}
+	.form .input i {
+		top: 39px;
+	}
+	.form button{
+		font-size: 12pt;
+	}
+}
+
+@media(max-width:400px){
+	.form{
+		width: 70vw;
+		font-size: 10pt;
+	}
+	.form .input i {
+		top: 33px;
+	}
+	.form button{
+		padding: 5px 10px 5px 10px;
+	}
+	.form .input input {
+		width: 100%;
+		height: 30px;
+		border: none;
+		border-radius: 5px;
+		padding-left: 10px;
+		font-size: 14pt;
+	}
 }
