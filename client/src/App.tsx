@@ -4,6 +4,7 @@ import Home from "./components/home/Home";
 import UserThemeContextProvider from "./contexts/UserAndTheme";
 import Main from "./components/main/Main";
 import Register from "./components/register/Register";
+import Login from "./components/login/Login";
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/register" element={<Register/>}/>
+						<Route path="/login" element={<Login/>}/>
 					</Routes>
 				</Main>
 			</UserThemeContextProvider>
