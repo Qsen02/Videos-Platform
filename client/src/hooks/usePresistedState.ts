@@ -22,7 +22,7 @@ export function usePresistedUser(initialValue: null) {
 	};
 }
 
-export function userPresistedTheme(initialValue: null) {
+export function userPresistedTheme(initialValue: "light" | "dark") {
 	const [theme, setTheme] = useState<"light" | "dark">(() => {
 		const theme = getUserTheme();
 		if (theme) {

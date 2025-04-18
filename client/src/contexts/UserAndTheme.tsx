@@ -10,7 +10,7 @@ const UserThemeContext = createContext<UserThemeType | null>(null);
 export default function UserThemeContextProvider(props: {
 	children: React.ReactNode;
 }) {
-	const {theme,changeCurTheme}=userPresistedTheme(null);
+	const {theme,changeCurTheme}=userPresistedTheme("light");
 	const {user,setCurUser}=usePresistedUser(null);
 
 	function changeTheme() {
