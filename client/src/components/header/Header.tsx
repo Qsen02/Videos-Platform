@@ -14,7 +14,7 @@ export default function Header() {
 	const userNav = [
 		{ name: "Videos", link: "/" },
 		{ name: "Add", link: "/create" },
-		{ name: "Profile", link: "/profile" },
+		{ name: "Profile", link: `/profile/${user?._id}` },
 		{ name: "Logout", link: "/logout" },
 	];
 
