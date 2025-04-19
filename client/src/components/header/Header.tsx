@@ -3,7 +3,7 @@ import HeaderItem from "./header-item/HeaderItem";
 import styles from "./HeaderStyles.module.css";
 
 export default function Header() {
-	const { changeTheme, user } = useUserThemeContext();
+	const { changeTheme, user, theme } = useUserThemeContext();
 
 	const guestNav = [
 		{ name: "Videos", link: "/" },
@@ -46,7 +46,7 @@ export default function Header() {
 			</ul>
 			<i
 				className="fa-solid fa-circle-half-stroke"
-				id={styles.theme}
+				id={theme == "dark" ? styles.darkTheme : styles.whiteTheme}
 				onClick={onChangeTheme}
 			></i>
 		</header>

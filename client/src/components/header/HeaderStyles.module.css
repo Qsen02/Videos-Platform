@@ -21,9 +21,15 @@
 	color: white;
 }
 
-#theme{
+#whiteTheme{
     font-size: 20pt;
 	color: white;
+    cursor: pointer;
+}
+
+#darkTheme{
+    font-size: 20pt;
+    color: rgb(30, 30, 30);
     cursor: pointer;
 }
 
@@ -36,9 +42,14 @@
         color: white;
     }
     
-    #theme{
+    #whiteTheme{
         font-size: 15pt;
         color: white;
+        cursor: pointer;
+    }
+    #darkTheme{
+        font-size: 15pt;
+        color: rgb(30, 30, 30);
         cursor: pointer;
     }
 }
