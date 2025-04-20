@@ -1,15 +1,30 @@
 import { useParams } from "react-router-dom";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { useGetOneVideo } from "../../hooks/useVideos";
+import styles from "./VideoDetailsStyles.module.css";
 
 export default function VideoDetails() {
-	const { theme } = useUserThemeContext();
+	const { theme, user } = useUserThemeContext();
 	const { videoId } = useParams();
 	const { video, loading, error } = useGetOneVideo(null, videoId);
 
 	return (
-		<div>
-			<h2>Video details works! {videoId}</h2>
-		</div>
+		<section
+			className={theme == "dark" ? "darkTheme-dark" : "whiteTheme-light"}
+			id={styles.detailsWrapper}
+		>
+			<h2>{video?.title}</h2>
+			<iframe
+				src={`https://www.youtube.com/embed/${video?.videoUrl}`}
+				allowFullScreen
+			></iframe>
+			<section className={styles.descriptionWrapper}>
+				<div className={styles.owner}>
+					<img src={video?.ownerId.profileImage} />
+					<p>{video?.ownerId.username}</p>
+				</div>
+				<p className={styles.description}>{video?.description}</p>
+			</section>
+		</section>
 	);
 }
