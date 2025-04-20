@@ -8,7 +8,7 @@ export async function getAllVideos(){
     return videos as Video[];
 }
 
-export async function getVideoById(videoId:string){
+export async function getVideoById(videoId:string|undefined){
     const video=await get(`${endpoint}/${videoId}`);
     return video as Video;
 }

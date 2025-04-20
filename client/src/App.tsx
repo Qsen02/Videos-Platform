@@ -7,7 +7,8 @@ import Register from "./components/register/Register";
 import Login from "./components/login/Login";
 import NotFound from "./components/not-found/NotFound";
 import Logout from "./components/logout/Logout";
-import CreateVideo from "./components/createVideo/CreateVideo";
+import CreateVideo from "./components/create-video/CreateVideo";
+import VideoDetails from "./components/video-details/VideoDetails";
 
 function App() {
 	return (
@@ -21,6 +22,7 @@ function App() {
 						<Route path="/login" element={<Login/>}/>
 						<Route path="/logout" element={<Logout/>}/>
 						<Route path="/create" element={<CreateVideo/>}/>
+						<Route path="/videos/:videoId" element={<VideoDetails/>}/>
 						<Route path="*" element={<NotFound/>}/>
 					</Routes>
 				</Main>
