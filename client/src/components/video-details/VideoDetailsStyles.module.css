@@ -43,7 +43,9 @@
 }
 
 .description{
+    width: 100%;
     word-wrap: break-word;
+    text-align: left;
 }
 
 @media(max-width:800px){

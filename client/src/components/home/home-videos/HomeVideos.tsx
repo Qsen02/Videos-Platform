@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { User } from "../../../types/user";
 import { useUserThemeContext } from "../../../contexts/UserAndTheme";
 import styles from "./HomeVideosStyles.module.css"
+import { errorProfileImage, errorVideoImage } from "../../../utils/errorVideoAndImage";
 
 interface HomeVideosProp {
 	id: string;
@@ -20,11 +21,11 @@ export default function HomeVideos({
 	return (
 		<article className={theme == "dark" ? "darkTheme-dark" : "whiteTheme-light"} id={styles.wrapper}>
 			<div className={styles.header}>
-				<img src={owner.profileImage} />
+				<img src={owner.profileImage} onError={errorProfileImage}/>
 				<p>{owner.username}</p>
 			</div>
 			<div className={styles.body}>
-				<img src={thumbnail} alt={title} />
+				<img src={thumbnail} alt={title} onError={errorVideoImage}/>
 				<h2>{title}</h2>
 				<Link to={`/videos/${id}`}>Watch</Link>
 			</div>

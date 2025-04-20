@@ -53,6 +53,10 @@
 	font-size: 20pt;
 }
 
+.userButtons i:hover{
+    color:grey;
+}
+
 @media(max-width:800px){
     .ownerButtons i {
         font-size: 18pt;

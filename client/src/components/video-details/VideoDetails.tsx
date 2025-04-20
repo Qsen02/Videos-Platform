@@ -3,6 +3,7 @@ import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { useGetOneVideo } from "../../hooks/useVideos";
 import styles from "./VideoDetailsStyles.module.css";
 import VideoButtons from "./video-buttons/VideoButtons";
+import { errorProfileImage } from "../../utils/errorVideoAndImage";
 
 export default function VideoDetails() {
 	const { theme, user } = useUserThemeContext();
@@ -21,7 +22,7 @@ export default function VideoDetails() {
 			></iframe>
 			<section className={styles.descriptionWrapper}>
 				<div className={styles.owner}>
-					<img src={video?.ownerId.profileImage} />
+					<img src={video?.ownerId.profileImage} onError={errorProfileImage}/>
 					<p>{video?.ownerId.username}</p>
 				</div>
 				<p className={styles.description}>{video?.description}</p>
