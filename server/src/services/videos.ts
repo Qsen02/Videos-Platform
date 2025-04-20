@@ -5,7 +5,13 @@ import { Videos } from "../models/videos";
 
 export async function getVideoById(videoId: string) {
 	const video = await Videos.findById(videoId)
-		.populate("comments")
+		.populate({
+			path: "comments",
+			populate: {
+				path: "ownerId",
+				model: "Users",
+			},
+		})
 		.populate("ownerId")
 		.lean();
 

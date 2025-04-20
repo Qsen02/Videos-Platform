@@ -1,0 +1,80 @@
+.wrapper{
+    width: 100%;
+    padding-top: 20px;
+    border-top: 2px solid grey;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap:20px;    
+}
+
+.form{
+    margin: 0 auto;
+    background-color: transparent;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+}
+
+.form input{
+    width: 500px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    padding-left: 10px;
+    font-size: 14pt;
+}
+
+.form input::placeholder{
+    font-size: 14pt;
+}
+
+.form button{
+    padding: 10px 20px 10px 20px;
+	background-color: rgb(225, 0, 0);
+	border-radius: 20px;
+	font-size: 14pt;
+	font-weight: bold;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+.form button:hover{
+    background-color: rgb(178, 1, 1);
+}
+
+.commentWrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:20px;
+}
+
+@media(max-width:900px){
+    .form button{
+        font-size: 12pt;
+    }
+    .form input{
+        width: 300px;
+        font-size: 12pt;
+    }
+}
+
+@media(max-width:450px){
+    .form button{
+        font-size: 10pt;
+        padding: 5px 10px 5px 10px;
+    }
+    .form input{
+        width: 150px;
+        height: 30px;
+        font-size: 10pt;
+    }
+    .form input::placeholder{
+       font-size: 10pt;
+    }
+}
