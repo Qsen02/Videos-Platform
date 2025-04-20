@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { useGetOneVideo } from "../../hooks/useVideos";
 import styles from "./VideoDetailsStyles.module.css";
+import VideoButtons from "./video-buttons/VideoButtons";
 
 export default function VideoDetails() {
 	const { theme, user } = useUserThemeContext();
@@ -25,6 +26,7 @@ export default function VideoDetails() {
 				</div>
 				<p className={styles.description}>{video?.description}</p>
 			</section>
+			<VideoButtons user={user} video={video} theme={theme}/>
 		</section>
 	);
 }

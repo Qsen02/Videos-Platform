@@ -1,0 +1,108 @@
+.ownerButtons {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 30px;
+}
+
+.ownerButtons i {
+	font-size: 20pt;
+}
+
+.ownerButtons p{
+    font-size: 14pt;
+}
+
+.ownerButtons button{
+    padding: 10px 20px 10px 20px;
+	background-color: rgb(225, 0, 0);
+	border-radius: 20px;
+	font-size: 14pt;
+	font-weight: bold;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+.ownerButtons button:hover{
+    background-color: rgb(178, 1, 1);
+}
+
+.userButtons {
+	padding: 10px;
+	width: 150px;
+	border-radius: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 25px;
+}
+
+.userButtons p{
+    font-size: 14pt;
+}
+
+.userLikes {
+	border-right: 2px solid grey;
+	padding-right: 25px;
+}
+
+.userButtons i {
+	cursor: pointer;
+	font-size: 20pt;
+}
+
+@media(max-width:800px){
+    .ownerButtons i {
+        font-size: 18pt;
+    }
+    
+    .ownerButtons p{
+        font-size: 12pt;
+    }
+
+    .userButtons i {
+        cursor: pointer;
+        font-size: 18pt;
+    }
+
+    .userButtons p{
+        font-size: 12pt;
+    }
+    .ownerButtons button{
+        font-size: 12pt;
+    }
+}
+
+@media(max-width:450px){
+    .ownerButtons i {
+        font-size: 14pt;
+    }
+    
+    .ownerButtons p{
+        font-size: 10pt;
+    }
+
+    .userButtons i {
+        cursor: pointer;
+        font-size: 14pt;
+    }
+
+    .userButtons p{
+        font-size: 10pt;
+    }
+    .userButtons{
+        width: 100px;
+    }
+
+    .ownerButtons button{
+		font-size: 10px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .ownerButtons{
+        gap:15px;
+    }
+}
+
