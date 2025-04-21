@@ -12,7 +12,7 @@ interface VideoCommentSectionProps {
 export default function VideoCommentSection({
 	comments,
 }: VideoCommentSectionProps) {
-	const { theme } = useUserThemeContext();
+	const { theme,user } = useUserThemeContext();
 
 	function onComment() {}
 
@@ -46,6 +46,8 @@ export default function VideoCommentSection({
                             theme={theme}
 							owner={el.ownerId}
 							content={el.content}
+							curUser={user}
+							likes={el.likes}
 						/>
 					))
 				)}
