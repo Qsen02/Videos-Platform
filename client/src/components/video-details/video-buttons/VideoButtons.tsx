@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { UserForAuth } from "../../../types/user";
 import { Video } from "../../../types/video";
 import styles from "./VideoButtonsStyles.module.css";
@@ -23,8 +24,8 @@ export default function VideoButtons({
 						<i className="fa-solid fa-thumbs-up"></i>
 						<p>{video?.likes.length}</p>
 					</div>
-					<button>Edit</button>
-					<button>Delete</button>
+					<Link to={`/videos/${video?._id}/edit`}><button>Edit</button></Link>
+					<Link to={`/videos/${video?._id}/delete`}><button>Delete</button></Link>
 					<div className={styles.ownerDislikes}>
 						<i className="fa-solid fa-thumbs-down"></i>
 						<p>{video?.dislikes.length}</p>

@@ -3,6 +3,7 @@ import { ActionType, Video } from "../types/video";
 import { useLoadingError } from "./useLoadingError";
 import {
 	createVideo,
+	deleteVideo,
 	getAllVideos,
 	getVideoById,
 	searchVideos,
@@ -78,5 +79,11 @@ export function useGetOneVideo(initialValue: null, videoId: string|undefined) {
 
 	return {
 		video,loading,error
+	}
+}
+
+export function useDeleteVideo(){
+	return async function(videoId:string){
+		return await deleteVideo(videoId);
 	}
 }

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { useGetOneVideo } from "../../hooks/useVideos";
 import styles from "./VideoDetailsStyles.module.css";
@@ -12,6 +12,8 @@ export default function VideoDetails() {
 	const { video, loading, error } = useGetOneVideo(null, videoId);
 
 	return (
+		<>
+		<Outlet context={{videoId,video}}/>
 		<section
 			className={theme == "dark" ? "darkTheme-dark" : "whiteTheme-light"}
 			id={styles.detailsWrapper}
@@ -44,5 +46,6 @@ export default function VideoDetails() {
 				</>
 			)}
 		</section>
+		</>
 	);
 }
