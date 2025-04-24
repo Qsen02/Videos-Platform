@@ -91,32 +91,6 @@ export function useDeleteVideo(){
 }
 
 
-export function useGetOneVideoForEdit(initialValue: EditFormTypes, videoId: string|undefined) {
-	const [video, setVideo] = useState<EditFormTypes>(initialValue);
-	const { loading, setLoading, error, setError } = useLoadingError(
-		false,
-		false
-	);
-
-	useEffect(() => {
-		(async () => {
-			try {
-				setLoading(true);
-				const video = await getVideoById(videoId);
-				setVideo(video);
-				setLoading(false);
-			} catch (err) {
-				setError(true);
-				setLoading(false);
-			}
-		})();
-	}, []);
-
-	return {
-		video,loading,error
-	}
-}
-
 export function useEditVideo(){
 	return async function(videoId:string,data:object){
 		return await editVideo(videoId,data)

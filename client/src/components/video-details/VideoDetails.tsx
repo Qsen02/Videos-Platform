@@ -10,7 +10,6 @@ export default function VideoDetails() {
 	const { theme, user } = useUserThemeContext();
 	const { videoId } = useParams();
 	const { video, setVideo, loading, error } = useGetOneVideo(null, videoId);
-	console.log(user);
 	return (
 		<>
 			<Outlet context={{ videoId, video, setVideo }} />

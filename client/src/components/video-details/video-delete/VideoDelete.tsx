@@ -19,7 +19,7 @@ export default function VideoDelete() {
 			await deleteVideo(videoId);
 			navigate("/");
 		} catch (err) {
-            navigate(`/videos/${videoId}`);
+            navigate("404");
         }
 	}
 
