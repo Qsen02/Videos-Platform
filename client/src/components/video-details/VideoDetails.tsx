@@ -9,28 +9,31 @@ import VideoCommentSection from "./video-comments/VideoCommentSection";
 export default function VideoDetails() {
 	const { theme, user } = useUserThemeContext();
 	const { videoId } = useParams();
-	const initValues={
+	const initValues = {
+		_id: "",
+		title: "",
+		videoUrl: "",
+		description: "",
+		thumbnail: "",
+		likes: [],
+		dislikes: [],
+		comments: [],
+		ownerId: {
 			_id: "",
-			title: "",
-			videoUrl: "",
-			description: "",
-			thumbnail: "",
-			likes: [],
-			dislikes: [],
-			comments: [],
-			ownerId:{
-				_id:"",
-				username:"",
-				email:"",
-				profileImage:"",
-				password:"",
-				followers:[]
-			}
-	}
-	const { video, setVideo, loading, error } = useGetOneVideo(initValues, videoId);
+			username: "",
+			email: "",
+			profileImage: "",
+			password: "",
+			followers: [],
+		},
+	};
+	const { video, setVideo, loading, error } = useGetOneVideo(
+		initValues,
+		videoId
+	);
 	return (
 		<>
-			<Outlet context={{ videoId, video, setVideo,loading,error }} />
+			<Outlet context={{ videoId, video, setVideo, loading, error }} />
 			<section
 				className={
 					theme == "dark" ? "darkTheme-dark" : "whiteTheme-light"
@@ -66,7 +69,11 @@ export default function VideoDetails() {
 							theme={theme}
 							setVideoHandler={setVideo}
 						/>
-						<VideoCommentSection videoId={video._id} comments={video?.comments} setVideoHandler={setVideo}/>
+						<VideoCommentSection
+							videoId={video._id}
+							comments={video?.comments}
+							setVideoHandler={setVideo}
+						/>
 					</>
 				)}
 			</section>

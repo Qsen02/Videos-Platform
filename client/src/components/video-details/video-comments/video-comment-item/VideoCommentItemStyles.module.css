@@ -52,6 +52,14 @@
 	color:grey;
 }
 
+.commentBody>i{
+	cursor: pointer;
+}
+
+.commentBody>i:hover{
+	color:grey;
+}
+
 .guestLikes{
 	position: absolute;
     right: 50px;

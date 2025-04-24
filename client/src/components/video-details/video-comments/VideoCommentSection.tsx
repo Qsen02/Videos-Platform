@@ -29,7 +29,6 @@ export default function VideoCommentSection({
 	) {
 		const content = values.content;
 		const updatedVideo = await createComment(videoId, { content: content });
-		console.log(updatedVideo);
 		setVideoHandler(updatedVideo);
 		actions.resetForm();
 	}
