@@ -7,7 +7,9 @@ import { useDeleteVideo } from "../../../hooks/useVideos";
 interface ContextTypes {
 	videoId: string;
 	video: Video;
+    setVideo:React.Dispatch<React.SetStateAction<Video | null>>
 }
+
 
 export default function VideoDelete() {
 	const { theme } = useUserThemeContext();

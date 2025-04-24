@@ -9,11 +9,11 @@ import VideoCommentSection from "./video-comments/VideoCommentSection";
 export default function VideoDetails() {
 	const { theme, user } = useUserThemeContext();
 	const { videoId } = useParams();
-	const { video, loading, error } = useGetOneVideo(null, videoId);
+	const { video,setVideo, loading, error } = useGetOneVideo(null, videoId);
 
 	return (
 		<>
-		<Outlet context={{videoId,video}}/>
+		<Outlet context={{videoId,video,setVideo}}/>
 		<section
 			className={theme == "dark" ? "darkTheme-dark" : "whiteTheme-light"}
 			id={styles.detailsWrapper}

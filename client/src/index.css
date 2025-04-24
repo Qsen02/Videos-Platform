@@ -92,6 +92,12 @@ main {
 	text-align: center;
 }
 
+.form .buttons{
+	display: flex;
+	justify-content: center;
+	gap:30px;
+}
+
 .form .input {
 	position: relative;
 	width: 80%;

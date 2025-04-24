@@ -4,6 +4,7 @@ import { useLoadingError } from "./useLoadingError";
 import {
 	createVideo,
 	deleteVideo,
+	editVideo,
 	getAllVideos,
 	getVideoById,
 	searchVideos,
@@ -56,8 +57,47 @@ export function useCreateVideo() {
 	};
 }
 
-export function useGetOneVideo(initialValue: null, videoId: string|undefined) {
+export function useGetOneVideo(initialValue: null | Video , videoId: string|undefined) {
 	const [video, setVideo] = useState<Video | null>(initialValue);
+	const { loading, setLoading, error, setError } = useLoadingError(
+		false,
+		false
+	);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				setLoading(true);
+				const video = await getVideoById(videoId);
+				setVideo(video);
+				setLoading(false);
+			} catch (err) {
+				setError(true);
+				setLoading(false);
+			}
+		})();
+	}, []);
+
+	return {
+		video,setVideo,loading,error
+	}
+}
+
+export function useDeleteVideo(){
+	return async function(videoId:string){
+		return await deleteVideo(videoId);
+	}
+}
+
+interface InitValuesType {
+	title: string;
+	videoUrl: string;
+	thumbnail: string;
+	description: string;
+}
+
+export function useGetOneVideoForEdit(initialValue: InitValuesType, videoId: string|undefined) {
+	const [video, setVideo] = useState<InitValuesType>(initialValue);
 	const { loading, setLoading, error, setError } = useLoadingError(
 		false,
 		false
@@ -82,8 +122,8 @@ export function useGetOneVideo(initialValue: null, videoId: string|undefined) {
 	}
 }
 
-export function useDeleteVideo(){
-	return async function(videoId:string){
-		return await deleteVideo(videoId);
+export function useEditVideo(){
+	return async function(videoId:string,data:object){
+		return await editVideo(videoId,data)
 	}
 }
