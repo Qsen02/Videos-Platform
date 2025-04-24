@@ -18,14 +18,29 @@ export default function VideoButtons({
 
 	return (
 		<>
-			{user?._id == video?.ownerId._id ? (
+			{!user ? (
 				<section className={styles.ownerButtons}>
 					<div className={styles.ownerLikes}>
 						<i className="fa-solid fa-thumbs-up"></i>
 						<p>{video?.likes.length}</p>
 					</div>
-					<Link to={`/videos/${video?._id}/edit`}><button>Edit</button></Link>
-					<Link to={`/videos/${video?._id}/delete`}><button>Delete</button></Link>
+					<div className={styles.ownerDislikes}>
+						<i className="fa-solid fa-thumbs-down"></i>
+						<p>{video?.dislikes.length}</p>
+					</div>
+				</section>
+			) : user?._id == video?.ownerId._id ? (
+				<section className={styles.ownerButtons}>
+					<div className={styles.ownerLikes}>
+						<i className="fa-solid fa-thumbs-up"></i>
+						<p>{video?.likes.length}</p>
+					</div>
+					<Link to={`/videos/${video?._id}/edit`}>
+						<button>Edit</button>
+					</Link>
+					<Link to={`/videos/${video?._id}/delete`}>
+						<button>Delete</button>
+					</Link>
 					<div className={styles.ownerDislikes}>
 						<i className="fa-solid fa-thumbs-down"></i>
 						<p>{video?.dislikes.length}</p>

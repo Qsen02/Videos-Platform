@@ -35,14 +35,21 @@ export default function VideoCommentItem({
 				) : (
 					""
 				)}
-				<div className={styles.commentLikes}>
-					{curUser?._id && likesIds.includes(curUser?._id) ? (
+				{curUser ? (
+					<div className={styles.commentLikes}>
+						{curUser?._id && likesIds.includes(curUser?._id) ? (
+							<i className="fa-solid fa-thumbs-up"></i>
+						) : (
+							<i className="fa-regular fa-thumbs-up"></i>
+						)}
+						<p>{likes.length}</p>
+					</div>
+				) : (
+					<div className={styles.guestLikes}>
 						<i className="fa-solid fa-thumbs-up"></i>
-					) : (
-						<i className="fa-regular fa-thumbs-up"></i>
-					)}
-					<p>{likes.length}</p>
-				</div>
+						<p>{likes.length}</p>
+					</div>
+				)}
 			</div>
 			<p>{content}</p>
 		</article>

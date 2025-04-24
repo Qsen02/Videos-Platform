@@ -69,7 +69,7 @@ export default function VideoEdit() {
 	}
 
     function onCancel(){
-        navigate(`/videos/${videoId}`)
+        navigate(`/videos/${videoId}`);
     }
 
 	return (

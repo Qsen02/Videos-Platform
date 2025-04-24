@@ -12,16 +12,17 @@ interface VideoCommentSectionProps {
 export default function VideoCommentSection({
 	comments,
 }: VideoCommentSectionProps) {
-	const { theme,user } = useUserThemeContext();
+	const { theme, user } = useUserThemeContext();
 
 	function onComment() {}
 
 	return (
 		<section className={styles.wrapper}>
 			<h2>Comments: {comments?.length}</h2>
-			<Formik initialValues={{ content: "" }} onSubmit={onComment}>
-				{(props) => (
-					<Form className={styles.form}>
+			{user ? (
+				<Formik initialValues={{ content: "" }} onSubmit={onComment}>
+					{(props) => (
+						<Form className={styles.form}>
 							<CustomInput
 								type="text"
 								name="content"
@@ -33,9 +34,12 @@ export default function VideoCommentSection({
 								}
 							/>
 							<button type="submit">Comment</button>
-					</Form>
-				)}
-			</Formik>
+						</Form>
+					)}
+				</Formik>
+			) : (
+				""
+			)}
 			<section className={styles.commentWrapper}>
 				{comments?.length == 0 ? (
 					<p>No comments yet, be the first one!</p>
@@ -43,7 +47,7 @@ export default function VideoCommentSection({
 					comments?.map((el) => (
 						<VideoCommentItem
 							key={el._id}
-                            theme={theme}
+							theme={theme}
 							owner={el.ownerId}
 							content={el.content}
 							curUser={user}
