@@ -1,20 +1,62 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserForAuth } from "../../../types/user";
 import { Video } from "../../../types/video";
 import styles from "./VideoButtonsStyles.module.css";
+import { useDislikeVideo, useLikeVideo, useUndislikeVideo, useUnlikeVideo } from "../../../hooks/useVideos";
 interface VideoButtonsProps {
 	user: UserForAuth | null | undefined;
 	video: Video | null | undefined;
 	theme: "light" | "dark" | undefined;
+	setVideoHandler:React.Dispatch<React.SetStateAction<Video | null>>;
 }
 
 export default function VideoButtons({
 	user,
 	video,
 	theme,
+	setVideoHandler
 }: VideoButtonsProps) {
-	const likeIds = video?.likes.map((el) => el._id);
-	const dislikeIds = video?.dislikes.map((el) => el._id);
+	const navigate=useNavigate();
+	const likeVideo=useLikeVideo();
+	const unlikeVideo=useUnlikeVideo();
+	const dislikeVideo=useDislikeVideo();
+	const undislikeVideo=useUndislikeVideo();
+
+	async function onLike(){
+		try{
+			const updatedVideo=await likeVideo(video?._id);
+			setVideoHandler(updatedVideo);
+		}catch(err){
+			navigate("404");
+		}
+	}
+
+	async function onUnlike(){
+		try{
+			const updatedVideo=await unlikeVideo(video?._id);
+			setVideoHandler(updatedVideo);
+		}catch(err){
+			navigate("404");
+		}
+	}
+
+	async function onDislike(){
+		try{
+			const updatedVideo=await dislikeVideo(video?._id);
+			setVideoHandler(updatedVideo);
+		}catch(err){
+			navigate("404");
+		}
+	}
+
+	async function onUndislike(){
+		try{
+			const updatedVideo=await undislikeVideo(video?._id);
+			setVideoHandler(updatedVideo);
+		}catch(err){
+			navigate("404");
+		}
+	}
 
 	return (
 		<>
@@ -55,18 +97,18 @@ export default function VideoButtons({
 					}`}
 				>
 					<div className={styles.userLikes}>
-						{user?._id && likeIds?.includes(user?._id) ? (
-							<i className="fa-solid fa-thumbs-up"></i>
+						{user?._id && video?.likes?.includes(user?._id) ? (
+							<i className="fa-solid fa-thumbs-up" onClick={onUnlike}></i>
 						) : (
-							<i className="fa-regular fa-thumbs-up"></i>
+							<i className="fa-regular fa-thumbs-up" onClick={onLike}></i>
 						)}
 						<p>{video?.likes.length}</p>
 					</div>
 					<div className={styles.userDislikes}>
-						{user?._id && dislikeIds?.includes(user?._id) ? (
-							<i className="fa-solid fa-thumbs-down"></i>
+						{user?._id && video?.dislikes?.includes(user?._id) ? (
+							<i className="fa-solid fa-thumbs-down" onClick={onUndislike}></i>
 						) : (
-							<i className="fa-regular fa-thumbs-down"></i>
+							<i className="fa-regular fa-thumbs-down" onClick={onDislike}></i>
 						)}
 						<p>{video?.dislikes.length}</p>
 					</div>

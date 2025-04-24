@@ -37,22 +37,22 @@ export async function editVideo(videoId:string,data:object){
     return updatedVideo as Video;
 }
 
-export async function likeVideo(videoId:string){
+export async function likeVideo(videoId:string | undefined | null){
     const  updatedVideo=await post(`${endpoint}/like/${videoId}`,{});
     return updatedVideo as Video;
 }
 
-export async function unlikeVideo(videoId:string){
+export async function unlikeVideo(videoId:string | undefined | null){
     const  updatedVideo=await post(`${endpoint}/unlike/${videoId}`,{});
     return updatedVideo as Video;
 }
 
-export async function dislikeVideo(videoId:string){
+export async function dislikeVideo(videoId:string | undefined | null){
     const  updatedVideo=await post(`${endpoint}/dislike/${videoId}`,{});
     return updatedVideo as Video;
 }
 
-export async function undislikeVideo(videoId:string){
+export async function undislikeVideo(videoId:string | undefined | null){
     const  updatedVideo=await post(`${endpoint}/undislike/${videoId}`,{});
     return updatedVideo as Video;
 }

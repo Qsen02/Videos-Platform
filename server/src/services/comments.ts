@@ -3,7 +3,6 @@ import { Videos } from "../models/videos";
 
 export async function getCommentById(commentId: string) {
 	const comment = await Comments.findById(commentId)
-		.populate("likes")
 		.populate("videoId")
 		.populate("ownerId")
 		.lean();
@@ -67,7 +66,6 @@ export async function editComment(commentId: string, newContent: string) {
 		},
 		{ new: true }
 	)
-		.populate("likes")
 		.populate("videoId")
 		.populate("ownerId")
 		.lean();
@@ -85,7 +83,10 @@ export async function likeComment(
 			$push: { likes: userId },
 		},
 		{ new: true }
-	).populate("likes").lean();
+	)
+		.populate("videoId")
+		.populate("ownerId")
+		.lean();
 
 	return updatedComment;
 }
@@ -100,7 +101,10 @@ export async function unlikeComment(
 			$pull: { likes: userId },
 		},
 		{ new: true }
-	).populate("likes").lean();
+	)
+		.populate("videoId")
+		.populate("ownerId")
+		.lean();
 
 	return updatedComment;
 }

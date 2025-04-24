@@ -4,10 +4,14 @@ import { useLoadingError } from "./useLoadingError";
 import {
 	createVideo,
 	deleteVideo,
+	dislikeVideo,
 	editVideo,
 	getAllVideos,
 	getVideoById,
+	likeVideo,
 	searchVideos,
+	undislikeVideo,
+	unlikeVideo,
 } from "../api/videos";
 import { homeReducer } from "../components/reducers/homeReducer";
 import { EditFormTypes } from "../types/initialFormTypes";
@@ -94,5 +98,29 @@ export function useDeleteVideo(){
 export function useEditVideo(){
 	return async function(videoId:string,data:object){
 		return await editVideo(videoId,data)
+	}
+}
+
+export function useLikeVideo(){
+	return async function(videoId:string | undefined | null){
+		return await likeVideo(videoId);
+	}
+}
+
+export function useDislikeVideo(){
+	return async function(videoId:string | undefined | null){
+		return await dislikeVideo(videoId);
+	}
+}
+
+export function useUndislikeVideo(){
+	return async function(videoId:string | undefined | null){
+		return await undislikeVideo(videoId);
+	}
+}
+
+export function useUnlikeVideo(){
+	return async function(videoId:string | undefined | null){
+		return await unlikeVideo(videoId);
 	}
 }

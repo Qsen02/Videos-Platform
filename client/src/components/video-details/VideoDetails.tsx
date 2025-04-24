@@ -42,7 +42,12 @@ export default function VideoDetails() {
 								{video?.description}
 							</p>
 						</section>
-						<VideoButtons user={user} video={video} theme={theme} />
+						<VideoButtons
+							user={user}
+							video={video}
+							theme={theme}
+							setVideoHandler={setVideo}
+						/>
 						<VideoCommentSection comments={video?.comments} />
 					</>
 				)}

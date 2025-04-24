@@ -7,8 +7,8 @@ export interface Video {
 	videoUrl: string;
 	description: string;
 	thumbnail: string;
-	likes: User[];
-	dislikes: User[];
+	likes: string[];
+	dislikes: string[];
 	comments: Comment[];
 	ownerId: User;
 }
