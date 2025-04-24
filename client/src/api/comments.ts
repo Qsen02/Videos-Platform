@@ -11,7 +11,7 @@ export async function getCommentById(commentId:string){
 
 export async function createComment(videoId:string,data:object){
     const comment=await post(`${endpoint}/in/${videoId}`,data);
-    return comment as Comment;
+    return comment as Video;
 }
 
 export async function deleteComment(videoId:string,commentId:string){

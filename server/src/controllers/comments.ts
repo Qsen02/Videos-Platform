@@ -44,8 +44,8 @@ commentRouter.post(
             if (!results.isEmpty()) {
                 throw new Error(errorParser(results));
             }
-            const newComment=await createComment(user?._id,videoId,content);
-            res.json(newComment);
+            const updatedVideo=await createComment(user?._id,videoId,content);
+            res.json(updatedVideo);
         } catch (err) {
             if (err instanceof Error) {
                 res.status(400).json({ message: err.message });

@@ -66,7 +66,7 @@ export default function VideoDetails() {
 							theme={theme}
 							setVideoHandler={setVideo}
 						/>
-						<VideoCommentSection comments={video?.comments} />
+						<VideoCommentSection videoId={video._id} comments={video?.comments} setVideoHandler={setVideo}/>
 					</>
 				)}
 			</section>

@@ -32,11 +32,24 @@ export async function createComment(
 		content: content,
 	});
 
-	await Videos.findByIdAndUpdate(videoId, {
-		$push: { comments: newComment._id },
-	});
+	const updatedVideo = await Videos.findByIdAndUpdate(
+		videoId,
+		{
+			$push: { comments: newComment._id },
+		},
+		{ new: true }
+	)
+		.populate({
+			path: "comments",
+			populate: {
+				path: "ownerId",
+				model: "Users",
+			},
+		})
+		.populate("ownerId")
+		.lean();
 
-	return newComment;
+	return updatedVideo;
 }
 
 export async function deleteComment(videoId: string, commentId: string) {

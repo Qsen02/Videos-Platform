@@ -58,3 +58,7 @@ export const createVideoSchema = yup.object().shape({
 		.max(300, "Descriprion mut be between 10 and 300 symbols!")
 		.required("Description is required!"),
 });
+
+export const commentSchema=yup.object().shape({
+	content:yup.string().required("Field must be filled!")
+})

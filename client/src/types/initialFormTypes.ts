@@ -17,3 +17,7 @@ export interface LoginFormTypes {
 	username: string;
 	password: string;
 }
+
+export interface CommentFormTypes{
+	content:string;
+}

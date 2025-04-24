@@ -7,7 +7,7 @@ interface VideoCommentItemProps {
 	owner: User;
 	content: string;
 	curUser: UserForAuth | null | undefined;
-	likes: User[];
+	likes: string[];
 }
 
 export default function VideoCommentItem({
@@ -17,7 +17,6 @@ export default function VideoCommentItem({
 	curUser,
 	likes,
 }: VideoCommentItemProps) {
-	const likesIds = likes.map((el) => el._id);
 	return (
 		<article
 			className={`${styles.wrapper} ${
@@ -37,7 +36,7 @@ export default function VideoCommentItem({
 				)}
 				{curUser ? (
 					<div className={styles.commentLikes}>
-						{curUser?._id && likesIds.includes(curUser?._id) ? (
+						{curUser?._id && likes.includes(curUser?._id) ? (
 							<i className="fa-solid fa-thumbs-up"></i>
 						) : (
 							<i className="fa-regular fa-thumbs-up"></i>
