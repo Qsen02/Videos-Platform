@@ -62,8 +62,8 @@ export function useCreateVideo() {
 	};
 }
 
-export function useGetOneVideo(initialValue: null | Video , videoId: string|undefined) {
-	const [video, setVideo] = useState<Video | null>(initialValue);
+export function useGetOneVideo(initialValue: Video , videoId: string|undefined) {
+	const [video, setVideo] = useState<Video>(initialValue);
 	const { loading, setLoading, error, setError } = useLoadingError(
 		false,
 		false

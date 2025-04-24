@@ -10,8 +10,9 @@ import { OutletContextType } from "../../../types/outletContext";
 import { EditFormTypes } from "../../../types/initialFormTypes";
 
 export default function VideoEdit() {
-	const { theme} = useUserThemeContext();
-	const { videoId, video, setVideo } = useOutletContext<OutletContextType>();
+	const { theme } = useUserThemeContext();
+	const { videoId, video, setVideo, loading, error } =
+		useOutletContext<OutletContextType>();
 	const [errMessage, setErrMessage] = useState("");
 	const [isErr, setIsErr] = useState(false);
 	const navigate = useNavigate();
@@ -63,7 +64,7 @@ export default function VideoEdit() {
 			}}
 			onSubmit={onEdit}
 			validationSchema={createVideoSchema}
-			enableReinitialize
+			enableReinitialize={true}
 		>
 			{(props) => (
 				<div className="modal">
@@ -74,64 +75,78 @@ export default function VideoEdit() {
 								: "whiteTheme-light"
 						}`}
 					>
-						<h2>You can edit video here</h2>
-						{isErr ? <p className="error">{errMessage}</p> : ""}
-						<p className="input">
-							<CustomInput
-								label="Title"
-								type="text"
-								name="title"
-								placeholder="Example"
-								className={
-									theme == "dark"
-										? "darkTheme-light"
-										: "whiteTheme-darkWhite"
-								}
-							/>
-						</p>
-						<p className="input">
-							<CustomInput
-								label="Video ID"
-								type="text"
-								name="videoUrl"
-								placeholder="oAdEoFrGhTfg"
-								className={
-									theme == "dark"
-										? "darkTheme-light"
-										: "whiteTheme-darkWhite"
-								}
-							/>
-						</p>
-						<p className="input">
-							<CustomInput
-								label="Thumbnail URL"
-								type="text"
-								name="thumbnail"
-								placeholder="https://exmaple.com"
-								className={
-									theme == "dark"
-										? "darkTheme-light"
-										: "whiteTheme-darkWhite"
-								}
-							/>
-						</p>
-						<p className="input">
-							<CustomTextarea
-								label="Description"
-								type="text"
-								name="description"
-								placeholder="Very good example description"
-								className={
-									theme == "dark"
-										? "darkTheme-light"
-										: "whiteTheme-darkWhite"
-								}
-							/>
-						</p>
-						<div className="buttons">
-							<button type="submit">Save</button>
-							<button onClick={onCancel}>Cancel</button>
-						</div>
+						{loading && !error ? (
+							<span className="loader"></span>
+						) : error ? (
+							<h2>
+								Something went wrong, please try again later!
+							</h2>
+						) : (
+							<>
+								<h2>You can edit video here</h2>
+								{isErr ? (
+									<p className="error">{errMessage}</p>
+								) : (
+									""
+								)}
+								<p className="input">
+									<CustomInput
+										label="Title"
+										type="text"
+										name="title"
+										placeholder="Example"
+										className={
+											theme == "dark"
+												? "darkTheme-light"
+												: "whiteTheme-darkWhite"
+										}
+									/>
+								</p>
+								<p className="input">
+									<CustomInput
+										label="Video ID"
+										type="text"
+										name="videoUrl"
+										placeholder="oAdEoFrGhTfg"
+										className={
+											theme == "dark"
+												? "darkTheme-light"
+												: "whiteTheme-darkWhite"
+										}
+									/>
+								</p>
+								<p className="input">
+									<CustomInput
+										label="Thumbnail URL"
+										type="text"
+										name="thumbnail"
+										placeholder="https://exmaple.com"
+										className={
+											theme == "dark"
+												? "darkTheme-light"
+												: "whiteTheme-darkWhite"
+										}
+									/>
+								</p>
+								<p className="input">
+									<CustomTextarea
+										label="Description"
+										type="text"
+										name="description"
+										placeholder="Very good example description"
+										className={
+											theme == "dark"
+												? "darkTheme-light"
+												: "whiteTheme-darkWhite"
+										}
+									/>
+								</p>
+								<div className="buttons">
+									<button type="submit">Save</button>
+									<button onClick={onCancel}>Cancel</button>
+								</div>
+							</>
+						)}
 					</Form>
 				</div>
 			)}

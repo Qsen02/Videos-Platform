@@ -9,10 +9,28 @@ import VideoCommentSection from "./video-comments/VideoCommentSection";
 export default function VideoDetails() {
 	const { theme, user } = useUserThemeContext();
 	const { videoId } = useParams();
-	const { video, setVideo, loading, error } = useGetOneVideo(null, videoId);
+	const initValues={
+			_id: "",
+			title: "",
+			videoUrl: "",
+			description: "",
+			thumbnail: "",
+			likes: [],
+			dislikes: [],
+			comments: [],
+			ownerId:{
+				_id:"",
+				username:"",
+				email:"",
+				profileImage:"",
+				password:"",
+				followers:[]
+			}
+	}
+	const { video, setVideo, loading, error } = useGetOneVideo(initValues, videoId);
 	return (
 		<>
-			<Outlet context={{ videoId, video, setVideo }} />
+			<Outlet context={{ videoId, video, setVideo,loading,error }} />
 			<section
 				className={
 					theme == "dark" ? "darkTheme-dark" : "whiteTheme-light"

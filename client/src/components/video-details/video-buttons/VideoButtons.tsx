@@ -7,7 +7,7 @@ interface VideoButtonsProps {
 	user: UserForAuth | null | undefined;
 	video: Video | null | undefined;
 	theme: "light" | "dark" | undefined;
-	setVideoHandler:React.Dispatch<React.SetStateAction<Video | null>>;
+	setVideoHandler:React.Dispatch<React.SetStateAction<Video>>;
 }
 
 export default function VideoButtons({
