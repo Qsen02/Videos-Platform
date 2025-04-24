@@ -1,20 +1,13 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { useUserThemeContext } from "../../../contexts/UserAndTheme";
-import { Video } from "../../../types/video";
 import styles from "./VideoDeleteStyles.module.css";
 import { useDeleteVideo } from "../../../hooks/useVideos";
-
-interface ContextTypes {
-	videoId: string;
-	video: Video;
-    setVideo:React.Dispatch<React.SetStateAction<Video | null>>
-}
-
+import { OutletContextType } from "../../../types/outletContext";
 
 export default function VideoDelete() {
 	const { theme } = useUserThemeContext();
 	const navigate = useNavigate();
-	const { videoId, video } = useOutletContext<ContextTypes>();
+	const { videoId, video } = useOutletContext<OutletContextType>();
 	const deleteVideo = useDeleteVideo();
 
 	function onCancel() {

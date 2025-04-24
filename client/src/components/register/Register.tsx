@@ -5,6 +5,7 @@ import { useRegister } from "../../hooks/useUsers";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { registerShema } from "../../schemas/validationShema";
 import { useState } from "react";
+import { RegisterFormTypes } from "../../types/initialFormTypes";
 
 export default function Register() {
 	const { setUser, theme } = useUserThemeContext();
@@ -23,14 +24,6 @@ export default function Register() {
 		repass: "",
 	};
 
-	interface FormValues {
-		username: string;
-		email: string;
-		profileImage: string;
-		password: string;
-		repass: string;
-	}
-
 	function onShowPassword(){
 		if(showPassword){
 			setShowPassword(false);
@@ -48,8 +41,8 @@ export default function Register() {
 	}
 
 	async function onRegister(
-		values: FormValues,
-		actions: FormikHelpers<FormValues>
+		values: RegisterFormTypes,
+		actions: FormikHelpers<RegisterFormTypes>
 	) {
 		try {
 			const username = values.username;

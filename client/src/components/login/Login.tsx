@@ -3,8 +3,9 @@ import CustomInput from "../../commons/customInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useUsers";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
-import { loginSchema, registerShema } from "../../schemas/validationShema";
+import { loginSchema } from "../../schemas/validationShema";
 import { useState } from "react";
+import { LoginFormTypes } from "../../types/initialFormTypes";
 
 export default function Login() {
 	const { setUser, theme } = useUserThemeContext();
@@ -19,11 +20,6 @@ export default function Login() {
 		password: "",
 	};
 
-	interface FormValues {
-		username: string;
-		password: string;
-	}
-
 	function onShowPassword(){
 		if(showPassword){
 			setShowPassword(false);
@@ -33,8 +29,8 @@ export default function Login() {
 	}
 
 	async function onLogin(
-		values: FormValues,
-		actions: FormikHelpers<FormValues>
+		values: LoginFormTypes,
+		actions: FormikHelpers<LoginFormTypes>
 	) {
 		try {
 			const username = values.username;

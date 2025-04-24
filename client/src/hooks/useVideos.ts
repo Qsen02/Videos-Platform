@@ -10,6 +10,7 @@ import {
 	searchVideos,
 } from "../api/videos";
 import { homeReducer } from "../components/reducers/homeReducer";
+import { EditFormTypes } from "../types/initialFormTypes";
 
 export function useGetAllVideos(initialValue: []) {
 	const [videos, setVideos] = useReducer<React.Reducer<Video[], ActionType>>(
@@ -89,15 +90,9 @@ export function useDeleteVideo(){
 	}
 }
 
-interface InitValuesType {
-	title: string;
-	videoUrl: string;
-	thumbnail: string;
-	description: string;
-}
 
-export function useGetOneVideoForEdit(initialValue: InitValuesType, videoId: string|undefined) {
-	const [video, setVideo] = useState<InitValuesType>(initialValue);
+export function useGetOneVideoForEdit(initialValue: EditFormTypes, videoId: string|undefined) {
+	const [video, setVideo] = useState<EditFormTypes>(initialValue);
 	const { loading, setLoading, error, setError } = useLoadingError(
 		false,
 		false

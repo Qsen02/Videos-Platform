@@ -6,27 +6,16 @@ import { createVideoSchema } from "../../../schemas/validationShema";
 import CustomInput from "../../../commons/customInput";
 import CustomTextarea from "../../../commons/custumTextarea";
 import { useEditVideo, useGetOneVideoForEdit } from "../../../hooks/useVideos";
-import { Video } from "../../../types/video";
-
-interface ContextTypes {
-	videoId: string;
-	video: Video;
-    setVideo:React.Dispatch<React.SetStateAction<Video | null>>
-}
+import { OutletContextType } from "../../../types/outletContext";
+import { EditFormTypes } from "../../../types/initialFormTypes";
 
 export default function VideoEdit() {
 	const { theme } = useUserThemeContext();
-	const { videoId ,setVideo} = useOutletContext<ContextTypes>();
+	const { videoId ,setVideo} = useOutletContext<OutletContextType>();
 	const [errMessage, setErrMessage] = useState("");
 	const [isErr, setIsErr] = useState(false);
 	const navigate = useNavigate();
     const editVideo=useEditVideo();
-	interface valuesType {
-		title: string;
-		videoUrl: string;
-		thumbnail: string;
-		description: string;
-	}
 	const initValues = {
 		_id: "",
 		title: "",
@@ -41,8 +30,8 @@ export default function VideoEdit() {
 	);
 
 	async function onEdit(
-		values: valuesType,
-		actions: FormikHelpers<valuesType>
+		values: EditFormTypes,
+		actions: FormikHelpers<EditFormTypes>
 	) {
 		try {
 			const title = values.title;
