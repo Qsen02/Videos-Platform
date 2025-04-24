@@ -87,7 +87,16 @@ export async function editVideo(videoId: string, data: Partial<VideosType>) {
 			$set: data,
 		},
 		{ new: true }
-	).lean();
+	)
+		.populate({
+			path: "comments",
+			populate: {
+				path: "ownerId",
+				model: "Users",
+			},
+		})
+		.populate("ownerId")
+		.lean();
 
 	return updatedVideos;
 }
