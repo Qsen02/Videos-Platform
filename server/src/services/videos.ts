@@ -111,7 +111,16 @@ export async function likeVideo(
 			$push: { likes: user?._id },
 		},
 		{ new: true }
-	).lean();
+	)
+		.populate({
+			path: "comments",
+			populate: {
+				path: "ownerId",
+				model: "Users",
+			},
+		})
+		.populate("ownerId")
+		.lean();
 
 	return updatedVideos;
 }
@@ -125,7 +134,16 @@ export async function unlikeVideo(
 			$pull: { likes: user?._id },
 		},
 		{ new: true }
-	).lean();
+	)
+		.populate({
+			path: "comments",
+			populate: {
+				path: "ownerId",
+				model: "Users",
+			},
+		})
+		.populate("ownerId")
+		.lean();
 
 	return updatedVideos;
 }
@@ -139,7 +157,16 @@ export async function dislikeVideo(
 			$push: { dislikes: user?._id },
 		},
 		{ new: true }
-	).lean();
+	)
+		.populate({
+			path: "comments",
+			populate: {
+				path: "ownerId",
+				model: "Users",
+			},
+		})
+		.populate("ownerId")
+		.lean();
 
 	return updatedVideos;
 }
@@ -153,7 +180,16 @@ export async function undislikeVideo(
 			$pull: { dislikes: user?._id },
 		},
 		{ new: true }
-	).lean();
+	)
+		.populate({
+			path: "comments",
+			populate: {
+				path: "ownerId",
+				model: "Users",
+			},
+		})
+		.populate("ownerId")
+		.lean();
 
 	return updatedVideos;
 }
