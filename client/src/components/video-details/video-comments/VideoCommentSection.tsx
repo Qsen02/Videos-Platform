@@ -68,6 +68,8 @@ export default function VideoCommentSection({
 					comments?.map((el) => (
 						<VideoCommentItem
 							key={el._id}
+							commentId={el._id}
+							videoId={videoId}
 							theme={theme}
 							owner={el.ownerId}
 							content={el.content}

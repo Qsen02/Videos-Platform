@@ -11,6 +11,7 @@ import CreateVideo from "./components/create-video/CreateVideo";
 import VideoDetails from "./components/video-details/VideoDetails";
 import VideoDelete from "./components/video-details/video-delete/VideoDelete";
 import VideoEdit from "./components/video-details/video-edit/VideoEdit";
+import CommentDelete from "./components/video-details/video-comments/comments-delete/CommentsDelete";
 
 function App() {
 	return (
@@ -27,6 +28,7 @@ function App() {
 						<Route path="/videos/:videoId" element={<VideoDetails/>}>
 							<Route path="delete" element={<VideoDelete/>}/>
 							<Route path="edit" element={<VideoEdit/>}/>
+							<Route path="comments/:commentId/delete" element={<CommentDelete/>}/>
 						</Route>
 						<Route path="*" element={<NotFound/>}/>
 					</Routes>

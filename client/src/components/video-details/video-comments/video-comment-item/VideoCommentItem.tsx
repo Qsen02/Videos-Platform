@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
 import { User, UserForAuth } from "../../../../types/user";
 import { errorProfileImage } from "../../../../utils/errorVideoAndImage";
 import styles from "./VideoCommentItemStyles.module.css";
 
 interface VideoCommentItemProps {
+	commentId:string;
+	videoId:string;
 	theme: "light" | "dark" | undefined;
 	owner: User;
 	content: string;
@@ -11,6 +14,8 @@ interface VideoCommentItemProps {
 }
 
 export default function VideoCommentItem({
+	commentId,
+	videoId,
 	theme,
 	owner,
 	content,
@@ -28,8 +33,8 @@ export default function VideoCommentItem({
 				<p>{owner.username}</p>
 				{curUser?._id == owner._id ? (
 					<>
-						<i className="fa-solid fa-pen-to-square"></i>
-						<i className="fa-solid fa-trash"></i>
+						<Link to={`/videos/${videoId}/comments/${commentId}/edit`}><i className="fa-solid fa-pen-to-square"></i></Link>
+						<Link to={`/videos/${videoId}/comments/${commentId}/delete`}><i className="fa-solid fa-trash"></i></Link>
 					</>
 				) : (
 					""

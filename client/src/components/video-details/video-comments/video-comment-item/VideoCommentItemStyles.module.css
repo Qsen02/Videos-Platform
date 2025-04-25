@@ -52,11 +52,11 @@
 	color:grey;
 }
 
-.commentBody>i{
+.commentBody>a>i{
 	cursor: pointer;
 }
 
-.commentBody>i:hover{
+.commentBody>a>i:hover{
 	color:grey;
 }
 
