@@ -2,58 +2,63 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserForAuth } from "../../../types/user";
 import { Video } from "../../../types/video";
 import styles from "./VideoButtonsStyles.module.css";
-import { useDislikeVideo, useLikeVideo, useUndislikeVideo, useUnlikeVideo } from "../../../hooks/useVideos";
+import {
+	useDislikeVideo,
+	useLikeVideo,
+	useUndislikeVideo,
+	useUnlikeVideo,
+} from "../../../hooks/useVideos";
 interface VideoButtonsProps {
 	user: UserForAuth | null | undefined;
 	video: Video | null | undefined;
 	theme: "light" | "dark" | undefined;
-	setVideoHandler:React.Dispatch<React.SetStateAction<Video>>;
+	setVideoHandler: React.Dispatch<React.SetStateAction<Video>>;
 }
 
 export default function VideoButtons({
 	user,
 	video,
 	theme,
-	setVideoHandler
+	setVideoHandler,
 }: VideoButtonsProps) {
-	const navigate=useNavigate();
-	const likeVideo=useLikeVideo();
-	const unlikeVideo=useUnlikeVideo();
-	const dislikeVideo=useDislikeVideo();
-	const undislikeVideo=useUndislikeVideo();
+	const navigate = useNavigate();
+	const likeVideo = useLikeVideo();
+	const unlikeVideo = useUnlikeVideo();
+	const dislikeVideo = useDislikeVideo();
+	const undislikeVideo = useUndislikeVideo();
 
-	async function onLike(){
-		try{
-			const updatedVideo=await likeVideo(video?._id);
+	async function onLike() {
+		try {
+			const updatedVideo = await likeVideo(video?._id);
 			setVideoHandler(updatedVideo);
-		}catch(err){
+		} catch (err) {
 			navigate("404");
 		}
 	}
 
-	async function onUnlike(){
-		try{
-			const updatedVideo=await unlikeVideo(video?._id);
+	async function onUnlike() {
+		try {
+			const updatedVideo = await unlikeVideo(video?._id);
 			setVideoHandler(updatedVideo);
-		}catch(err){
+		} catch (err) {
 			navigate("404");
 		}
 	}
 
-	async function onDislike(){
-		try{
-			const updatedVideo=await dislikeVideo(video?._id);
+	async function onDislike() {
+		try {
+			const updatedVideo = await dislikeVideo(video?._id);
 			setVideoHandler(updatedVideo);
-		}catch(err){
+		} catch (err) {
 			navigate("404");
 		}
 	}
 
-	async function onUndislike(){
-		try{
-			const updatedVideo=await undislikeVideo(video?._id);
+	async function onUndislike() {
+		try {
+			const updatedVideo = await undislikeVideo(video?._id);
 			setVideoHandler(updatedVideo);
-		}catch(err){
+		} catch (err) {
 			navigate("404");
 		}
 	}
@@ -98,17 +103,37 @@ export default function VideoButtons({
 				>
 					<div className={styles.userLikes}>
 						{user?._id && video?.likes?.includes(user?._id) ? (
-							<i className="fa-solid fa-thumbs-up" onClick={onUnlike}></i>
+							<i
+								className="fa-solid fa-thumbs-up"
+								onClick={onUnlike}
+							></i>
 						) : (
-							<i className="fa-regular fa-thumbs-up" onClick={onLike}></i>
+							<i
+								className="fa-regular fa-thumbs-up"
+								onClick={
+									video?.dislikes.includes(user._id)
+										? undefined
+										: onLike
+								}
+							></i>
 						)}
 						<p>{video?.likes.length}</p>
 					</div>
 					<div className={styles.userDislikes}>
 						{user?._id && video?.dislikes?.includes(user?._id) ? (
-							<i className="fa-solid fa-thumbs-down" onClick={onUndislike}></i>
+							<i
+								className="fa-solid fa-thumbs-down"
+								onClick={onUndislike}
+							></i>
 						) : (
-							<i className="fa-regular fa-thumbs-down" onClick={onDislike}></i>
+							<i
+								className="fa-regular fa-thumbs-down"
+								onClick={
+									video?.likes.includes(user._id)
+										? undefined
+										: onDislike
+								}
+							></i>
 						)}
 						<p>{video?.dislikes.length}</p>
 					</div>
