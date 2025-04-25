@@ -130,7 +130,10 @@ commentRouter.post(
 			return;
 		}
 		const updatedComment = await likeComment(user?._id, commentId);
-		res.json(updatedComment);
+		const updatedVideo = await getVideoById(
+			updatedComment?.videoId?._id.toString()
+		);
+		res.json(updatedVideo);
 	}
 );
 
@@ -146,7 +149,10 @@ commentRouter.post(
 			return;
 		}
 		const updatedComment = await unlikeComment(user?._id, commentId);
-		res.json(updatedComment);
+		const updatedVideo = await getVideoById(
+			updatedComment?.videoId?._id.toString()
+		);
+		res.json(updatedVideo);
 	}
 );
 

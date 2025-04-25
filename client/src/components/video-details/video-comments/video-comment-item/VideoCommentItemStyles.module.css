@@ -10,6 +10,14 @@
 	font-size: 16pt;
 }
 
+#owner{
+	cursor: default;
+}
+
+#owner:hover{
+	color:inherit;
+}
+
 .commentBody {
 	display: flex;
 	justify-content: flex-start;

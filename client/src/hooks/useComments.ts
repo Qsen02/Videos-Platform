@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createComment, deleteComment, editComment, getCommentById } from "../api/comments"
+import { createComment, deleteComment, editComment, getCommentById, likeComment, unlikeComment } from "../api/comments"
 import { Comment } from "../types/comment";
 import { useLoadingError } from "./useLoadingError";
 
@@ -44,5 +44,17 @@ export function useGetOneComment(initialValue: {content:string} , commentId: str
 
     return {
         comment,loading,error
+    }
+}
+
+export function useLikeComment(){
+    return async function(commentId:string){
+        return await likeComment(commentId)
+    }
+}
+
+export function useUnlikeComment(){
+    return async function(commentId:string){
+        return await unlikeComment(commentId)
     }
 }

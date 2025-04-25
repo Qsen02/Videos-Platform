@@ -25,11 +25,11 @@ export async function editComment(commentId:string | undefined,data:object){
 }
 
 export async function likeComment(commentId:string){
-    const comment=await get(`${endpoint}/like/${commentId}`);
-    return comment as Comment;
+    const comment=await post(`${endpoint}/like/${commentId}`,{});
+    return comment as Video;
 }
 
 export async function unlikeComment(commentId:string){
-    const comment=await get(`${endpoint}/unlike/${commentId}`);
-    return comment as Comment;
+    const comment=await post(`${endpoint}/unlike/${commentId}`,{});
+    return comment as Video;
 }
