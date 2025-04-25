@@ -3,7 +3,7 @@ import { VideosType } from "../types/videos";
 import { Comments } from "../models/comments";
 import { Videos } from "../models/videos";
 
-export async function getVideoById(videoId: string) {
+export async function getVideoById(videoId: string | undefined | null) {
 	const video = await Videos.findById(videoId)
 		.populate({
 			path: "comments",

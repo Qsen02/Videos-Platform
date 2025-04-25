@@ -14,7 +14,6 @@ import {
 	unlikeVideo,
 } from "../api/videos";
 import { homeReducer } from "../components/reducers/homeReducer";
-import { EditFormTypes } from "../types/initialFormTypes";
 
 export function useGetAllVideos(initialValue: []) {
 	const [videos, setVideos] = useReducer<React.Reducer<Video[], ActionType>>(

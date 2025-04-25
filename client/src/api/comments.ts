@@ -4,7 +4,7 @@ import { del, get, post, put } from "./requester";
 
 const endpoint="comments";
 
-export async function getCommentById(commentId:string){
+export async function getCommentById(commentId:string | undefined){
     const comment=await get(`${endpoint}/${commentId}`);
     return comment as Comment;
 }
@@ -19,9 +19,9 @@ export async function deleteComment(videoId:string,commentId:string | undefined)
     return updatedVideo as Video;
 }
 
-export async function editComment(commentId:string,data:object){
+export async function editComment(commentId:string | undefined,data:object){
     const updatedComment=await put(`${endpoint}/${commentId}`,data);
-    return updatedComment as Comment;
+    return updatedComment as Video;
 }
 
 export async function likeComment(commentId:string){
