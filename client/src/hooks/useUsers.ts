@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserById, login, register } from "../api/users"
+import { getFollwedUsers, getUserById, login, register } from "../api/users"
 import { User } from "../types/user";
 import { useLoadingError } from "./useLoadingError";
 
@@ -17,6 +17,7 @@ export function useLogin(){
 
 export function useGetOneUser(initialValues:null, userId:string | undefined){
     const [curUser, setUser] = useState<User | null>(initialValues);
+    const [follwedUsers,setFollowedUsers]=useState<User[]>([]);
         const { loading, setLoading, error, setError } = useLoadingError(
             false,
             false
@@ -28,6 +29,9 @@ export function useGetOneUser(initialValues:null, userId:string | undefined){
                     setLoading(true);
                     const returnedUser = await getUserById(userId);
                     setUser(returnedUser);
+                    const users=await getFollwedUsers(userId);
+                    console.log(users);
+                    setFollowedUsers(users);
                     setLoading(false);
                 } catch (err) {
                     setError(true);
@@ -37,6 +41,6 @@ export function useGetOneUser(initialValues:null, userId:string | undefined){
         }, []);
     
         return {
-            curUser,loading,error
+            curUser,follwedUsers,loading,error
         }
 }

@@ -68,7 +68,7 @@ export default function Home() {
 				) : isSearched && videos.length == 0 && !error ? (
 					<h2>No results.</h2>
 				) : error ? (
-					<h2>Something went wrong, please try again later!</h2>
+					<h2>Server is not responding, please try again later!</h2>
 				) : (
 					videos.map((el) => (
 						<HomeVideos

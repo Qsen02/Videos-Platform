@@ -41,3 +41,8 @@ export async function changePassword(userId:string,data:object){
     const updatedUser=await put(`${endpoint}/change-password/${userId}`,data);
     return updatedUser as User;
 }
+
+export async function getFollwedUsers(userId:string | undefined){
+    const follwedUsers=await get(`${endpoint}/follwedUsers/${userId}`);
+    return follwedUsers as User[];
+}

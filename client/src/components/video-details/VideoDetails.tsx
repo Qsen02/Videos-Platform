@@ -1,4 +1,4 @@
-import { Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { useGetOneVideo } from "../../hooks/useVideos";
 import styles from "./VideoDetailsStyles.module.css";
@@ -43,7 +43,7 @@ export default function VideoDetails() {
 				{loading && !error ? (
 					<span className="loader"></span>
 				) : !loading && error ? (
-					<h2>Something went wrong! Please try again later.</h2>
+					<h2>Server is not responding, please try again later!</h2>
 				) : (
 					<>
 						<h2>{video?.title}</h2>
@@ -53,10 +53,10 @@ export default function VideoDetails() {
 						></iframe>
 						<section className={styles.descriptionWrapper}>
 							<div className={styles.owner}>
-								<img
+								<Link to={`/profile/${video.ownerId._id}`}><img
 									src={video?.ownerId.profileImage}
 									onError={errorProfileImage}
-								/>
+								/></Link>
 								<p>{video?.ownerId.username}</p>
 							</div>
 							<p className={styles.description}>

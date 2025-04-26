@@ -5,6 +5,7 @@ import {
     editUser,
     followUser,
     getCreatedVideos,
+    getFollwedUsers,
     getUserById,
     login,
     register,
@@ -58,6 +59,17 @@ userRouter.get("/created-videos/:userId", isUser(), async (req, res) => {
     const videos = await getCreatedVideos(userId);
     res.json(videos);
 });
+
+userRouter.get("/follwedUsers/:userId",isUser(),async(req,res)=>{
+    const userId=req.params.userId;
+    const isValid = await checkUserId(userId);
+    if (!isValid) {
+        res.status(404).json({ message: "Resource not found!" });
+        return;
+    }
+    const follwedUsers=await getFollwedUsers(userId);
+    res.json(follwedUsers);
+})
 
 userRouter.post(
     "/register",

@@ -122,3 +122,11 @@ export async function searchUsers(name: string) {
 	const users = await Users.find({ username: new RegExp(name, "i") }).lean();
 	return users;
 }
+
+export async function getFollwedUsers(userId: string) {
+	const users = await Users.find().populate("followers").lean();
+	const follwedUsers = users.filter((el) =>
+		el.followers.map((el) => el._id.toString()).includes(userId)
+	);
+	return follwedUsers;
+}

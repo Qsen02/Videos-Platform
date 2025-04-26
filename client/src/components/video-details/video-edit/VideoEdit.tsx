@@ -79,7 +79,7 @@ export default function VideoEdit() {
 							<span className="loader"></span>
 						) : error ? (
 							<h2>
-								Something went wrong, please try again later!
+								Server is not responding, please try again later!
 							</h2>
 						) : (
 							<>

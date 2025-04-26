@@ -72,6 +72,10 @@
 	background-color: rgb(178, 1, 1);
 }
 
+.error{
+	text-align: center;
+}
+
 @media (max-width: 800px) {
 	.profileHeader {
 		font-size: 14pt;
