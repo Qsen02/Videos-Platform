@@ -23,12 +23,12 @@ export async function logout(){
     await get(`${endpoint}/logout`);
 }
 
-export async function followUser(userId:string){
+export async function followUser(userId:string | undefined){
     const user=await post(`${endpoint}/follow/${userId}`,{});
     return user as User;
 }
 
-export async function unfollowUser(userId:string){
+export async function unfollowUser(userId:string | undefined){
     const user=await post(`${endpoint}/unfollow/${userId}`,{});
     return user as User;
 }

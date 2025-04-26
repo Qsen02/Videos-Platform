@@ -47,7 +47,7 @@
     text-align: center;
 }
 
-.followers p:hover {
+.followers p:hover,.buttons p:hover {
 	background-color: grey;
 }
 

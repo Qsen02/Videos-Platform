@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import { useGetOneUser } from "../../hooks/useUsers";
+import { useNavigate, useParams } from "react-router-dom";
+import { useFollow, useGetOneUser, useUnfollow } from "../../hooks/useUsers";
 import { errorProfileImage } from "../../utils/errorVideoAndImage";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import styles from "./ProfileStyles.module.css";
@@ -8,9 +8,30 @@ import HomeVideos from "../home/home-videos/HomeVideos";
 export default function Profile() {
 	const { userId } = useParams();
 	const { user } = useUserThemeContext();
-	const { curUser, follwedUsers, createdVideos, loading, error } =
+	const { curUser, setUser, follwedUsers, createdVideos, loading, error } =
 		useGetOneUser(null, userId);
 	const followersId = curUser?.followers.map((el) => el._id);
+	const followUser = useFollow();
+	const unfollowUser = useUnfollow();
+	const navigate = useNavigate();
+
+	async function onFollow() {
+		try {
+			const updatedUser = await followUser(userId);
+			setUser(updatedUser);
+		} catch (err) {
+			navigate("404");
+		}
+	}
+
+	async function onUnfollow() {
+		try {
+			const updatedUser = await unfollowUser(userId);
+			setUser(updatedUser);
+		} catch (err) {
+			navigate("404");
+		}
+	}
 
 	return (
 		<>
@@ -40,9 +61,11 @@ export default function Profile() {
 								{curUser?._id != user?._id ? (
 									user?._id &&
 									followersId?.includes(user?._id) ? (
-										<p>Following!</p>
+										<p onClick={onUnfollow}>Following!</p>
 									) : (
-										<button>Follow</button>
+										<button onClick={onFollow}>
+											Follow
+										</button>
 									)
 								) : (
 									<>
