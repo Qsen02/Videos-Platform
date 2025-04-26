@@ -57,6 +57,7 @@ main {
 
 .error {
 	color: rgb(225, 0, 0);
+	font-size: 14pt;
 }
 
 .loader {
@@ -181,6 +182,9 @@ main {
 	.form button {
 		font-size: 12pt;
 	}
+	.error {
+		font-size: 12pt;
+	}
 }
 
 @media (max-width: 400px) {
@@ -201,5 +205,8 @@ main {
 		border-radius: 5px;
 		padding-left: 10px;
 		font-size: 14pt;
+	}
+	.error {
+		font-size: 10pt;
 	}
 }
