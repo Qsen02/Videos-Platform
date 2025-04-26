@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { getFollwedUsers, getUserById, login, register } from "../api/users"
+import { getCreatedVideos, getFollwedUsers, getUserById, login, register } from "../api/users"
 import { User } from "../types/user";
 import { useLoadingError } from "./useLoadingError";
+import { Video } from "../types/video";
 
 export function useRegister(){
     return async function registration(data:object){
@@ -18,6 +19,7 @@ export function useLogin(){
 export function useGetOneUser(initialValues:null, userId:string | undefined){
     const [curUser, setUser] = useState<User | null>(initialValues);
     const [follwedUsers,setFollowedUsers]=useState<User[]>([]);
+    const [createdVideos,setCreatedVideos]=useState<Video[]>([]);
         const { loading, setLoading, error, setError } = useLoadingError(
             false,
             false
@@ -30,8 +32,9 @@ export function useGetOneUser(initialValues:null, userId:string | undefined){
                     const returnedUser = await getUserById(userId);
                     setUser(returnedUser);
                     const users=await getFollwedUsers(userId);
-                    console.log(users);
                     setFollowedUsers(users);
+                    const videos=await getCreatedVideos(userId);
+                    setCreatedVideos(videos);
                     setLoading(false);
                 } catch (err) {
                     setError(true);
@@ -41,6 +44,6 @@ export function useGetOneUser(initialValues:null, userId:string | undefined){
         }, []);
     
         return {
-            curUser,follwedUsers,loading,error
+            curUser,follwedUsers,createdVideos,loading,error
         }
 }

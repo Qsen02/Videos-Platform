@@ -67,7 +67,7 @@ export async function unfollowUser(
 }
 
 export async function getCreatedVideos(userId: string) {
-	const videos = await Videos.find({ ownerId: userId }).lean();
+	const videos = await Videos.find({ ownerId: userId }).populate("ownerId").lean();
 
 	return videos;
 }

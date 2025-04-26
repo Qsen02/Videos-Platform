@@ -1,4 +1,5 @@
 import { User, UserForAuth } from "../types/user";
+import { Video } from "../types/video";
 import { get, post, put } from "./requester";
 
 const endpoint="users";
@@ -45,4 +46,9 @@ export async function changePassword(userId:string,data:object){
 export async function getFollwedUsers(userId:string | undefined){
     const follwedUsers=await get(`${endpoint}/follwedUsers/${userId}`);
     return follwedUsers as User[];
+}
+
+export async function getCreatedVideos(userId:string | undefined){
+    const createdVideos=await get(`${endpoint}/created-videos/${userId}`);
+    return createdVideos as Video[];
 }
