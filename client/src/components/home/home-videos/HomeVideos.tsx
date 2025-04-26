@@ -21,7 +21,7 @@ export default function HomeVideos({
 	return (
 		<article className={theme == "dark" ? "darkTheme-dark" : "whiteTheme-light"} id={styles.wrapper}>
 			<div className={styles.header}>
-				<img src={owner.profileImage} onError={errorProfileImage}/>
+				<Link to={`/profile/${owner._id}`}><img src={owner.profileImage} onError={errorProfileImage}/></Link>
 				<p>{owner.username}</p>
 			</div>
 			<div className={styles.body}>

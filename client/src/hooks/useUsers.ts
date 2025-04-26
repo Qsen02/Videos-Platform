@@ -16,7 +16,7 @@ export function useLogin(){
 }
 
 export function useGetOneUser(initialValues:null, userId:string | undefined){
-    const [user, setUser] = useState<User | null>(initialValues);
+    const [curUser, setUser] = useState<User | null>(initialValues);
         const { loading, setLoading, error, setError } = useLoadingError(
             false,
             false
@@ -26,8 +26,8 @@ export function useGetOneUser(initialValues:null, userId:string | undefined){
             (async () => {
                 try {
                     setLoading(true);
-                    const curUser = await getUserById(userId);
-                    setUser(curUser);
+                    const returnedUser = await getUserById(userId);
+                    setUser(returnedUser);
                     setLoading(false);
                 } catch (err) {
                     setError(true);
@@ -37,6 +37,6 @@ export function useGetOneUser(initialValues:null, userId:string | undefined){
         }, []);
     
         return {
-            user,loading,error
+            curUser,loading,error
         }
 }
