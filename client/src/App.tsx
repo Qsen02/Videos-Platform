@@ -15,6 +15,8 @@ import CommentDelete from "./components/video-details/video-comments/comments-de
 import CommentEdit from "./components/video-details/video-comments/comments-edit/CommentsEdit";
 import Profile from "./components/profile/Profile";
 import ProfileEditUser from "./components/profile/profile-edit-user/ProfileEditUser";
+import ProfileChangePassword from "./components/profile/profile-change-password/ProfileChangePassword";
+import ProfileConfirm from "./components/profile/profile-confirm/ProfileConfirm";
 
 function App() {
 	return (
@@ -36,6 +38,8 @@ function App() {
 						</Route>
 						<Route path="/profile/:userId" element={<Profile/>}>
 							<Route path="edit" element={<ProfileEditUser/>}/>
+							<Route path="change-password" element={<ProfileChangePassword/>}/>
+							<Route path="confirm" element={<ProfileConfirm/>}/>
 						</Route>
 						<Route path="*" element={<NotFound/>}/>
 					</Routes>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "./HomeVideosStyles.module.css";
+import styles from "./VideoItemStyles.module.css";
 import { User } from "../../types/user";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { errorProfileImage, errorVideoImage } from "../../utils/errorVideoAndImage";

@@ -27,3 +27,7 @@ export interface EditUserFormTypes{
 	email:string | undefined;
 	profileImage:string | undefined;
 }
+
+export interface ChangePasswordFormTypes{
+	newPassword:string
+}
