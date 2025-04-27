@@ -3,7 +3,7 @@ import { useFollow, useGetOneUser, useUnfollow } from "../../hooks/useUsers";
 import { errorProfileImage } from "../../utils/errorVideoAndImage";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import styles from "./ProfileStyles.module.css";
-import HomeVideos from "../home/home-videos/HomeVideos";
+import VideoItem from "../../commons/video-item/VideoItem";
 
 export default function Profile() {
 	const { userId } = useParams();
@@ -89,7 +89,7 @@ export default function Profile() {
 							<p>No videos yet.</p>
 						) : (
 							createdVideos.map((el) => (
-								<HomeVideos
+								<VideoItem
 									key={el._id}
 									id={el._id}
 									title={el.title}

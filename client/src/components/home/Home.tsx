@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { useGetAllVideos, useSearchVideos } from "../../hooks/useVideos";
-import HomeVideos from "./home-videos/HomeVideos";
 import styles from "./HomeStyles.module.css";
 import { Form, Formik } from "formik";
 import CustomInput from "../../commons/customInput";
+import VideoItem from "../../commons/video-item/VideoItem";
 
 export default function Home() {
 	const { theme } = useUserThemeContext();
@@ -71,7 +71,7 @@ export default function Home() {
 					<h2>Server is not responding, please try again later!</h2>
 				) : (
 					videos.map((el) => (
-						<HomeVideos
+						<VideoItem
 							key={el._id}
 							id={el._id}
 							title={el.title}

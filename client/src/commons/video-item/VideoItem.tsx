@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
-import { User } from "../../../types/user";
-import { useUserThemeContext } from "../../../contexts/UserAndTheme";
 import styles from "./HomeVideosStyles.module.css";
-import {
-	errorProfileImage,
-	errorVideoImage,
-} from "../../../utils/errorVideoAndImage";
+import { User } from "../../types/user";
+import { useUserThemeContext } from "../../contexts/UserAndTheme";
+import { errorProfileImage, errorVideoImage } from "../../utils/errorVideoAndImage";
 
 interface HomeVideosProp {
 	id: string;
@@ -15,7 +12,7 @@ interface HomeVideosProp {
 	isProfilePage: boolean;
 }
 
-export default function HomeVideos({
+export default function VideoItem({
 	id,
 	title,
 	thumbnail,
