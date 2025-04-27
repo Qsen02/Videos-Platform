@@ -48,7 +48,7 @@ export async function followUser(
 		followingUserId,
 		{ $push: { followers: curUser?._id } },
 		{ new: true }
-	);
+	).populate("followers");
 
 	return updatedUser;
 }
@@ -61,7 +61,7 @@ export async function unfollowUser(
 		unfollowingUserId,
 		{ $pull: { followers: curUser?._id } },
 		{ new: true }
-	);
+	).populate("followers");
 
 	return updatedUser;
 }
