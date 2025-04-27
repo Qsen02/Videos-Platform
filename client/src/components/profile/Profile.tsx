@@ -95,6 +95,7 @@ export default function Profile() {
 									title={el.title}
 									thumbnail={el.thumbnail}
 									owner={el.ownerId}
+									isProfilePage={true}
 								/>
 							))
 						)}

@@ -77,6 +77,7 @@ export default function Home() {
 							title={el.title}
 							thumbnail={el.thumbnail}
 							owner={el.ownerId}
+							isProfilePage={false}
 						/>
 					))
 				)}
