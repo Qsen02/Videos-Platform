@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import { useFollow, useGetOneUser, useUnfollow } from "../../hooks/useUsers";
 import { errorProfileImage } from "../../utils/errorVideoAndImage";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
@@ -35,6 +35,7 @@ export default function Profile() {
 
 	return (
 		<>
+			<Outlet context={{setUserState:setUser,userId,loading,error }} />
 			{loading && !error ? (
 				<span className="loader"></span>
 			) : error ? (
@@ -69,8 +70,14 @@ export default function Profile() {
 									)
 								) : (
 									<>
-										<button>Change password</button>
-										<button>Edit profile</button>
+										<Link
+											to={`/profile/${userId}/change-password`}
+										>
+											<button>Change password</button>
+										</Link>
+										<Link to={`/profile/${userId}/edit`}>
+											<button>Edit profile</button>
+										</Link>
 									</>
 								)}
 							</div>

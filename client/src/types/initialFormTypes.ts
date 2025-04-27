@@ -21,3 +21,9 @@ export interface LoginFormTypes {
 export interface CommentFormTypes{
 	content:string;
 }
+
+export interface EditUserFormTypes{
+	username:string | undefined;
+	email:string | undefined;
+	profileImage:string | undefined;
+}

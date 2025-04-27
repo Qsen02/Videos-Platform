@@ -1,6 +1,6 @@
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useUserThemeContext } from "../../../../contexts/UserAndTheme";
-import { OutletContextType } from "../../../../types/outletContext";
+import { VideoOutletContextType } from "../../../../types/outletContext";
 import styles from "./CommentDeleteStyles.module.css"
 import { useDeleteComment } from "../../../../hooks/useComments";
 
@@ -8,7 +8,7 @@ export default function CommentDelete() {
 	const { theme } = useUserThemeContext();
     const {commentId}=useParams();
 	const navigate = useNavigate();
-	const { videoId, setVideo } = useOutletContext<OutletContextType>();
+	const { videoId, setVideo } = useOutletContext<VideoOutletContextType>();
     const deleteComment=useDeleteComment();
 
 	function onCancel() {

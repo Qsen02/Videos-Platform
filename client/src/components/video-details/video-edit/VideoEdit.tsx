@@ -6,13 +6,13 @@ import { createVideoSchema } from "../../../schemas/validationShema";
 import CustomInput from "../../../commons/customInput";
 import CustomTextarea from "../../../commons/custumTextarea";
 import { useEditVideo } from "../../../hooks/useVideos";
-import { OutletContextType } from "../../../types/outletContext";
+import { VideoOutletContextType } from "../../../types/outletContext";
 import { EditFormTypes } from "../../../types/initialFormTypes";
 
 export default function VideoEdit() {
 	const { theme } = useUserThemeContext();
 	const { videoId, video, setVideo, loading, error } =
-		useOutletContext<OutletContextType>();
+		useOutletContext<VideoOutletContextType>();
 	const [errMessage, setErrMessage] = useState("");
 	const [isErr, setIsErr] = useState(false);
 	const navigate = useNavigate();

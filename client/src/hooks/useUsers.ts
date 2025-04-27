@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import {
+	editUser,
 	followUser,
 	getCreatedVideos,
 	getFollwedUsers,
@@ -71,4 +72,10 @@ export function useUnfollow() {
 	return async function (userId: string | undefined) {
 		return await unfollowUser(userId);
 	};
+}
+
+export function useEditUser(){
+	return async function (userId:string,data:object){
+		return await editUser(userId,data);
+	}
 }

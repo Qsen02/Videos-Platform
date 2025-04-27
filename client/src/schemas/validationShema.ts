@@ -62,3 +62,17 @@ export const createVideoSchema = yup.object().shape({
 export const commentSchema=yup.object().shape({
 	content:yup.string().required("Field must be filled!")
 })
+
+export const editUserSchema = yup.object().shape({
+	username: yup
+		.string()
+		.min(3, "Username must be at least 3 symbols long!")
+		.required("Username is required!"),
+	email: yup
+		.string()
+		.email("Email must be valid email!")
+		.required("Email is required!"),
+	profileImage: yup
+		.string()
+		.matches(/^https?:\/\//, "Profile image must be valid URL")
+});

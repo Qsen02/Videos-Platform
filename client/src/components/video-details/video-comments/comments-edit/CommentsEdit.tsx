@@ -3,7 +3,7 @@ import { useUserThemeContext } from "../../../../contexts/UserAndTheme";
 import { useState } from "react";
 import { CommentFormTypes } from "../../../../types/initialFormTypes";
 import { Form, Formik, FormikHelpers } from "formik";
-import { OutletContextType } from "../../../../types/outletContext";
+import { VideoOutletContextType } from "../../../../types/outletContext";
 import { commentSchema } from "../../../../schemas/validationShema";
 import CustomInput from "../../../../commons/customInput";
 import {
@@ -14,7 +14,7 @@ import {
 export default function CommentEdit() {
 	const { theme } = useUserThemeContext();
 	const { commentId } = useParams();
-	const { videoId, setVideo } = useOutletContext<OutletContextType>();
+	const { videoId, setVideo } = useOutletContext<VideoOutletContextType>();
 	const [errMessage, setErrMessage] = useState("");
 	const [isErr, setIsErr] = useState(false);
 	const navigate = useNavigate();

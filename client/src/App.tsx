@@ -14,6 +14,7 @@ import VideoEdit from "./components/video-details/video-edit/VideoEdit";
 import CommentDelete from "./components/video-details/video-comments/comments-delete/CommentsDelete";
 import CommentEdit from "./components/video-details/video-comments/comments-edit/CommentsEdit";
 import Profile from "./components/profile/Profile";
+import ProfileEditUser from "./components/profile/profile-edit-user/ProfileEditUser";
 
 function App() {
 	return (
@@ -33,7 +34,9 @@ function App() {
 							<Route path="comments/:commentId/delete" element={<CommentDelete/>}/>
 							<Route path="comments/:commentId/edit" element={<CommentEdit/>}/>
 						</Route>
-						<Route path="/profile/:userId" element={<Profile/>}/>
+						<Route path="/profile/:userId" element={<Profile/>}>
+							<Route path="edit" element={<ProfileEditUser/>}/>
+						</Route>
 						<Route path="*" element={<NotFound/>}/>
 					</Routes>
 				</Main>
