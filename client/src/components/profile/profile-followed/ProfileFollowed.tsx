@@ -1,14 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useGetFollowers } from "../../../hooks/useUsers";
+import { useGetFollowed } from "../../../hooks/useUsers";
 import FollowerItem from "../../../commons/follower-item/FollowerItem";
 import { useUserThemeContext } from "../../../contexts/UserAndTheme";
-import styles from "./ProfileFollowersStyles.module.css";
+import styles from "../profile-followers/ProfileFollowersStyles.module.css";
 
-export default function ProfileFollowers() {
+export default function ProfileFollowed() {
 	const { theme } = useUserThemeContext();
 	const { userId } = useParams();
-	const { followers, loading, error } = useGetFollowers([], userId);
-
+	const { followed, loading, error } = useGetFollowed([], userId);
 	function onBack() {
 		history.back();
 	}
@@ -21,16 +20,16 @@ export default function ProfileFollowers() {
 				}`}
 			>
 				<button onClick={onBack}>X</button>
-				<h2>Followers</h2>
+				<h2>Followed users</h2>
 				<section className={styles.followerContainer}>
 					{loading && !error ? (
 						<span className="loader"></span>
 					) : error ? (
 						<p>Server is not responding, please try again later!</p>
-					) : followers.length == 0 ? (
+					) : followed.length == 0 ? (
 						<p>No followers yet</p>
 					) : (
-						followers.map((el) => (
+						followed.map((el) => (
 							<FollowerItem
 								key={el._id}
 								id={el._id}

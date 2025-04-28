@@ -18,6 +18,7 @@ import ProfileEditUser from "./components/profile/profile-edit-user/ProfileEditU
 import ProfileChangePassword from "./components/profile/profile-change-password/ProfileChangePassword";
 import ProfileConfirm from "./components/profile/profile-confirm/ProfileConfirm";
 import ProfileFollowers from "./components/profile/profile-followers/ProfileFollowers";
+import ProfileFollowed from "./components/profile/profile-followed/ProfileFollowed";
 
 function App() {
 	return (
@@ -42,6 +43,7 @@ function App() {
 							<Route path="change-password" element={<ProfileChangePassword/>}/>
 							<Route path="confirm" element={<ProfileConfirm/>}/>
 							<Route path="followers" element={<ProfileFollowers/>}/>
+							<Route path="followed" element={<ProfileFollowed/>}/>
 						</Route>
 						<Route path="*" element={<NotFound/>}/>
 					</Routes>

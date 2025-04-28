@@ -98,8 +98,8 @@ export function useGetFollowers(initialValues:[],userId:string | undefined){
 		(async () => {
 			try {
 				setLoading(true);
-				const returnedUser = await getUserById(userId);
-				setFollowers(returnedUser.followers);
+				const returnedUsers = await getUserById(userId);
+				setFollowers(returnedUsers.followers);
 				setLoading(false);
 			} catch (err) {
 				setError(true);
@@ -110,5 +110,31 @@ export function useGetFollowers(initialValues:[],userId:string | undefined){
 
 	return {
 		followers,loading,error
+	}
+}
+
+export function useGetFollowed(initialValues:[],userId:string | undefined){
+	const [followed, setFollowed] = useState<User[]>(initialValues);
+	const { loading, setLoading, error, setError } = useLoadingError(
+		false,
+		false
+	);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				setLoading(true);
+				const returnedUsers = await getFollwedUsers(userId);
+				setFollowed(returnedUsers);
+				setLoading(false);
+			} catch (err) {
+				setError(true);
+				setLoading(false);
+			}
+		})();
+	}, []);
+
+	return {
+		followed,loading,error
 	}
 }
