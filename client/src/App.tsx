@@ -19,6 +19,8 @@ import ProfileChangePassword from "./components/profile/profile-change-password/
 import ProfileConfirm from "./components/profile/profile-confirm/ProfileConfirm";
 import ProfileFollowers from "./components/profile/profile-followers/ProfileFollowers";
 import ProfileFollowed from "./components/profile/profile-followed/ProfileFollowed";
+import GuestGuard from "./commons/guest-guard/GuestGuard";
+import UserGuard from "./commons/user-guard/UserGuard";
 
 function App() {
 	return (
@@ -28,24 +30,60 @@ function App() {
 				<Main>
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/register" element={<Register/>}/>
-						<Route path="/login" element={<Login/>}/>
-						<Route path="/logout" element={<Logout/>}/>
-						<Route path="/create" element={<CreateVideo/>}/>
-						<Route path="/videos/:videoId" element={<VideoDetails/>}>
-							<Route path="delete" element={<VideoDelete/>}/>
-							<Route path="edit" element={<VideoEdit/>}/>
-							<Route path="comments/:commentId/delete" element={<CommentDelete/>}/>
-							<Route path="comments/:commentId/edit" element={<CommentEdit/>}/>
+						<Route element={<GuestGuard />}>
+							<Route path="/register" element={<Register />} />
+							<Route path="/login" element={<Login />} />
 						</Route>
-						<Route path="/profile/:userId" element={<Profile/>}>
-							<Route path="edit" element={<ProfileEditUser/>}/>
-							<Route path="change-password" element={<ProfileChangePassword/>}/>
-							<Route path="confirm" element={<ProfileConfirm/>}/>
-							<Route path="followers" element={<ProfileFollowers/>}/>
-							<Route path="followed" element={<ProfileFollowed/>}/>
+						<Route element={<UserGuard />}>
+							<Route path="/logout" element={<Logout />} />
+							<Route path="/create" element={<CreateVideo />} />
+							<Route
+								path="/profile/:userId"
+								element={<Profile />}
+							>
+								<Route
+									path="edit"
+									element={<ProfileEditUser />}
+								/>
+								<Route
+									path="change-password"
+									element={<ProfileChangePassword />}
+								/>
+								<Route
+									path="confirm"
+									element={<ProfileConfirm />}
+								/>
+								<Route
+									path="followers"
+									element={<ProfileFollowers />}
+								/>
+								<Route
+									path="followed"
+									element={<ProfileFollowed />}
+								/>
+							</Route>
 						</Route>
-						<Route path="*" element={<NotFound/>}/>
+						<Route
+							path="/videos/:videoId"
+							element={<VideoDetails />}
+						>
+							<Route element={<UserGuard />}>
+								<Route
+									path="delete"
+									element={<VideoDelete />}
+								/>
+								<Route path="edit" element={<VideoEdit />} />
+								<Route
+									path="comments/:commentId/delete"
+									element={<CommentDelete />}
+								/>
+							</Route>
+							<Route
+								path="comments/:commentId/edit"
+								element={<CommentEdit />}
+							/>
+						</Route>
+						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</Main>
 			</UserThemeContextProvider>
