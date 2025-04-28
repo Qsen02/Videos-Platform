@@ -55,8 +55,8 @@ export default function Profile() {
 						</div>
 						<div className={styles.followersWrapper}>
 							<div className={styles.followers}>
-								<p>Followers: {curUser?.followers.length}</p>
-								<p>Followed: {follwedUsers.length}</p>
+								<Link to={`/profile/${curUser?._id}/followers`}><p>Followers: {curUser?.followers.length}</p></Link>
+								<Link to={`/profile/${curUser?._id}/followed`}><p>Followed: {follwedUsers.length}</p></Link>
 							</div>
 							<div className={styles.buttons}>
 								{curUser?._id != user?._id ? (

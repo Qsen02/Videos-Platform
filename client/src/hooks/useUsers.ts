@@ -86,3 +86,29 @@ export function useChangePassword(){
 		return await changePassword(userId,data);
 	}
 }
+
+export function useGetFollowers(initialValues:[],userId:string | undefined){
+	const [followers, setFollowers] = useState<User[]>(initialValues);
+	const { loading, setLoading, error, setError } = useLoadingError(
+		false,
+		false
+	);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				setLoading(true);
+				const returnedUser = await getUserById(userId);
+				setFollowers(returnedUser.followers);
+				setLoading(false);
+			} catch (err) {
+				setError(true);
+				setLoading(false);
+			}
+		})();
+	}, []);
+
+	return {
+		followers,loading,error
+	}
+}
