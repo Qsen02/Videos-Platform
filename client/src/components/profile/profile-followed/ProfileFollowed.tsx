@@ -29,12 +29,15 @@ export default function ProfileFollowed() {
 					) : followed.length == 0 ? (
 						<p>No followers yet</p>
 					) : (
-						followed.map((el) => (
+						followed?.map((el) => (
 							<FollowerItem
-								key={el._id}
-								id={el._id}
+								key={el?._id}
+								id={el?._id}
 								profileImage={el.profileImage}
 								username={el.username}
+								email={el.email}
+								followers={el.followers}
+								password={el.password}
 							/>
 						))
 					)}

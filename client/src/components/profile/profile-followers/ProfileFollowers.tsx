@@ -32,10 +32,13 @@ export default function ProfileFollowers() {
 					) : (
 						followers.map((el) => (
 							<FollowerItem
-								key={el._id}
-								id={el._id}
+								key={el?._id}
+								id={el?._id}
 								profileImage={el.profileImage}
 								username={el.username}
+								email={el.email}
+								followers={el.followers}
+								password={el.password}
 							/>
 						))
 					)}
