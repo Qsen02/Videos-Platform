@@ -4,6 +4,7 @@ interface CustomSelectProps {
 	name: string;
 	label?: string;
 	className?: string;
+	value?:string;
 }
 
 export default function CustomSelect({ label, ...props }: CustomSelectProps) {
@@ -12,10 +13,10 @@ export default function CustomSelect({ label, ...props }: CustomSelectProps) {
 		<>
 			{label ? <label>{label}</label> : ""}
 			<select {...props} {...field}>
-				<option value="videos" selected>
+				<option value="videos">
 					Videos
 				</option>
-				<option value="users" selected>
+				<option value="users">
 					Users
 				</option>
 			</select>

@@ -7,7 +7,7 @@ import CustomInput from "../../commons/customInput";
 import VideoItem from "../../commons/video-item/VideoItem";
 import { useSearchUsers } from "../../hooks/useUsers";
 import CustomSelect from "../../commons/customSelect";
-import { errorProfileImage } from "../../utils/errorVideoAndImage";
+import UserItem from "../../commons/user-item/UserItem";
 
 export default function Home() {
 	const { theme } = useUserThemeContext();
@@ -33,8 +33,7 @@ export default function Home() {
 				query = "No value";
 			}
 			const criteria = values.criteria;
-			console.log(videos);
-			if (criteria == "videos") {
+			if (criteria == "videos" || criteria=="Videos") {
 				const videos = await searchVideos(query);
 				setVideos({ type: "searchVideos", payload: videos });
 				setUsers(null);
@@ -82,6 +81,7 @@ export default function Home() {
 						</p>
 						<p>
 							<CustomSelect
+								value="videos"
 								name="criteria"
 								className={
 									theme == "dark"
@@ -104,13 +104,12 @@ export default function Home() {
 					<h2>Server is not responding, please try again later!</h2>
 				) : users && users.length > 0 ? (
 					users.map((el) => (
-						<div>
-							<img
-								src={el.profileImage}
-								onError={errorProfileImage}
-							/>
-							<h2>{el.username}</h2>
-						</div>
+						<UserItem
+							key={el._id}
+							id={el._id}
+							profileImage={el.profileImage}
+							username={el.username}
+						/>
 					))
 				) : users?.length == 0 ? (
 					<h2>No users yet</h2>
