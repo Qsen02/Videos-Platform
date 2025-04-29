@@ -8,6 +8,7 @@ import {
 	getUserById,
 	login,
 	register,
+    searchUsers,
     unfollowUser,
 } from "../api/users";
 import { User } from "../types/user";
@@ -136,5 +137,11 @@ export function useGetFollowed(initialValues:[],userId:string | undefined){
 
 	return {
 		followed,loading,error
+	}
+}
+
+export function useSearchUsers(){
+	return async function (query:string){
+		return await searchUsers(query);
 	}
 }

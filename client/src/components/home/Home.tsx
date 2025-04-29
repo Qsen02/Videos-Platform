@@ -5,23 +5,43 @@ import styles from "./HomeStyles.module.css";
 import { Form, Formik } from "formik";
 import CustomInput from "../../commons/customInput";
 import VideoItem from "../../commons/video-item/VideoItem";
+import { useSearchUsers } from "../../hooks/useUsers";
+import CustomSelect from "../../commons/customSelect";
+import { errorProfileImage } from "../../utils/errorVideoAndImage";
 
 export default function Home() {
 	const { theme } = useUserThemeContext();
 	const [isSearched, setIsSearched] = useState(false);
-	const { videos, setVideos, loading, setLoading, error, setError } =
-		useGetAllVideos([]);
+	const {
+		videos,
+		setVideos,
+		users,
+		setUsers,
+		loading,
+		setLoading,
+		error,
+		setError,
+	} = useGetAllVideos([]);
 	const searchVideos = useSearchVideos();
+	const searchUsers = useSearchUsers();
 
-	async function onSearch(values: { query: string }) {
+	async function onSearch(values: { query: string; criteria: string }) {
 		try {
 			setLoading(true);
 			let query = values.query;
 			if (query == "") {
 				query = "No value";
 			}
-			const videos = await searchVideos(query);
-			setVideos({ type: "searchVideos", payload: videos });
+			const criteria = values.criteria;
+			console.log(videos);
+			if (criteria == "videos") {
+				const videos = await searchVideos(query);
+				setVideos({ type: "searchVideos", payload: videos });
+				setUsers(null);
+			} else {
+				const users = await searchUsers(query);
+				setUsers(users);
+			}
 			setIsSearched(true);
 			setLoading(false);
 		} catch (err) {
@@ -32,7 +52,10 @@ export default function Home() {
 
 	return (
 		<>
-			<Formik initialValues={{ query: "" }} onSubmit={onSearch}>
+			<Formik
+				initialValues={{ query: "", criteria: "Videos" }}
+				onSubmit={onSearch}
+			>
 				{(props) => (
 					<Form className={styles.form}>
 						<p>
@@ -57,6 +80,16 @@ export default function Home() {
 								<i className="fa-solid fa-magnifying-glass"></i>
 							</button>
 						</p>
+						<p>
+							<CustomSelect
+								name="criteria"
+								className={
+									theme == "dark"
+										? "darkTheme-dark"
+										: "whiteTheme-light"
+								}
+							/>
+						</p>
 					</Form>
 				)}
 			</Formik>
@@ -69,6 +102,18 @@ export default function Home() {
 					<h2>No results.</h2>
 				) : error ? (
 					<h2>Server is not responding, please try again later!</h2>
+				) : users && users.length > 0 ? (
+					users.map((el) => (
+						<div>
+							<img
+								src={el.profileImage}
+								onError={errorProfileImage}
+							/>
+							<h2>{el.username}</h2>
+						</div>
+					))
+				) : users?.length == 0 ? (
+					<h2>No users yet</h2>
 				) : (
 					videos.map((el) => (
 						<VideoItem

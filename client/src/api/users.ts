@@ -52,3 +52,8 @@ export async function getCreatedVideos(userId:string | undefined){
     const createdVideos=await get(`${endpoint}/created-videos/${userId}`);
     return createdVideos as Video[];
 }
+
+export async function searchUsers(query:string){
+    const users=await get(`${endpoint}/search/${query}`);
+    return users as User[];
+}

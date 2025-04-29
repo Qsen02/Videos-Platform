@@ -14,12 +14,14 @@ import {
 	unlikeVideo,
 } from "../api/videos";
 import { homeReducer } from "../components/reducers/homeReducer";
+import { User } from "../types/user";
 
 export function useGetAllVideos(initialValue: []) {
 	const [videos, setVideos] = useReducer<React.Reducer<Video[], ActionType>>(
 		homeReducer,
 		initialValue
 	);
+	const [users, setUsers] = useState<User[] | null>(null);
 	const { loading, setLoading, error, setError } = useLoadingError(
 		false,
 		false
@@ -42,6 +44,8 @@ export function useGetAllVideos(initialValue: []) {
 	return {
 		videos,
 		setVideos,
+		users,
+		setUsers,
 		loading,
 		setLoading,
 		error,
@@ -61,7 +65,10 @@ export function useCreateVideo() {
 	};
 }
 
-export function useGetOneVideo(initialValue: Video , videoId: string|undefined) {
+export function useGetOneVideo(
+	initialValue: Video,
+	videoId: string | undefined
+) {
 	const [video, setVideo] = useState<Video>(initialValue);
 	const { loading, setLoading, error, setError } = useLoadingError(
 		false,
@@ -83,43 +90,45 @@ export function useGetOneVideo(initialValue: Video , videoId: string|undefined) 
 	}, []);
 
 	return {
-		video,setVideo,loading,error
-	}
+		video,
+		setVideo,
+		loading,
+		error,
+	};
 }
 
-export function useDeleteVideo(){
-	return async function(videoId:string){
+export function useDeleteVideo() {
+	return async function (videoId: string) {
 		return await deleteVideo(videoId);
-	}
+	};
 }
 
-
-export function useEditVideo(){
-	return async function(videoId:string,data:object){
-		return await editVideo(videoId,data)
-	}
+export function useEditVideo() {
+	return async function (videoId: string, data: object) {
+		return await editVideo(videoId, data);
+	};
 }
 
-export function useLikeVideo(){
-	return async function(videoId:string | undefined | null){
+export function useLikeVideo() {
+	return async function (videoId: string | undefined | null) {
 		return await likeVideo(videoId);
-	}
+	};
 }
 
-export function useDislikeVideo(){
-	return async function(videoId:string | undefined | null){
+export function useDislikeVideo() {
+	return async function (videoId: string | undefined | null) {
 		return await dislikeVideo(videoId);
-	}
+	};
 }
 
-export function useUndislikeVideo(){
-	return async function(videoId:string | undefined | null){
+export function useUndislikeVideo() {
+	return async function (videoId: string | undefined | null) {
 		return await undislikeVideo(videoId);
-	}
+	};
 }
 
-export function useUnlikeVideo(){
-	return async function(videoId:string | undefined | null){
+export function useUnlikeVideo() {
+	return async function (videoId: string | undefined | null) {
 		return await unlikeVideo(videoId);
-	}
+	};
 }
