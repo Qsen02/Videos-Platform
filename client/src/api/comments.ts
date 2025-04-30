@@ -14,7 +14,7 @@ export async function createComment(videoId:string,data:object){
     return comment as Video;
 }
 
-export async function deleteComment(videoId:string,commentId:string | undefined){
+export async function deleteComment(videoId:string | undefined,commentId:string | undefined){
     const updatedVideo=await del(`${endpoint}/${commentId}/in/${videoId}`);
     return updatedVideo as Video;
 }

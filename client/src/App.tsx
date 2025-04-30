@@ -21,6 +21,7 @@ import ProfileFollowers from "./components/profile/profile-followers/ProfileFoll
 import ProfileFollowed from "./components/profile/profile-followed/ProfileFollowed";
 import GuestGuard from "./commons/guest-guard/GuestGuard";
 import UserGuard from "./commons/user-guard/UserGuard";
+import VideoDetailsGuard from "./commons/video-details-guard/VideoDetailsGuard";
 
 function App() {
 	return (
@@ -67,7 +68,7 @@ function App() {
 							path="/videos/:videoId"
 							element={<VideoDetails />}
 						>
-							<Route element={<UserGuard />}>
+							<Route element={<VideoDetailsGuard />}>
 								<Route
 									path="delete"
 									element={<VideoDelete />}
@@ -77,11 +78,11 @@ function App() {
 									path="comments/:commentId/delete"
 									element={<CommentDelete />}
 								/>
+								<Route
+									path="comments/:commentId/edit"
+									element={<CommentEdit />}
+								/>
 							</Route>
-							<Route
-								path="comments/:commentId/edit"
-								element={<CommentEdit />}
-							/>
 						</Route>
 						<Route path="*" element={<NotFound />} />
 					</Routes>

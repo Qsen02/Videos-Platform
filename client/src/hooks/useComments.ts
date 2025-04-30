@@ -10,7 +10,7 @@ export function useCreateComment(){
 }
 
 export function useDeleteComment(){
-    return async function(videoId:string,commentId:string | undefined){
+    return async function(videoId:string | undefined,commentId:string | undefined){
         return await deleteComment(videoId,commentId)
     }
 }
