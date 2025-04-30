@@ -64,7 +64,7 @@ videoRouter.post(
 		.withMessage("Title must be at least 3 symbols long!"),
 	body("videoUrl")
 		.trim()
-		.isLength({min:11,max:11})
+		.matches(/^https?:\/\//)
 		.withMessage("Video ID must be exactly 11 symbols!"),
 	body("thumbnail")
 		.trim()

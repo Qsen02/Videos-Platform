@@ -11,11 +11,12 @@
     text-align: center;
 }
 
-#detailsWrapper iframe{
+#detailsWrapper video{
     width: 90%;
     height: 500px;
     border-radius: 7px;
     border:none;
+    object-fit: cover;
 }
 
 .owner{

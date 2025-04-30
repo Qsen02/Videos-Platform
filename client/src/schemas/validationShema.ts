@@ -45,10 +45,9 @@ export const createVideoSchema = yup.object().shape({
 		.min(3, "Title must be at least 3 symbols long!")
 		.required("Title is required!"),
 	videoUrl: yup
-		.string()
-		.min(11, "Video ID must be exactly 11 symbols!")
-		.max(11, "Video ID must be exactly 11 symbols!")
-		.required("Video ID is required!"),
+	.string()
+	.matches(/^https?:\/\//, "Video URL must be valid URL!")
+	.required("Video URL is required!"),
 	thumbnail: yup
 		.string()
 		.matches(/^https?:\/\//, "Thumbnail URL must be valid URL!"),

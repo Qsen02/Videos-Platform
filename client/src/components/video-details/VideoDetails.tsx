@@ -47,16 +47,17 @@ export default function VideoDetails() {
 				) : (
 					<>
 						<h2>{video?.title}</h2>
-						<iframe
-							src={`https://www.youtube.com/embed/${video?.videoUrl}`}
-							allowFullScreen
-						></iframe>
+						<video controls>
+							<source src={video.videoUrl} type="video/mp4" />
+						</video>
 						<section className={styles.descriptionWrapper}>
 							<div className={styles.owner}>
-								<Link to={`/profile/${video.ownerId._id}`}><img
-									src={video?.ownerId.profileImage}
-									onError={errorProfileImage}
-								/></Link>
+								<Link to={`/profile/${video.ownerId._id}`}>
+									<img
+										src={video?.ownerId.profileImage}
+										onError={errorProfileImage}
+									/>
+								</Link>
 								<p>{video?.ownerId.username}</p>
 							</div>
 							<p className={styles.description}>
