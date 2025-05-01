@@ -4,7 +4,7 @@ import { del, get, post, put } from "./requester";
 const endpoint="videos";
 
 export async function getAllVideos(){
-    const videos=await get(`${endpoint}`);
+    const videos=await get(`${endpoint}/page/0`);
     return videos as Video[];
 }
 

@@ -9,6 +9,7 @@ import {
 	getAllVideos,
 	getVideoById,
 	likeVideo,
+	pagination,
 	searchVideos,
 	undislikeVideo,
 	unlikeVideo,
@@ -21,11 +22,13 @@ export function useGetAllVideos(initialValue: []) {
 		homeReducer,
 		initialValue
 	);
+	const [pages, setPages] = useState(1);
 	const [users, setUsers] = useState<User[] | null>(null);
 	const { loading, setLoading, error, setError } = useLoadingError(
 		false,
 		false
 	);
+	const [isOver, setIsOver] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -46,6 +49,10 @@ export function useGetAllVideos(initialValue: []) {
 		setVideos,
 		users,
 		setUsers,
+		pages,
+		setPages,
+		isOver,
+		setIsOver,
 		loading,
 		setLoading,
 		error,
@@ -130,5 +137,11 @@ export function useUndislikeVideo() {
 export function useUnlikeVideo() {
 	return async function (videoId: string | undefined | null) {
 		return await unlikeVideo(videoId);
+	};
+}
+
+export function useGetNextVideos() {
+	return async function (page: number) {
+		return await pagination(page);
 	};
 }

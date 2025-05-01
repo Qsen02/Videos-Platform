@@ -38,9 +38,9 @@ export async function getAllVideos() {
 }
 
 export async function pagination(page: number) {
-	const skipCount = page * 6;
+	const skipCount = page * 3;
 	const videos = await Videos.find()
-		.limit(6)
+		.limit(3)
 		.skip(skipCount)
 		.populate("ownerId")
 		.lean();

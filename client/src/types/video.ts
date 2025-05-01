@@ -14,6 +14,6 @@ export interface Video {
 }
 
 export interface ActionType {
-	type: "getAll" | "searchVideos";
+	type: "getAll" | "searchVideos" | "getNext";
 	payload: Video[] | [];
 }

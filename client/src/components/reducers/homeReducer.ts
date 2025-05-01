@@ -6,6 +6,8 @@ export const homeReducer:React.Reducer<Video[],ActionType>=(state,action)=>{
             return action.payload.slice();
         case "searchVideos":
             return action.payload.slice();
+        case "getNext":
+            return action.payload.slice();
         default:
             return state;
     }

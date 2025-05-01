@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
-import { useGetAllVideos, useSearchVideos } from "../../hooks/useVideos";
+import {
+	useGetAllVideos,
+	useGetNextVideos,
+	useSearchVideos,
+} from "../../hooks/useVideos";
 import styles from "./HomeStyles.module.css";
 import { Form, Formik } from "formik";
 import CustomInput from "../../commons/customInput";
@@ -17,6 +21,10 @@ export default function Home() {
 		setVideos,
 		users,
 		setUsers,
+		pages,
+		setPages,
+		isOver,
+		setIsOver,
 		loading,
 		setLoading,
 		error,
@@ -24,6 +32,33 @@ export default function Home() {
 	} = useGetAllVideos([]);
 	const searchVideos = useSearchVideos();
 	const searchUsers = useSearchUsers();
+	const getNextVideos = useGetNextVideos();
+
+	window.addEventListener("scroll", onScroll);
+	async function onScroll() {
+		const curPosition = window.innerHeight + window.scrollY;
+		const max = document.documentElement.scrollHeight;
+		if (curPosition >= max) {
+			if (!isOver) {
+				try {
+					setLoading(true);
+					const nexVideos = await getNextVideos(pages);
+					if (nexVideos.length == 0) {
+						setIsOver(true);
+					}
+					setPages(pages + 1);
+					setVideos({
+						type: "getNext",
+						payload: [...videos, ...nexVideos],
+					});
+					setLoading(false);
+				} catch (err) {
+					setLoading(false);
+					setError(true);
+				}
+			}
+		}
+	}
 
 	async function onSearch(values: { query: string; criteria: string }) {
 		try {
@@ -33,7 +68,7 @@ export default function Home() {
 				query = "No value";
 			}
 			const criteria = values.criteria;
-			if (criteria == "videos" || criteria=="Videos") {
+			if (criteria == "videos" || criteria == "Videos") {
 				const videos = await searchVideos(query);
 				setVideos({ type: "searchVideos", payload: videos });
 				setUsers(null);
