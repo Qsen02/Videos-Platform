@@ -13,7 +13,7 @@ export interface Video {
 	ownerId: User;
 }
 
-export interface ActionType {
-	type: "getAll" | "searchVideos" | "getNext";
-	payload: Video[] | [];
-}
+export type ActionType =
+	| { type: "getAll"; payload: Video[] | [] }
+	| { type: "searchVideos"; payload: Video[] | [] }
+	| { type: "getNext"; payload: (curVideos: Video[]) => Video[] | [] };

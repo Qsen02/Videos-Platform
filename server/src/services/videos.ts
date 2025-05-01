@@ -44,7 +44,6 @@ export async function pagination(page: number) {
 		.skip(skipCount)
 		.populate("ownerId")
 		.lean();
-
 	return videos;
 }
 

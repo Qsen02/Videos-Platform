@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { ActionType, Video } from "../types/video";
 import { useLoadingError } from "./useLoadingError";
 import {
@@ -29,10 +29,47 @@ export function useGetAllVideos(initialValue: []) {
 		false
 	);
 	const [isOver, setIsOver] = useState(false);
+	const pagesRef=useRef(pages);
+	const isOverRef=useRef(isOver);
+
+	useEffect(()=>{
+		pagesRef.current=pages;
+	},[pages]);
+
+	useEffect(()=>{
+		isOverRef.current=isOver;
+	},[isOver])
+
+	async function onScroll() {
+		const curPosition = window.innerHeight + window.scrollY;
+		const max = document.documentElement.scrollHeight;
+		if (curPosition >= max) {
+			if (!isOverRef.current) {
+				try {
+					setLoading(true);
+					const nexVideos = await pagination(pagesRef.current);
+					if (nexVideos.length == 0) {
+						setIsOver(true);
+					} else {
+						setPages((value)=>value+1);
+						setVideos({
+							type: "getNext",
+							payload: (curVideos)=>[...curVideos, ...nexVideos],
+						});
+					}
+					setLoading(false);
+				} catch (err) {
+					setLoading(false);
+					setError(true);
+				}
+			}
+		}
+	}
 
 	useEffect(() => {
 		(async () => {
 			try {
+				window.addEventListener("scroll", onScroll);
 				setLoading(true);
 				const videos = await getAllVideos();
 				setVideos({ type: "getAll", payload: videos });
@@ -42,6 +79,10 @@ export function useGetAllVideos(initialValue: []) {
 				setLoading(false);
 			}
 		})();
+
+		return () => {
+			window.removeEventListener("scroll", onScroll);
+		};
 	}, []);
 
 	return {
@@ -49,10 +90,6 @@ export function useGetAllVideos(initialValue: []) {
 		setVideos,
 		users,
 		setUsers,
-		pages,
-		setPages,
-		isOver,
-		setIsOver,
 		loading,
 		setLoading,
 		error,
@@ -137,11 +174,5 @@ export function useUndislikeVideo() {
 export function useUnlikeVideo() {
 	return async function (videoId: string | undefined | null) {
 		return await unlikeVideo(videoId);
-	};
-}
-
-export function useGetNextVideos() {
-	return async function (page: number) {
-		return await pagination(page);
 	};
 }
