@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
-import {
-	useGetAllVideos,
-	useSearchVideos,
-} from "../../hooks/useVideos";
+import { useGetAllVideos, useSearchVideos } from "../../hooks/useVideos";
 import styles from "./HomeStyles.module.css";
 import { Form, Formik } from "formik";
 import CustomInput from "../../commons/customInput";
@@ -14,12 +11,13 @@ import UserItem from "../../commons/user-item/UserItem";
 
 export default function Home() {
 	const { theme } = useUserThemeContext();
-	const [isSearched, setIsSearched] = useState(false);
 	const {
 		videos,
 		setVideos,
 		users,
 		setUsers,
+		isSearchedRef,
+		setIsSearched,
 		loading,
 		setLoading,
 		error,
@@ -99,9 +97,9 @@ export default function Home() {
 			<section className={styles.videoContainer}>
 				{!error && loading ? (
 					<span className="loader"></span>
-				) : videos.length == 0 && !isSearched && !error ? (
+				) : videos.length == 0 && !isSearchedRef.current && !error ? (
 					<h2>No videos yet.</h2>
-				) : isSearched && videos.length == 0 && !error ? (
+				) : isSearchedRef.current && videos.length == 0 && !error ? (
 					<h2>No results.</h2>
 				) : error ? (
 					<h2>Server is not responding, please try again later!</h2>

@@ -28,9 +28,11 @@ export function useGetAllVideos(initialValue: []) {
 		false,
 		false
 	);
+	const [isSearched, setIsSearched] = useState(false);
 	const [isOver, setIsOver] = useState(false);
 	const pagesRef=useRef(pages);
 	const isOverRef=useRef(isOver);
+	const isSearchedRef=useRef(isSearched);
 
 	useEffect(()=>{
 		pagesRef.current=pages;
@@ -40,11 +42,15 @@ export function useGetAllVideos(initialValue: []) {
 		isOverRef.current=isOver;
 	},[isOver])
 
+	useEffect(()=>{
+		isSearchedRef.current=isSearched;
+	},[isSearched])
+
 	async function onScroll() {
 		const curPosition = window.innerHeight + window.scrollY;
 		const max = document.documentElement.scrollHeight;
 		if (curPosition >= max) {
-			if (!isOverRef.current) {
+			if (!isOverRef.current && !isSearchedRef.current) {
 				try {
 					setLoading(true);
 					const nexVideos = await pagination(pagesRef.current);
@@ -90,6 +96,7 @@ export function useGetAllVideos(initialValue: []) {
 		setVideos,
 		users,
 		setUsers,
+		isSearchedRef,setIsSearched,
 		loading,
 		setLoading,
 		error,
