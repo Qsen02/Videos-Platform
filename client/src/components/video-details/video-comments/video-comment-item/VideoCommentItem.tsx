@@ -58,7 +58,7 @@ export default function VideoCommentItem({
 			}`}
 		>
 			<div className={styles.commentBody}>
-				<Link to={`/profile/${owner._id}`}>
+				<Link to={`/profiles/${owner._id}`}>
 					<img src={owner.profileImage} onError={errorProfileImage} />
 				</Link>
 				<p>{owner.username}</p>

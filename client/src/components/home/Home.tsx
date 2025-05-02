@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { useGetAllVideos, useSearchVideos } from "../../hooks/useVideos";
 import styles from "./HomeStyles.module.css";

@@ -53,7 +53,7 @@ export default function VideoDetails() {
 						></iframe>
 						<section className={styles.descriptionWrapper}>
 							<div className={styles.owner}>
-								<Link to={`/profile/${video.ownerId._id}`}><img
+								<Link to={`/profiles/${video.ownerId._id}`}><img
 									src={video?.ownerId.profileImage}
 									onError={errorProfileImage}
 								/></Link>

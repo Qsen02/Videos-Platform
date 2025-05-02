@@ -27,7 +27,7 @@ export default function VideoItem({
 		>
 			{!isProfilePage ? (
 				<div className={styles.header}>
-					<Link to={`/profile/${owner._id}`}>
+					<Link to={`/profiles/${owner._id}`}>
 						<img
 							src={owner.profileImage}
 							onError={errorProfileImage}

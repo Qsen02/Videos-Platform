@@ -17,7 +17,7 @@ export default function UserItem({
 	const { theme } = useUserThemeContext();
 
 	return (
-		<Link to={`/profile/${id}`}>
+		<Link to={`/profiles/${id}`}>
 			<article
 				className={`${styles.wrapper} ${
 					theme == "dark" ? "darkTheme-dark" : "whiteTheme-light"

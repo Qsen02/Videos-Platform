@@ -35,9 +35,6 @@ export default function ProfileFollowed() {
 								id={el?._id}
 								profileImage={el.profileImage}
 								username={el.username}
-								email={el.email}
-								followers={el.followers}
-								password={el.password}
 							/>
 						))
 					)}

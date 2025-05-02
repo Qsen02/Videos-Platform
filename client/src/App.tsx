@@ -22,6 +22,7 @@ import ProfileFollowed from "./components/profile/profile-followed/ProfileFollow
 import GuestGuard from "./commons/guest-guard/GuestGuard";
 import UserGuard from "./commons/user-guard/UserGuard";
 import VideoDetailsGuard from "./commons/video-details-guard/VideoDetailsGuard";
+import Profiles from "./components/profile/Profiles";
 
 function App() {
 	return (
@@ -63,6 +64,7 @@ function App() {
 									element={<ProfileFollowed />}
 								/>
 							</Route>
+							<Route path="profiles/:userId" element={<Profiles/>}/>
 						</Route>
 						<Route
 							path="/videos/:videoId"
