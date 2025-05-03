@@ -57,7 +57,7 @@ commentRouter.post(
 				videoId,
 				content
 			);
-			res.json(updatedVideo);
+			res.status(201).json(updatedVideo);
 		} catch (err) {
 			if (err instanceof Error) {
 				res.status(400).json({ message: err.message });

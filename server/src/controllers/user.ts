@@ -57,7 +57,11 @@ userRouter.get("/created-videos/:userId", isUser(), async (req, res) => {
 		return;
 	}
 	const videos = await getCreatedVideos(userId);
-	res.json(videos);
+	if (videos.length == 0) {
+		res.status(204).json(videos);
+	} else {
+		res.json(videos);
+	}
 });
 
 userRouter.get("/follwedUsers/:userId", isUser(), async (req, res) => {
@@ -67,8 +71,12 @@ userRouter.get("/follwedUsers/:userId", isUser(), async (req, res) => {
 		res.status(404).json({ message: "Resource not found!" });
 		return;
 	}
-	const follwedUsers = await getFollwedUsers(userId);
-	res.json(follwedUsers);
+	const followedUsers = await getFollwedUsers(userId);
+	if (followedUsers.length == 0) {
+		res.status(204).json(followedUsers);
+	} else {
+		res.json(followedUsers);
+	}
 });
 
 userRouter.post(
@@ -108,7 +116,7 @@ userRouter.post(
 				fields.profileImage
 			);
 			const token = setToken(user);
-			res.json({
+			res.status(201).json({
 				_id: user._id,
 				username: user.username,
 				email: user.email,

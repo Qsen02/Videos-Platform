@@ -46,6 +46,9 @@ export default function Home() {
 		} catch (err) {
 			setError(true);
 			setLoading(false);
+			if (err instanceof Error) {
+				console.log(err.message);
+			}
 		}
 	}
 

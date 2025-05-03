@@ -64,7 +64,7 @@ videoRouter.post(
 		.withMessage("Title must be at least 3 symbols long!"),
 	body("videoUrl")
 		.trim()
-		.isLength({min:11,max:11})
+		.isLength({ min: 11, max: 11 })
 		.withMessage("Video ID must be exactly 11 symbols!"),
 	body("thumbnail")
 		.trim()
@@ -92,7 +92,7 @@ videoRouter.post(
 				fields.thumbnail,
 				user
 			);
-			res.json(newVideo);
+			res.status(201).json(newVideo);
 		} catch (err) {
 			if (err instanceof Error) {
 				res.status(400).json({ message: err.message });
@@ -124,7 +124,7 @@ videoRouter.put(
 		.withMessage("Title must be at least 3 symbols long!"),
 	body("videoUrl")
 		.trim()
-		.isLength({min:11,max:11})
+		.isLength({ min: 11, max: 11 })
 		.withMessage("Video ID must be exactly 11 symbols!"),
 	body("thumbnail")
 		.trim()
