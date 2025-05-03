@@ -7,6 +7,7 @@ import {
 	useUnlikeComment,
 } from "../../../../hooks/useComments";
 import { Video } from "../../../../types/video";
+import { useUserThemeContext } from "../../../../contexts/UserAndTheme";
 
 interface VideoCommentItemProps {
 	commentId: string;
@@ -32,6 +33,7 @@ export default function VideoCommentItem({
 	const likeComment = useLikeComment();
 	const unlikeComment = useUnlikeComment();
 	const navigate = useNavigate();
+	const { user } = useUserThemeContext();
 
 	async function onLike() {
 		try {
@@ -58,9 +60,16 @@ export default function VideoCommentItem({
 			}`}
 		>
 			<div className={styles.commentBody}>
-				<Link to={`/profiles/${owner._id}`}>
+				{user ? (
+					<Link to={`/profiles/${owner._id}`}>
+						<img
+							src={owner.profileImage}
+							onError={errorProfileImage}
+						/>
+					</Link>
+				) : (
 					<img src={owner.profileImage} onError={errorProfileImage} />
-				</Link>
+				)}
 				<p>{owner.username}</p>
 				{curUser?._id == owner._id ? (
 					<>

@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import styles from "./VideoItemStyles.module.css";
 import { User } from "../../types/user";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
-import { errorProfileImage, errorVideoImage } from "../../utils/errorVideoAndImage";
+import {
+	errorProfileImage,
+	errorVideoImage,
+} from "../../utils/errorVideoAndImage";
 
 interface HomeVideosProp {
 	id: string;
@@ -19,7 +22,7 @@ export default function VideoItem({
 	owner,
 	isProfilePage,
 }: HomeVideosProp) {
-	const { theme } = useUserThemeContext();
+	const { theme, user } = useUserThemeContext();
 	return (
 		<article
 			className={theme == "dark" ? "darkTheme-dark" : "whiteTheme-light"}
@@ -27,12 +30,19 @@ export default function VideoItem({
 		>
 			{!isProfilePage ? (
 				<div className={styles.header}>
-					<Link to={`/profiles/${owner._id}`}>
+					{user ? (
+						<Link to={`/profiles/${owner._id}`}>
+							<img
+								src={owner.profileImage}
+								onError={errorProfileImage}
+							/>
+						</Link>
+					) : (
 						<img
 							src={owner.profileImage}
 							onError={errorProfileImage}
 						/>
-					</Link>
+					)}
 					<p>{owner.username}</p>
 				</div>
 			) : (
