@@ -74,6 +74,8 @@ export async function getCreatedVideos(userId: string) {
 
 export async function getUserById(userId: string) {
 	const user = await Users.findById(userId).populate("followers").lean();
+	console.log(userId)
+	console.log(user);
 	if (!user) {
 		throw new Error("Resource not found!");
 	}
