@@ -12,7 +12,7 @@ This is platfrom for posting videos, searching and watching videos.
 - Server: You can install all dependencies with command `npm i` and nex you can start server with nodemon with command `npm run debug` or start server with node with command `npm start`.
 - DB: In server/src/config/mongoose.ts in mongoose.connect() add localDB constant.
 # Deployment link:
-https://videos-platform-server.onrender.com
+https://videos-platform-client.onrender.com
 
 Warning: For deployment is used free Render instance and server may start after about 50 seconds.
 # Screenshots
