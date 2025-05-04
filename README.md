@@ -10,6 +10,7 @@ This is platfrom for posting videos, searching and watching videos.
 # How to start client and server
 - Client: First you can install all dependencies with command `npm i` and next you can start client with command `npm run dev`.
 - Server: You can install all dependencies with command `npm i` and nex you can start server with nodemon with command `npm run debug` or start server with node with command `npm start`.
+- DB: In server/src/config/mongoose.ts in mongoose.connect() add localDB constant.
 # Screenshots
 -Home page (light)
 ![Screenshot 2025-05-03 124302](https://github.com/user-attachments/assets/754fc118-f907-4e05-941a-8eed4230796a)
