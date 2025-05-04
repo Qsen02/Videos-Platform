@@ -27,7 +27,6 @@ userRouter.get("/logout", isUser(), (req, res) => {
 
 userRouter.get("/:userId", async (req, res) => {
 	const userId = req.params.userId;
-	console.log(req.ip);
 	try {
 		const user = await getUserById(userId);
 		res.json(user);
