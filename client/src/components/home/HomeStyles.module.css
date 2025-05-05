@@ -74,4 +74,13 @@
     .form{
         flex-direction: column;
     }
+    .form input::placeholder{
+        font-size: 12pt;
+    }
+    .form select{
+        font-size: 12pt;
+    }
+    .form input{
+        font-size: 12pt;
+    }
 }
