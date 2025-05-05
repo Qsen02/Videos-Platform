@@ -52,12 +52,12 @@ export function useGetAllVideos(initialValue: []) {
 		if (curPosition >= max) {
 			if (!isOverRef.current && !isSearchedRef.current) {
 				try {
+					setPages((value)=>value+1);
 					setLoading(true);
 					const nexVideos = await pagination(pagesRef.current);
 					if (nexVideos.length == 0) {
 						setIsOver(true);
 					} else {
-						setPages((value)=>value+1);
 						setVideos({
 							type: "getNext",
 							payload: (curVideos)=>[...curVideos, ...nexVideos],
