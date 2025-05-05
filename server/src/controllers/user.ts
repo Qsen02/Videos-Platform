@@ -57,11 +57,7 @@ userRouter.get("/created-videos/:userId", isUser(), async (req, res) => {
 		return;
 	}
 	const videos = await getCreatedVideos(userId);
-	if (videos.length == 0) {
-		res.status(204).json(videos);
-	} else {
-		res.json(videos);
-	}
+	res.json(videos);
 });
 
 userRouter.get("/follwedUsers/:userId", isUser(), async (req, res) => {
@@ -72,11 +68,7 @@ userRouter.get("/follwedUsers/:userId", isUser(), async (req, res) => {
 		return;
 	}
 	const followedUsers = await getFollwedUsers(userId);
-	if (followedUsers.length == 0) {
-		res.status(204).json(followedUsers);
-	} else {
-		res.json(followedUsers);
-	}
+	res.json(followedUsers);
 });
 
 userRouter.post(
