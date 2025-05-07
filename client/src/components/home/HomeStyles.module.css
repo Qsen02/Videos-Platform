@@ -1,86 +1,98 @@
-.form{
-    margin: 0 auto;
-    background-color: transparent;
-    width: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap:20px;
+.form {
+	margin: 0 auto;
+	background-color: transparent;
+	width: 90%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
 }
 
-.form p{
-    display: flex;
-    align-items: center;
+.form p {
+	display: flex;
+	align-items: center;
 }
 
-.form input{
-    width: 350px;
-    height: 40px;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    border: none;
-    padding-left: 10px;
-    font-size: 14pt;
+.form input {
+	width: 350px;
+	height: 40px;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border: none;
+	padding-left: 10px;
+	font-size: 14pt;
 }
 
-.form input::placeholder{
-    font-size: 14pt;
+.form input::placeholder {
+	font-size: 14pt;
 }
 
-.form button{
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    border: none;
-    height: 40px;
-    padding-right: 20px;
-    cursor: pointer;
+.form button {
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+	border: none;
+	height: 40px;
+	padding-right: 20px;
+	cursor: pointer;
 }
 
-.form button i{
-    font-size: 16pt;
+.form button i {
+	font-size: 16pt;
 }
 
-.form select{
-    border-radius: 20px;
-    width: 100px;
-    height: 40px;
-    font-size: 14pt;
-    border: none;
-    padding-left: 10px;
+.form select {
+	border-radius: 20px;
+	width: 100px;
+	height: 40px;
+	font-size: 14pt;
+	border: none;
+	padding-left: 10px;
 }
 
-.videoContainer{
-    width: 100%;
-    margin: 30px auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap:20px;
+.videoContainer {
+	width: 100%;
+	margin: 30px auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 20px;
 }
 
-
-@media(max-width:700px){
-    .videoContainer{
-        flex-direction: column;
-        align-items: center;
-        flex-wrap: nowrap;
-    }
-    .form input{
-        width: 200px;
-    }
+.typedSearchContainer {
+    position: absolute;
+    top:170px;
+    left:50%;
+    transform: translate(-65%);
+	width: 393px;
+	height: 60%;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+    border:1.5px solid darkgrey;
+    border-top: none;
 }
 
-@media(max-width:500px){
-    .form{
-        flex-direction: column;
-    }
-    .form input::placeholder{
-        font-size: 12pt;
-    }
-    .form select{
-        font-size: 12pt;
-    }
-    .form input{
-        font-size: 12pt;
-    }
+@media (max-width: 700px) {
+	.videoContainer {
+		flex-direction: column;
+		align-items: center;
+		flex-wrap: nowrap;
+	}
+	.form input {
+		width: 200px;
+	}
+}
+
+@media (max-width: 500px) {
+	.form {
+		flex-direction: column;
+	}
+	.form input::placeholder {
+		font-size: 12pt;
+	}
+	.form select {
+		font-size: 12pt;
+	}
+	.form input {
+		font-size: 12pt;
+	}
 }

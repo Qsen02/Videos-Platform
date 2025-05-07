@@ -30,21 +30,24 @@ export function useGetAllVideos(initialValue: []) {
 	);
 	const [isSearched, setIsSearched] = useState(false);
 	const [isOver, setIsOver] = useState(false);
-	const pagesRef=useRef(pages);
-	const isOverRef=useRef(isOver);
-	const isSearchedRef=useRef(isSearched);
+	const [typed, setTyped] = useState(false);
+	const [typedVideos, setTypedVideos] = useState<Video[]>([]);
+	const [typedUsers, setTypedUsers] = useState<User[]>([]);
+	const pagesRef = useRef(pages);
+	const isOverRef = useRef(isOver);
+	const isSearchedRef = useRef(isSearched);
 
-	useEffect(()=>{
-		pagesRef.current=pages;
-	},[pages]);
+	useEffect(() => {
+		pagesRef.current = pages;
+	}, [pages]);
 
-	useEffect(()=>{
-		isOverRef.current=isOver;
-	},[isOver])
+	useEffect(() => {
+		isOverRef.current = isOver;
+	}, [isOver]);
 
-	useEffect(()=>{
-		isSearchedRef.current=isSearched;
-	},[isSearched])
+	useEffect(() => {
+		isSearchedRef.current = isSearched;
+	}, [isSearched]);
 
 	async function onScroll() {
 		const curPosition = window.innerHeight + window.scrollY;
@@ -52,7 +55,7 @@ export function useGetAllVideos(initialValue: []) {
 		if (curPosition >= max) {
 			if (!isOverRef.current && !isSearchedRef.current) {
 				try {
-					setPages((value)=>value+1);
+					setPages((value) => value + 1);
 					setLoading(true);
 					const nexVideos = await pagination(pagesRef.current);
 					if (nexVideos.length == 0) {
@@ -60,7 +63,10 @@ export function useGetAllVideos(initialValue: []) {
 					} else {
 						setVideos({
 							type: "getNext",
-							payload: (curVideos)=>[...curVideos, ...nexVideos],
+							payload: (curVideos) => [
+								...curVideos,
+								...nexVideos,
+							],
 						});
 					}
 					setLoading(false);
@@ -96,7 +102,14 @@ export function useGetAllVideos(initialValue: []) {
 		setVideos,
 		users,
 		setUsers,
-		isSearchedRef,setIsSearched,
+		isSearchedRef,
+		setIsSearched,
+		typed,
+		setTyped,
+		typedVideos,
+		setTypedVideos,
+		typedUsers,
+		setTypedUsers,
 		loading,
 		setLoading,
 		error,

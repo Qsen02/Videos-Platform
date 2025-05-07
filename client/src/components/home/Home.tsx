@@ -7,6 +7,8 @@ import VideoItem from "../../commons/video-item/VideoItem";
 import { useSearchUsers } from "../../hooks/useUsers";
 import CustomSelect from "../../commons/customSelect";
 import UserItem from "../../commons/user-item/UserItem";
+import TypedVideoItem from "../../commons/typed-video-item/TypedVideoItem";
+import TypedUserItem from "../../commons/typed-user-item/TypedUserItem";
 
 export default function Home() {
 	const { theme } = useUserThemeContext();
@@ -17,6 +19,12 @@ export default function Home() {
 		setUsers,
 		isSearchedRef,
 		setIsSearched,
+		typed,
+		setTyped,
+		typedVideos,
+		setTypedVideos,
+		typedUsers,
+		setTypedUsers,
 		loading,
 		setLoading,
 		error,
@@ -28,6 +36,7 @@ export default function Home() {
 	async function onSearch(values: { query: string; criteria: string }) {
 		try {
 			setLoading(true);
+			setIsSearched(true);
 			let query = values.query;
 			if (query == "") {
 				query = "No value";
@@ -41,14 +50,39 @@ export default function Home() {
 				const users = await searchUsers(query);
 				setUsers(users);
 			}
-			setIsSearched(true);
+			setTyped(false);
 			setLoading(false);
 		} catch (err) {
 			setError(true);
 			setLoading(false);
-			if (err instanceof Error) {
-				console.log(err.message);
+		}
+	}
+
+	async function onChangeHandler(values: {
+		query: string;
+		criteria: "videos" | "users" | "Videos";
+	}) {
+		try {
+			setLoading(true);
+			setTyped(true);
+			let query = values.query;
+			if (query == "") {
+				query = "No value";
 			}
+			const criteria = values.criteria;
+			if (criteria == "videos" || criteria == "Videos") {
+				const videos = await searchVideos(query);
+				setTypedVideos(videos);
+				setTypedUsers([]);
+			} else {
+				const users = await searchUsers(query);
+				setTypedUsers(users);
+			}
+			setLoading(false);
+		} catch (err) {
+			setTyped(false);
+			setError(true);
+			setLoading(false);
 		}
 	}
 
@@ -70,6 +104,7 @@ export default function Home() {
 										? "darkTheme-dark"
 										: "whiteTheme-light"
 								}
+								changeHandler={onChangeHandler}
 							/>
 							<button
 								type="submit"
@@ -93,6 +128,37 @@ export default function Home() {
 								}
 							/>
 						</p>
+						{typed ? (
+							typedVideos.length > 0 ? (
+								<section
+									className={styles.typedSearchContainer}
+								>
+									{typedVideos.map((el) => (
+										<TypedVideoItem
+											key={el._id}
+											id={el._id}
+											title={el.title}
+										/>
+									))}
+								</section>
+							) : typedUsers.length > 0 ? (
+								<section
+									className={styles.typedSearchContainer}
+								>
+									{typedUsers.map((el) => (
+										<TypedUserItem
+											key={el._id}
+											id={el._id}
+											username={el.username}
+										/>
+									))}
+								</section>
+							) : (
+								""
+							)
+						) : (
+							""
+						)}
 					</Form>
 				)}
 			</Formik>
@@ -105,7 +171,7 @@ export default function Home() {
 					<h2>No results.</h2>
 				) : error ? (
 					<h2>Server is not responding, please try again later!</h2>
-				) : users && users.length > 0 ? (
+				) : users && users.length > 0 && !typed ? (
 					users.map((el) => (
 						<UserItem
 							key={el._id}
@@ -116,7 +182,7 @@ export default function Home() {
 					))
 				) : users?.length == 0 ? (
 					<h2>No users yet</h2>
-				) : (
+				) : !typed ? (
 					videos.map((el) => (
 						<VideoItem
 							key={el._id}
@@ -127,6 +193,8 @@ export default function Home() {
 							isProfilePage={false}
 						/>
 					))
+				) : (
+					""
 				)}
 			</section>
 		</>

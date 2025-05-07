@@ -1,0 +1,10 @@
+.wrapper{
+    padding: 10px;
+    border-bottom: 1.5px solid darkgrey;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper:hover{
+    background-color: darkgrey;
+}
