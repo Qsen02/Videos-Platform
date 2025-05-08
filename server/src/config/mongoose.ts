@@ -8,7 +8,7 @@ dotenv.config();
 const localDB="mongodb://127.0.0.1:27017/Videos-Platfrom";
 
 export async function runDB(){
-    await mongoose.connect(process.env.PRODDB!);
+    await mongoose.connect(localDB);
     await Users;
     await Videos;
     await Comments;

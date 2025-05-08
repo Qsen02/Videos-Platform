@@ -94,7 +94,7 @@ export default function Home() {
 			>
 				{(props) => (
 					<Form className={styles.form}>
-						<p>
+						<p className={styles.input}>
 							<CustomInput
 								type="text"
 								name="query"
@@ -117,7 +117,7 @@ export default function Home() {
 								<i className="fa-solid fa-magnifying-glass"></i>
 							</button>
 						</p>
-						<p>
+						<p className={styles.select}>
 							<CustomSelect
 								value="videos"
 								name="criteria"

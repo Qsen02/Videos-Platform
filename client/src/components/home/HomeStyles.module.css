@@ -60,6 +60,7 @@
 
 .typedSearchContainer {
     position: absolute;
+	padding-top:10px ;
     top:170px;
     left:50%;
     transform: translate(-65%);
@@ -69,6 +70,9 @@
 	border-bottom-right-radius: 20px;
     border:1.5px solid darkgrey;
     border-top: none;
+	overflow: auto;
+	font-size: 14pt;
+	text-align: center;
 }
 
 @media (max-width: 700px) {
@@ -80,9 +84,15 @@
 	.form input {
 		width: 200px;
 	}
+	.typedSearchContainer{
+		width: 250px;
+		font-size: 12pt;
+		transform: translate(-74.5%);
+		top:155px;
+	}
 }
 
-@media (max-width: 500px) {
+@media (max-width: 550px) {
 	.form {
 		flex-direction: column;
 	}
@@ -92,7 +102,19 @@
 	.form select {
 		font-size: 12pt;
 	}
+	.form .input{
+		order:2;
+	}
+	.form .select{
+		order:1;
+	}
 	.form input {
 		font-size: 12pt;
+	}
+	.typedSearchContainer{
+		width: 245px;
+		font-size: 10pt;
+		transform: translate(-50%);
+		top:385px;
 	}
 }
