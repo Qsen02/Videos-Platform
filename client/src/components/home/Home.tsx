@@ -129,7 +129,7 @@ export default function Home() {
 							/>
 						</p>
 						{typed ? (
-							typedVideos.length > 0 ? (
+							typedVideos.length > 0 && typedUsers.length==0? (
 								<section
 									className={styles.typedSearchContainer}
 								>
@@ -141,7 +141,7 @@ export default function Home() {
 										/>
 									))}
 								</section>
-							) : typedUsers.length > 0 ? (
+							) : typedUsers.length > 0? (
 								<section
 									className={styles.typedSearchContainer}
 								>
@@ -154,7 +154,11 @@ export default function Home() {
 									))}
 								</section>
 							) : (
-								""
+								<section
+									className={styles.typedSearchContainer}
+								>
+									<h2>No results found</h2>
+								</section>
 							)
 						) : (
 							""
