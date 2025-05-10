@@ -6,5 +6,5 @@ export interface Answer {
     content:string,
     ownerId:User,
     commentId:Comment,
-    likes:User[]
+    likes:string[]
 }

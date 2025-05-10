@@ -8,7 +8,7 @@ export interface AnswersItemProps {
 	id: string;
 	content: string;
 	owner: User;
-	likes: User[];
+	likes: string[];
 	commentId:string | undefined;
 	videoId:string | undefined;
 }
@@ -48,6 +48,23 @@ export default function AnswersItem({
 				) : (
 					""
 				)}
+					<div className={styles.answerLikes}>
+						{user?._id &&
+						(likes.includes(user._id) ||
+							user._id == owner._id)? (
+							<i
+								className="fa-solid fa-thumbs-up"
+								id={
+									user._id == owner._id ? styles.owner : ""
+								}
+							></i>
+						) : (
+							<i
+								className="fa-regular fa-thumbs-up"
+							></i>
+						)}
+						<p>{likes.length}</p>
+					</div>
 			</div>
 			<div className={styles.body}>
 				<p>{content}</p>
