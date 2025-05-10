@@ -8,7 +8,7 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 10px;
-    font-size: 16pt;
+    font-size: 14pt;
     text-align: center;
 }
 
@@ -49,7 +49,7 @@
 @media(max-width:900px){
     .wrapper{
         width: 70vw;
-        font-size: 14pt;
+        font-size: 12pt;
     }
     .wrapper form{
         width: 90%;
@@ -62,7 +62,7 @@
 @media(max-width:500px){
      .wrapper{
         width: 85vw;
-        font-size: 12pt;
+        font-size: 10pt;
     }
     .wrapper form{
         gap:10px;
