@@ -1,4 +1,4 @@
-import { useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useCreateAnswer, useGetAllAnswers } from "../../../hooks/useAnswers";
 import { Form, Formik, FormikHelpers } from "formik";
 import CustomInput from "../../../commons/customInput";
@@ -15,6 +15,7 @@ export default function AnswersSection() {
 		commentId
 	);
 	const createAnswer = useCreateAnswer();
+	const navigate=useNavigate();
 
 	async function onAnswer(
 		values: CommentFormTypes,
@@ -29,7 +30,7 @@ export default function AnswersSection() {
 	}
 
 	function onBack() {
-		history.back();
+		navigate(`/videos/${videoId}`);
 	}
 
 	return (

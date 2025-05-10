@@ -19,7 +19,7 @@ export async function editAnswer(answerId:string,data:object){
     return answer as Answer;
 }
 
-export async function deleteAnswer(answerId:string,commentId:string){
+export async function deleteAnswer(answerId:string| undefined,commentId:string | undefined){
     const comment=await del(`${endpoint}/${answerId}/in/${commentId}`);
     return comment as Comment;
 }

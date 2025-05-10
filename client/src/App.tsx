@@ -24,6 +24,7 @@ import UserGuard from "./commons/user-guard/UserGuard";
 import VideoDetailsGuard from "./commons/video-details-guard/VideoDetailsGuard";
 import Profiles from "./components/profile/Profiles";
 import AnswersSection from "./components/video-details/answers-section/AnswersSection";
+import AnswerDelete from "./components/video-details/answer-delete/AnswerDelete";
 
 function App() {
 	return (
@@ -91,6 +92,10 @@ function App() {
 								<Route
 									path="comments/:commentId/answers"
 									element={<AnswersSection />}
+								/>
+								<Route
+									path="comments/:commentId/answers/:answerId/delete"
+									element={<AnswerDelete />}
 								/>
 							</Route>
 						</Route>
