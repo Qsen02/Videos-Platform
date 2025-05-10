@@ -1,3 +1,4 @@
+import { Answers } from "../models/answers";
 import { Comments } from "../models/comments";
 import { Videos } from "../models/videos";
 
@@ -5,6 +6,7 @@ export async function getCommentById(commentId: string) {
 	const comment = await Comments.findById(commentId)
 		.populate("videoId")
 		.populate("ownerId")
+		.populate("answers")
 		.lean();
 	if (!comment) {
 		throw new Error("Resource not found!");
@@ -53,7 +55,7 @@ export async function createComment(
 }
 
 export async function deleteComment(videoId: string, commentId: string) {
-	await Comments.findByIdAndDelete(commentId);
+	const comment=await Comments.findById(commentId);
 	const updatedVideo = await Videos.findByIdAndUpdate(
 		videoId,
 		{ $pull: { comments: commentId } },
@@ -68,6 +70,8 @@ export async function deleteComment(videoId: string, commentId: string) {
 		})
 		.populate("ownerId")
 		.lean();
+	await Answers.deleteMany({commentId:comment?._id});
+	await comment?.deleteOne();
 	return updatedVideo;
 }
 
