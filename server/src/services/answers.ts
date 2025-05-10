@@ -13,7 +13,7 @@ export async function getAnswerById(answerId: string) {
 }
 
 export async function createAnswer(
-	userId: string,
+	userId: string | undefined,
 	commentId: string,
 	content: string
 ) {
@@ -64,7 +64,7 @@ export async function deleteAnswer(answerId: string, commentId: string) {
 	return updatedComment;
 }
 
-export async function likeAnswer(userId: string, answerId: string) {
+export async function likeAnswer(userId: string | undefined, answerId: string) {
 	const updatedAnswer = await Answers.findByIdAndUpdate(
 		answerId,
 		{
@@ -78,7 +78,7 @@ export async function likeAnswer(userId: string, answerId: string) {
 	return updatedAnswer;
 }
 
-export async function unlikeAnswer(userId: string, answerId: string) {
+export async function unlikeAnswer(userId: string | undefined, answerId: string) {
 	const updatedAnswer = await Answers.findByIdAndUpdate(
 		answerId,
 		{
