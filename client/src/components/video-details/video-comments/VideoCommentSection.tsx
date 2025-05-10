@@ -75,6 +75,7 @@ export default function VideoCommentSection({
 							content={el.content}
 							curUser={user}
 							likes={el.likes}
+							answers={el.answers}
 							setVideo={setVideoHandler}
 						/>
 					))

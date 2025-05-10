@@ -8,6 +8,7 @@ import {
 } from "../../../../hooks/useComments";
 import { Video } from "../../../../types/video";
 import { useUserThemeContext } from "../../../../contexts/UserAndTheme";
+import { Answer } from "../../../../types/answer";
 
 interface VideoCommentItemProps {
 	commentId: string;
@@ -17,6 +18,7 @@ interface VideoCommentItemProps {
 	content: string;
 	curUser: UserForAuth | null | undefined;
 	likes: string[];
+	answers: Answer[];
 	setVideo: React.Dispatch<React.SetStateAction<Video>>;
 }
 
@@ -28,6 +30,7 @@ export default function VideoCommentItem({
 	content,
 	curUser,
 	likes,
+	answers,
 	setVideo,
 }: VideoCommentItemProps) {
 	const likeComment = useLikeComment();
@@ -119,6 +122,9 @@ export default function VideoCommentItem({
 				)}
 			</div>
 			<p>{content}</p>
+			<Link to={`/videos/${videoId}/comments/${commentId}/answers`} className={styles.answers}>
+				Answers: {answers.length}
+			</Link>
 		</article>
 	);
 }

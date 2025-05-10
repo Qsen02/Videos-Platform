@@ -87,6 +87,17 @@
 	font-weight: initial;
 }
 
+.answers{
+	padding: 10px 20px 10px 20px;
+	border-radius: 10px;
+	border: 1px solid grey;
+	font-size: 14pt;
+}
+
+.answers:hover{
+	background-color: grey;
+}
+
 @media (max-width: 800px) {
 	.wrapper {
 		font-size: 14pt;
@@ -101,6 +112,9 @@
 	.guestLikes{
         top:25px;
     }
+	.answers{
+		font-size: 12pt;
+	}
 }
 
 @media (max-width: 450px) {
@@ -119,4 +133,8 @@
         right: 15px;
         top:15px;
     }
+	.answers{
+		padding: 5px 10px 5px 10px;
+		font-size: 10pt;
+	}
 }
