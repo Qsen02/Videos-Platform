@@ -9,7 +9,7 @@ export async function getAnswerById(answerId:string){
     return answer as Answer;
 }
 
-export async function createAnswer(commentId:string,data:object){
+export async function createAnswer(commentId:string | undefined,data:object){
     const comment=await post(`${endpoint}/in/${commentId}`,data);
     return comment as Comment;
 }

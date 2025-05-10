@@ -1,17 +1,24 @@
-import { useParams } from "react-router-dom";
-import { useGetAllAnswers } from "../../../hooks/useAnswers";
-import { Form, Formik } from "formik";
+import { useOutletContext, useParams } from "react-router-dom";
+import { useCreateAnswer, useGetAllAnswers } from "../../../hooks/useAnswers";
+import { Form, Formik, FormikHelpers } from "formik";
 import CustomInput from "../../../commons/customInput";
 import { useUserThemeContext } from "../../../contexts/UserAndTheme";
 import AnswersItem from "../../../commons/answers-item/AnswersItem";
 import styles from "./AnswersSectionStyles.module.css";
+import { CommentFormTypes } from "../../../types/initialFormTypes";
 
 export default function AnswersSection() {
 	const { commentId } = useParams();
 	const { theme } = useUserThemeContext();
-	const { answers, owner, loading, error } = useGetAllAnswers([], commentId);
+	const { answers, setAnswers,owner, loading, error } = useGetAllAnswers([], commentId);
+	const createAnswer=useCreateAnswer();
 
-	async function onAnswer() {}
+	async function onAnswer(values:CommentFormTypes,actions:FormikHelpers<CommentFormTypes>) {
+		const content=values.content;
+		const updatedComment=await createAnswer(commentId,{content:content});
+		setAnswers(updatedComment.answers);
+		actions.resetForm();
+	}
 
 	function onBack() {
 		history.back();

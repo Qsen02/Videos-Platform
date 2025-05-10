@@ -3,6 +3,7 @@ import { Answer } from "../types/answer";
 import { useLoadingError } from "./useLoadingError";
 import { getCommentById } from "../api/comments";
 import { User } from "../types/user";
+import { createAnswer } from "../api/answers";
 
 export function useGetAllAnswers(initialValues: [], commentId: string | undefined) {
 	const [answers, setAnswers] = useState<Answer[]>(initialValues);
@@ -28,6 +29,12 @@ export function useGetAllAnswers(initialValues: [], commentId: string | undefine
 	}, []);
 
     return {
-        answers,owner,loading,error
+        answers,setAnswers,owner,loading,error
+    }
+}
+
+export function useCreateAnswer(){
+    return async function (commentId:string | undefined,data:object){
+        return await createAnswer(commentId,data);
     }
 }

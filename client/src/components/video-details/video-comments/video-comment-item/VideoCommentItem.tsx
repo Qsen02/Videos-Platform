@@ -122,9 +122,16 @@ export default function VideoCommentItem({
 				)}
 			</div>
 			<p>{content}</p>
-			<Link to={`/videos/${videoId}/comments/${commentId}/answers`} className={styles.answers}>
-				Answers: {answers.length}
-			</Link>
+			{curUser ? (
+				<Link
+					to={`/videos/${videoId}/comments/${commentId}/answers`}
+					className={styles.answers}
+				>
+					Answers: {answers.length}
+				</Link>
+			) : (
+				""
+			)}
 		</article>
 	);
 }

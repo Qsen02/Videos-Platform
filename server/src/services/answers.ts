@@ -30,7 +30,13 @@ export async function createAnswer(
 		},
 		{ new: true }
 	)
-		.populate("answers")
+		.populate({
+			path: "answers",
+			populate: {
+				path: "ownerId",
+				model: "Users",
+			},
+		})
 		.populate("ownerId")
 		.lean();
 
@@ -78,7 +84,10 @@ export async function likeAnswer(userId: string | undefined, answerId: string) {
 	return updatedAnswer;
 }
 
-export async function unlikeAnswer(userId: string | undefined, answerId: string) {
+export async function unlikeAnswer(
+	userId: string | undefined,
+	answerId: string
+) {
 	const updatedAnswer = await Answers.findByIdAndUpdate(
 		answerId,
 		{
@@ -93,11 +102,10 @@ export async function unlikeAnswer(userId: string | undefined, answerId: string)
 }
 
 export async function checkAnswerId(answerId: string) {
-    const user = await Answers.findById(answerId).lean();
-    if (!user) {
-        return false;
-    }
+	const user = await Answers.findById(answerId).lean();
+	if (!user) {
+		return false;
+	}
 
-    return true;
+	return true;
 }
-
