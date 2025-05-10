@@ -1,0 +1,49 @@
+.wrapperItem {
+	width: 80%;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+	border-radius: 9px;
+}
+
+.header {
+	width: 95%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
+}
+.header img {
+	height: 70px;
+	width: 70px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.body{
+    width: 95%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.body p {
+	width: 100%;
+	word-wrap: break-word;
+    text-align: left;
+}
+
+@media (max-width: 900px) {
+	.header img {
+		height: 50px;
+		width: 50px;
+	}
+}
+
+@media (max-width: 500px) {
+	.header img {
+		height: 30px;
+		width: 30px;
+	}
+}

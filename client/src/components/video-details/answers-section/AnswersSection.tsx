@@ -4,6 +4,7 @@ import { Form, Formik } from "formik";
 import CustomInput from "../../../commons/customInput";
 import { useUserThemeContext } from "../../../contexts/UserAndTheme";
 import AnswersItem from "../../../commons/answers-item/AnswersItem";
+import styles from "./AnswersSectionStyles.module.css";
 
 export default function AnswersSection() {
 	const { commentId } = useParams();
@@ -18,7 +19,11 @@ export default function AnswersSection() {
 
 	return (
 		<div className="modal">
-			<section>
+			<section
+				className={`${styles.wrapper} ${
+					theme == "dark" ? "darkTheme-dark" : "whiteTheme-light"
+				}`}
+			>
 				<h2>Answers to {owner?.username}</h2>
 				<button onClick={onBack}>X</button>
 				<Formik initialValues={{ content: "" }} onSubmit={onAnswer}>
@@ -40,7 +45,7 @@ export default function AnswersSection() {
 						</Form>
 					)}
 				</Formik>
-				<section>
+				<section className={styles.answersWrapper}>
 					{answers.length == 0 ? (
 						<h2>No answers yet</h2>
 					) : (
