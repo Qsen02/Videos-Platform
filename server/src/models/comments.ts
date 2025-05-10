@@ -12,12 +12,17 @@ const commentSchema = new mongoose.Schema({
     likes: {
         type: [mongoose.SchemaTypes.ObjectId],
         ref: "Users",
-        default: [],
+        default: []
     },
     videoId: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Videos",
     },
+    answers:{
+        type: [mongoose.SchemaTypes.ObjectId],
+        ref: "Answers",
+        default: []
+    }
 });
 
 const Comments = mongoose.model("Comments", commentSchema);
