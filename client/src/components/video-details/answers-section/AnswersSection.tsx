@@ -6,6 +6,7 @@ import { useUserThemeContext } from "../../../contexts/UserAndTheme";
 import AnswersItem from "../../../commons/answers-item/AnswersItem";
 import styles from "./AnswersSectionStyles.module.css";
 import { CommentFormTypes } from "../../../types/initialFormTypes";
+import { commentSchema } from "../../../schemas/validationShema";
 
 export default function AnswersSection() {
 	const { commentId,videoId } = useParams();
@@ -56,10 +57,11 @@ export default function AnswersSection() {
 						<Formik
 							initialValues={{ content: "" }}
 							onSubmit={onAnswer}
+							validationSchema={commentSchema}
 						>
 							{(props) => (
 								<Form className="form">
-									<p className="input">
+									<p className="answerInput">
 										<CustomInput
 											type="text"
 											name="content"
