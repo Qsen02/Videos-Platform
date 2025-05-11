@@ -25,6 +25,7 @@ import VideoDetailsGuard from "./commons/video-details-guard/VideoDetailsGuard";
 import Profiles from "./components/profile/Profiles";
 import AnswersSection from "./components/video-details/answers-section/AnswersSection";
 import AnswerDelete from "./components/video-details/answer-delete/AnswerDelete";
+import AnswerEdit from "./components/video-details/answer-edit/AnswerEdit";
 
 function App() {
 	return (
@@ -96,6 +97,10 @@ function App() {
 								<Route
 									path="comments/:commentId/answers/:answerId/delete"
 									element={<AnswerDelete />}
+								/>
+								<Route
+									path="comments/:commentId/answers/:answerId/edit"
+									element={<AnswerEdit />}
 								/>
 							</Route>
 						</Route>

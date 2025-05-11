@@ -4,7 +4,7 @@ import { del, get, post, put } from "./requester";
 
 const endpoint="answers";
 
-export async function getAnswerById(answerId:string){
+export async function getAnswerById(answerId:string | undefined){
     const answer=await get(`${endpoint}/${answerId}`);
     return answer as Answer;
 }
@@ -14,7 +14,7 @@ export async function createAnswer(commentId:string | undefined,data:object){
     return comment as Comment;
 }
 
-export async function editAnswer(answerId:string,data:object){
+export async function editAnswer(answerId:string | undefined,data:object){
     const answer=await put(`${endpoint}/${answerId}`,data);
     return answer as Answer;
 }
