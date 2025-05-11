@@ -3,7 +3,7 @@ import { Answers } from "../models/answers";
 import { Comments } from "../models/comments";
 import { Videos } from "../models/videos";
 
-export async function getCommentById(commentId: string) {
+export async function getCommentById(commentId: string | undefined) {
 	const comment = await Comments.findById(commentId)
 		.populate("videoId")
 		.populate("ownerId")

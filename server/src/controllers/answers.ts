@@ -10,7 +10,7 @@ import {
 } from "../services/answers";
 import { isUser } from "../middlewares/guard";
 import { body, validationResult } from "express-validator";
-import { checkCommentId } from "../services/comments";
+import { checkCommentId, getCommentById } from "../services/comments";
 import { errorParser } from "../utils/errorParsers";
 import { MyRequest } from "../types/express";
 
@@ -124,7 +124,10 @@ answerRouter.post("/:answerId/like", isUser(), async (req: MyRequest, res) => {
 		return;
 	}
 	const updatedAnswer = await likeAnswer(user?._id, answerId);
-	res.json(updatedAnswer);
+	const comment = await getCommentById(
+		updatedAnswer?.commentId?._id.toString()
+	);
+	res.json(comment);
 });
 
 answerRouter.post(
@@ -139,7 +142,10 @@ answerRouter.post(
 			return;
 		}
 		const updatedAnswer = await unlikeAnswer(user?._id, answerId);
-		res.json(updatedAnswer);
+		const comment = await getCommentById(
+			updatedAnswer?.commentId?._id.toString()
+		);
+		res.json(comment);
 	}
 );
 

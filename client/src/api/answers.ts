@@ -25,11 +25,11 @@ export async function deleteAnswer(answerId:string| undefined,commentId:string |
 }
 
 export async function likeAnswer(answerId:string){
-    const answer=await post(`${endpoint}/${answerId}/like`,{});
-    return answer as Answer;
+    const comment=await post(`${endpoint}/${answerId}/like`,{});
+    return comment as Comment;
 }
 
 export async function unlikeAnswer(answerId:string){
-    const answer=await post(`${endpoint}/${answerId}/unlike`,{});
-    return answer as Answer;
+    const comment=await post(`${endpoint}/${answerId}/unlike`,{});
+    return comment as Comment;
 }

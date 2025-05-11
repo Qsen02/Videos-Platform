@@ -2,24 +2,22 @@ import { useEffect, useState } from "react";
 import { Answer } from "../types/answer";
 import { useLoadingError } from "./useLoadingError";
 import { getCommentById } from "../api/comments";
-import { User } from "../types/user";
-import { createAnswer, deleteAnswer, editAnswer, getAnswerById } from "../api/answers";
+import { createAnswer, deleteAnswer, editAnswer, getAnswerById, likeAnswer, unlikeAnswer } from "../api/answers";
+import { Comment } from "../types/comment";
 
-export function useGetAllAnswers(initialValues: [], commentId: string | undefined) {
-	const [answers, setAnswers] = useState<Answer[]>(initialValues);
+export function useGetAllAnswers(initialValues: null, commentId: string | undefined) {
+	const [comment, setComment] = useState<Comment | null>(initialValues);
 	const { loading, setLoading, error, setError } = useLoadingError(
 		false,
 		false
 	);
-    const [owner,setOwner]=useState<User | null>(null);
 
 	useEffect(() => {
 		(async () => {
             try{
                 setLoading(true);
                 const comment=await getCommentById(commentId);
-                setAnswers(comment.answers);
-                setOwner(comment.ownerId);
+                setComment(comment);
                 setLoading(false);
             }catch(err){
                 setLoading(false);
@@ -29,7 +27,7 @@ export function useGetAllAnswers(initialValues: [], commentId: string | undefine
 	}, []);
 
     return {
-        answers,setAnswers,owner,loading,error
+        comment,setComment,loading,error
     }
 }
 
@@ -48,6 +46,18 @@ export function useDeleteAnswer(){
 export function useEditAnswer(){
     return async function (answerId:string | undefined,data:object){
         return await editAnswer(answerId,data);
+    }
+}
+
+export function useLikeAnswer(){
+    return async function (answerId:string){
+        return await likeAnswer(answerId);
+    }
+}
+
+export function useUnlikeAnswer(){
+    return async function (answerId:string){
+        return await unlikeAnswer(answerId);
     }
 }
 

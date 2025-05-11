@@ -1,4 +1,4 @@
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCreateAnswer, useGetAllAnswers } from "../../../hooks/useAnswers";
 import { Form, Formik, FormikHelpers } from "formik";
 import CustomInput from "../../../commons/customInput";
@@ -11,8 +11,8 @@ import { commentSchema } from "../../../schemas/validationShema";
 export default function AnswersSection() {
 	const { commentId,videoId } = useParams();
 	const { theme } = useUserThemeContext();
-	const { answers, setAnswers, owner, loading, error } = useGetAllAnswers(
-		[],
+	const { comment, setComment, loading, error } = useGetAllAnswers(
+		null,
 		commentId
 	);
 	const createAnswer = useCreateAnswer();
@@ -26,7 +26,7 @@ export default function AnswersSection() {
 		const updatedComment = await createAnswer(commentId, {
 			content: content,
 		});
-		setAnswers(updatedComment.answers);
+		setComment(updatedComment);
 		actions.resetForm();
 	}
 
@@ -52,7 +52,7 @@ export default function AnswersSection() {
 					</>
 				) : (
 					<>
-						<h2>Answers to {owner?.username}</h2>
+						<h2>Answers to {comment?.ownerId?.username}</h2>
 						<button onClick={onBack}>X</button>
 						<Formik
 							initialValues={{ content: "" }}
@@ -78,10 +78,10 @@ export default function AnswersSection() {
 							)}
 						</Formik>
 						<section className={styles.answersWrapper}>
-							{answers.length == 0 ? (
+							{comment?.answers.length == 0 ? (
 								<h2>No answers yet</h2>
 							) : (
-								answers.map((el) => (
+								comment?.answers.map((el) => (
 									<AnswersItem
 										key={el._id}
 										id={el._id}
@@ -90,6 +90,7 @@ export default function AnswersSection() {
 										likes={el.likes}
 										commentId={commentId}
 										videoId={videoId}
+										setCommentHandler={setComment}
 									/>
 								))
 							)}
