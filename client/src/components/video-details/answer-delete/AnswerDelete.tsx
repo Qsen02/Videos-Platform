@@ -1,13 +1,15 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import styles from "../video-delete/VideoDeleteStyles.module.css"
 import { useUserThemeContext } from "../../../contexts/UserAndTheme";
 import { useDeleteAnswer } from "../../../hooks/useAnswers";
+import { VideoOutletContextType } from "../../../types/outletContext";
 
 export default function CommentDelete() {
 	const { theme } = useUserThemeContext();
     const {commentId,answerId,videoId}=useParams();
 	const navigate = useNavigate();
     const deleteAnswer=useDeleteAnswer();
+	const {setVideo}=useOutletContext<VideoOutletContextType>()
 
 	function onCancel() {
 		history.back();
@@ -15,7 +17,8 @@ export default function CommentDelete() {
 
 	async function onDelete() {
 		try {
-			await deleteAnswer(answerId,commentId);
+			const newData=await deleteAnswer(answerId,commentId);
+			setVideo(newData.video);
 			navigate(`/videos/${videoId}/comments/${commentId}/answers`);
 		} catch (err) {
             navigate("404");

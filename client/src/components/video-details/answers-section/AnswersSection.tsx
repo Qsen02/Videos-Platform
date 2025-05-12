@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useCreateAnswer, useGetAllAnswers } from "../../../hooks/useAnswers";
 import { Form, Formik, FormikHelpers } from "formik";
 import CustomInput from "../../../commons/customInput";
@@ -7,6 +7,7 @@ import AnswersItem from "../../../commons/answers-item/AnswersItem";
 import styles from "./AnswersSectionStyles.module.css";
 import { CommentFormTypes } from "../../../types/initialFormTypes";
 import { commentSchema } from "../../../schemas/validationShema";
+import { VideoOutletContextType } from "../../../types/outletContext";
 
 export default function AnswersSection() {
 	const { commentId,videoId } = useParams();
@@ -15,6 +16,7 @@ export default function AnswersSection() {
 		null,
 		commentId
 	);
+	const {setVideo}=useOutletContext<VideoOutletContextType>()
 	const createAnswer = useCreateAnswer();
 	const navigate=useNavigate();
 
@@ -23,10 +25,11 @@ export default function AnswersSection() {
 		actions: FormikHelpers<CommentFormTypes>
 	) {
 		const content = values.content;
-		const updatedComment = await createAnswer(commentId, {
+		const updatedData = await createAnswer(commentId, {
 			content: content,
 		});
-		setComment(updatedComment);
+		setComment(updatedData.comment);
+		setVideo(updatedData.video)
 		actions.resetForm();
 	}
 

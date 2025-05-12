@@ -13,6 +13,7 @@ import { body, validationResult } from "express-validator";
 import { checkCommentId, getCommentById } from "../services/comments";
 import { errorParser } from "../utils/errorParsers";
 import { MyRequest } from "../types/express";
+import { getVideoById } from "../services/videos";
 
 const answerRouter = Router();
 
@@ -57,7 +58,10 @@ answerRouter.post(
 				commentId,
 				content
 			);
-			res.status(201).json(updatedComment);
+			const video = await getVideoById(
+				updatedComment?.videoId?._id.toString()
+			);
+			res.status(201).json({ comment: updatedComment, video: video });
 		} catch (err) {
 			if (err instanceof Error) {
 				res.status(400).json(err.message);
@@ -79,7 +83,10 @@ answerRouter.delete("/:answerId/in/:commentId", isUser(), async (req, res) => {
 		return;
 	}
 	const updatedComment = await deleteAnswer(answerId, commentId);
-	res.json(updatedComment);
+	const video = await getVideoById(
+				updatedComment?.videoId?._id.toString()
+			);
+	res.json({ comment: updatedComment, video: video });
 });
 
 answerRouter.put(
