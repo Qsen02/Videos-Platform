@@ -26,6 +26,7 @@ import Profiles from "./components/profile/Profiles";
 import AnswersSection from "./components/video-details/answers-section/AnswersSection";
 import AnswerDelete from "./components/video-details/answer-delete/AnswerDelete";
 import AnswerEdit from "./components/video-details/answer-edit/AnswerEdit";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 
 function App() {
 	return (
@@ -33,79 +34,90 @@ function App() {
 			<UserThemeContextProvider>
 				<Header />
 				<Main>
-					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route element={<GuestGuard />}>
-							<Route path="/register" element={<Register />} />
-							<Route path="/login" element={<Login />} />
-						</Route>
-						<Route element={<UserGuard />}>
-							<Route path="/logout" element={<Logout />} />
-							<Route path="/create" element={<CreateVideo />} />
+					<ErrorBoundary>
+						<Routes>
+							<Route path="/" element={<Home />} />
+							<Route element={<GuestGuard />}>
+								<Route
+									path="/register"
+									element={<Register />}
+								/>
+								<Route path="/login" element={<Login />} />
+							</Route>
+							<Route element={<UserGuard />}>
+								<Route path="/logout" element={<Logout />} />
+								<Route
+									path="/create"
+									element={<CreateVideo />}
+								/>
+								<Route
+									path="/profile/:userId"
+									element={<Profile />}
+								>
+									<Route
+										path="edit"
+										element={<ProfileEditUser />}
+									/>
+									<Route
+										path="change-password"
+										element={<ProfileChangePassword />}
+									/>
+									<Route
+										path="confirm"
+										element={<ProfileConfirm />}
+									/>
+									<Route
+										path="followers"
+										element={<ProfileFollowers />}
+									/>
+									<Route
+										path="followed"
+										element={<ProfileFollowed />}
+									/>
+								</Route>
+								<Route
+									path="profiles/:userId"
+									element={<Profiles />}
+								/>
+							</Route>
 							<Route
-								path="/profile/:userId"
-								element={<Profile />}
+								path="/videos/:videoId"
+								element={<VideoDetails />}
 							>
-								<Route
-									path="edit"
-									element={<ProfileEditUser />}
-								/>
-								<Route
-									path="change-password"
-									element={<ProfileChangePassword />}
-								/>
-								<Route
-									path="confirm"
-									element={<ProfileConfirm />}
-								/>
-								<Route
-									path="followers"
-									element={<ProfileFollowers />}
-								/>
-								<Route
-									path="followed"
-									element={<ProfileFollowed />}
-								/>
+								<Route element={<VideoDetailsGuard />}>
+									<Route
+										path="delete"
+										element={<VideoDelete />}
+									/>
+									<Route
+										path="edit"
+										element={<VideoEdit />}
+									/>
+									<Route
+										path="comments/:commentId/delete"
+										element={<CommentDelete />}
+									/>
+									<Route
+										path="comments/:commentId/edit"
+										element={<CommentEdit />}
+									/>
+									<Route
+										path="comments/:commentId/answers"
+										element={<AnswersSection />}
+									/>
+									<Route
+										path="comments/:commentId/answers/:answerId/delete"
+										element={<AnswerDelete />}
+									/>
+									<Route
+										path="comments/:commentId/answers/:answerId/edit"
+										element={<AnswerEdit />}
+									/>
+								</Route>
 							</Route>
-							<Route
-								path="profiles/:userId"
-								element={<Profiles />}
-							/>
-						</Route>
-						<Route
-							path="/videos/:videoId"
-							element={<VideoDetails />}
-						>
-							<Route element={<VideoDetailsGuard />}>
-								<Route
-									path="delete"
-									element={<VideoDelete />}
-								/>
-								<Route path="edit" element={<VideoEdit />} />
-								<Route
-									path="comments/:commentId/delete"
-									element={<CommentDelete />}
-								/>
-								<Route
-									path="comments/:commentId/edit"
-									element={<CommentEdit />}
-								/>
-								<Route
-									path="comments/:commentId/answers"
-									element={<AnswersSection />}
-								/>
-								<Route
-									path="comments/:commentId/answers/:answerId/delete"
-									element={<AnswerDelete />}
-								/>
-								<Route
-									path="comments/:commentId/answers/:answerId/edit"
-									element={<AnswerEdit />}
-								/>
-							</Route>
-						</Route>
-						<Route path="*" element={<NotFound />} />
-					</Routes>
+							<Route path="*" element={<NotFound />} />
+						</Routes>
+					</ErrorBoundary>
 				</Main>
 			</UserThemeContextProvider>
 		</>
