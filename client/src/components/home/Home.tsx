@@ -169,9 +169,9 @@ export default function Home() {
 			<section className={styles.videoContainer}>
 				{!error && loading ? (
 					<span className="loader"></span>
-				) : videos.length == 0 && !isSearchedRef.current && !error ? (
+				) : videos.length == 0 && !isSearchedRef.current && !error  && !typed? (
 					<h2>No videos yet.</h2>
-				) : isSearchedRef.current && videos.length == 0 && !error ? (
+				) : isSearchedRef.current && videos.length == 0 && !error && !typed ? (
 					<h2>No results.</h2>
 				) : error ? (
 					<h2>Server is not responding, please try again later!</h2>
@@ -184,7 +184,7 @@ export default function Home() {
 							username={el.username}
 						/>
 					))
-				) : users?.length == 0 ? (
+				) : users?.length == 0 && !typed? (
 					<h2>No users yet</h2>
 				) : !typed ? (
 					videos.map((el) => (
