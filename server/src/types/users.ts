@@ -5,6 +5,7 @@ export interface User {
     password: string;
     profileImage: string;
     followers: User[];
+    created_at:string;
 }
 
 export interface UserAttributes{
