@@ -9,4 +9,5 @@ export interface Comment {
 	likes: string[];
 	videoId:Video;
 	answers:Answer[];
+	created_at:string;
 }

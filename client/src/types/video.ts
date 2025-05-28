@@ -11,6 +11,7 @@ export interface Video {
 	dislikes: string[];
 	comments: Comment[];
 	ownerId: User;
+	created_at:string;
 }
 
 export type ActionType =
