@@ -64,6 +64,7 @@
 #time {
 	font-size: 14pt;
 	color: darkgray;
+	font-weight: normal;
 }
 
 @media (max-width: 1035px) {

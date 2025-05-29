@@ -9,6 +9,7 @@ import {
 import { Video } from "../../../../types/video";
 import { useUserThemeContext } from "../../../../contexts/UserAndTheme";
 import { Answer } from "../../../../types/answer";
+import { transformTime } from "../../../../utils/transformTime";
 
 interface VideoCommentItemProps {
 	commentId: string;
@@ -20,6 +21,7 @@ interface VideoCommentItemProps {
 	likes: string[];
 	answers: Answer[];
 	setVideo: React.Dispatch<React.SetStateAction<Video>>;
+	time:string;
 }
 
 export default function VideoCommentItem({
@@ -32,6 +34,7 @@ export default function VideoCommentItem({
 	likes,
 	answers,
 	setVideo,
+	time
 }: VideoCommentItemProps) {
 	const likeComment = useLikeComment();
 	const unlikeComment = useUnlikeComment();
@@ -74,6 +77,7 @@ export default function VideoCommentItem({
 					<img src={owner.profileImage} onError={errorProfileImage} />
 				)}
 				<p>{owner.username}</p>
+				<p id={styles.time}>{transformTime(time)}</p>
 				{curUser?._id == owner._id ? (
 					<>
 						<Link

@@ -68,6 +68,12 @@
 	font-weight: initial;
 }
 
+#time {
+	font-size: 14pt;
+	color: darkgray;
+	font-weight: normal;
+}
+
 @media (max-width: 900px) {
 	.header img {
 		height: 50px;
@@ -76,6 +82,9 @@
 	.answerLikes{
         top:37px;
     }
+	#time{
+		font-size: 12pt;
+	}
 }
 
 @media (max-width: 500px) {
@@ -87,4 +96,7 @@
         right: 15px;
         top:30px;
     }
+	#time{
+		font-size: 10pt;
+	}
 }

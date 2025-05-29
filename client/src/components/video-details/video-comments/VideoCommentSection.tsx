@@ -77,6 +77,7 @@ export default function VideoCommentSection({
 							likes={el.likes}
 							answers={el.answers}
 							setVideo={setVideoHandler}
+							time={el.created_at}
 						/>
 					))
 				)}
