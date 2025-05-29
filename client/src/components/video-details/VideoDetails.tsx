@@ -5,6 +5,7 @@ import styles from "./VideoDetailsStyles.module.css";
 import VideoButtons from "./video-buttons/VideoButtons";
 import { errorProfileImage } from "../../utils/errorVideoAndImage";
 import VideoCommentSection from "./video-comments/VideoCommentSection";
+import { transformTime } from "../../utils/transformTime";
 
 export default function VideoDetails() {
 	const { theme, user } = useUserThemeContext();
@@ -25,7 +26,9 @@ export default function VideoDetails() {
 			profileImage: "",
 			password: "",
 			followers: [],
+			created_at:""
 		},
+		created_at:""
 	};
 	const { video, setVideo, loading, error } = useGetOneVideo(
 		initValues,
@@ -67,6 +70,7 @@ export default function VideoDetails() {
 									/>
 								)}
 								<p>{video?.ownerId.username}</p>
+								<p id={styles.time}>{transformTime(video.created_at)}</p>
 							</div>
 							<p className={styles.description}>
 								{video?.description}

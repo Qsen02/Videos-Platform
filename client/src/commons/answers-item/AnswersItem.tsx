@@ -5,6 +5,7 @@ import { errorProfileImage } from "../../utils/errorVideoAndImage";
 import styles from "./AnswersItemStyles.module.css";
 import { useLikeAnswer, useUnlikeAnswer } from "../../hooks/useAnswers";
 import { Comment } from "../../types/comment";
+import { transformTime } from "../../utils/transformTime";
 
 export interface AnswersItemProps {
 	id: string;
@@ -14,6 +15,7 @@ export interface AnswersItemProps {
 	commentId: string | undefined;
 	videoId: string | undefined;
 	setCommentHandler: React.Dispatch<React.SetStateAction<Comment | null>>;
+	time:string;
 }
 
 export default function AnswersItem({
@@ -24,6 +26,7 @@ export default function AnswersItem({
 	commentId,
 	videoId,
 	setCommentHandler,
+	time
 }: AnswersItemProps) {
 	const { theme, user } = useUserThemeContext();
 	const likeAnswer = useLikeAnswer();
@@ -59,6 +62,7 @@ export default function AnswersItem({
 					<img src={owner.profileImage} onError={errorProfileImage} />
 				</Link>
 				<h2>{owner.username}</h2>
+				<p id={styles.time}>{transformTime(time)}</p>
 				{user?._id == owner._id ? (
 					<>
 						<Link

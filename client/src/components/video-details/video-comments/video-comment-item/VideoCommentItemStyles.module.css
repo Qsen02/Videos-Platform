@@ -98,6 +98,12 @@
 	background-color: grey;
 }
 
+#time {
+	font-size: 14pt;
+	color: darkgray;
+	font-weight: normal;
+}
+
 @media (max-width: 800px) {
 	.wrapper {
 		font-size: 14pt;
@@ -113,6 +119,9 @@
         top:25px;
     }
 	.answers{
+		font-size: 12pt;
+	}
+	#time{
 		font-size: 12pt;
 	}
 }
@@ -135,6 +144,9 @@
     }
 	.answers{
 		padding: 5px 10px 5px 10px;
+		font-size: 10pt;
+	}
+	#time{
 		font-size: 10pt;
 	}
 }

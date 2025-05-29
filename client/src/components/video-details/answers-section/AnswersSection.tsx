@@ -94,6 +94,7 @@ export default function AnswersSection() {
 										commentId={commentId}
 										videoId={videoId}
 										setCommentHandler={setComment}
+										time={el.created_at}
 									/>
 								))
 							)}

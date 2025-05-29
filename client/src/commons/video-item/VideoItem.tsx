@@ -14,7 +14,7 @@ interface HomeVideosProp {
 	thumbnail: string;
 	owner: User;
 	isProfilePage: boolean;
-	time:string
+	time?: string;
 }
 
 export default function VideoItem({
@@ -23,7 +23,7 @@ export default function VideoItem({
 	thumbnail,
 	owner,
 	isProfilePage,
-	time
+	time,
 }: HomeVideosProp) {
 	const { theme, user } = useUserThemeContext();
 	return (
@@ -47,7 +47,7 @@ export default function VideoItem({
 						/>
 					)}
 					<p>{owner.username}</p>
-					<p id={styles.time}>{transformTime(time)}</p>
+					{time ? <p id={styles.time}>{transformTime(time)}</p> : ""}
 				</div>
 			) : (
 				""
