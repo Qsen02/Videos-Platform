@@ -6,6 +6,7 @@ import {
 	errorProfileImage,
 	errorVideoImage,
 } from "../../utils/errorVideoAndImage";
+import { transformTime } from "../../utils/transformTime";
 
 interface HomeVideosProp {
 	id: string;
@@ -13,6 +14,7 @@ interface HomeVideosProp {
 	thumbnail: string;
 	owner: User;
 	isProfilePage: boolean;
+	time:string
 }
 
 export default function VideoItem({
@@ -21,6 +23,7 @@ export default function VideoItem({
 	thumbnail,
 	owner,
 	isProfilePage,
+	time
 }: HomeVideosProp) {
 	const { theme, user } = useUserThemeContext();
 	return (
@@ -44,6 +47,7 @@ export default function VideoItem({
 						/>
 					)}
 					<p>{owner.username}</p>
+					<p id={styles.time}>{transformTime(time)}</p>
 				</div>
 			) : (
 				""

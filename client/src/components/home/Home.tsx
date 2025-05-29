@@ -195,6 +195,7 @@ export default function Home() {
 							thumbnail={el.thumbnail}
 							owner={el.ownerId}
 							isProfilePage={false}
+							time={el.created_at}
 						/>
 					))
 				) : (

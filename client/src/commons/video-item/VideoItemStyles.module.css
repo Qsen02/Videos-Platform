@@ -61,6 +61,11 @@
 	background-color: rgb(178, 1, 1);
 }
 
+#time{
+	font-size: 14pt;
+	color:darkgray;
+}
+
 @media (max-width: 1035px) {
 	#wrapper {
 		flex: 0 0 45%;

@@ -1,7 +1,7 @@
-function transformTime(time: string) {
+export function transformTime(time: string) {
 	const pastDate = new Date(time);
 	const curDate = new Date();
-	const diffDate = curDate.getDate() - pastDate.getDate();
+	const diffDate = curDate.getTime() - pastDate.getTime();
 
 	const minutes = Math.floor(diffDate / 60 / 1000);
 	const hours = Math.floor(minutes / 60);
@@ -11,11 +11,11 @@ function transformTime(time: string) {
 	if (minutes < 1) {
 		return "Now";
 	} else if (minutes >= 1 && minutes < 60) {
-		return `${minutes} min`;
+		return `${minutes}min`;
 	} else if (minutes > 60 && hours >= 1) {
-		return `${hours} h`;
+		return `${hours}h`;
 	} else if (hours > 60 && days >= 1) {
-		return `${days} d`;
+		return `${days}d`;
 	} else if (diffDate >= week) {
 		return pastDate.toLocaleDateString("bg-BG", {
 			day: "2-digit",
