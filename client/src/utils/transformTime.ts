@@ -12,9 +12,9 @@ export function transformTime(time: string) {
 		return "Now";
 	} else if (minutes >= 1 && minutes < 60) {
 		return `${minutes}min`;
-	} else if (minutes > 60 && hours >= 1) {
+	} else if (minutes >= 60 && hours >= 1 && hours < 24) {
 		return `${hours}h`;
-	} else if (hours > 60 && days >= 1) {
+	} else if (hours >= 24 && days >= 1 && days < 7) {
 		return `${days}d`;
 	} else if (diffDate >= week) {
 		return pastDate.toLocaleDateString("bg-BG", {
