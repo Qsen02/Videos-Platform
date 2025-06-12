@@ -1,5 +1,5 @@
 .wrapper {
-    position: relative;
+	position: relative;
 	width: 90%;
 	border-radius: 10px;
 	padding: 10px;
@@ -10,12 +10,12 @@
 	font-size: 16pt;
 }
 
-#owner{
+#owner {
 	cursor: default;
 }
 
-#owner:hover{
-	color:inherit;
+#owner:hover {
+	color: inherit;
 }
 
 .commentBody {
@@ -37,64 +37,64 @@
 	font-weight: bold;
 }
 
-.wrapper p {
+.wrapper>p {
 	width: 100%;
 	word-wrap: break-word;
 	text-align: left;
 }
 
-.commentLikes{
-    position: absolute;
-    right: 50px;
-    top:30px;
-    align-self: flex-end;
-    display: flex;
-    align-items: center;
-    gap:5px;
-}
-
-.commentLikes i{
-	cursor: pointer;
-}
-
-.commentLikes i:hover{
-	color:grey;
-}
-
-.commentBody>a>i{
-	cursor: pointer;
-}
-
-.commentBody>a>i:hover{
-	color:grey;
-}
-
-.guestLikes{
+.commentLikes {
 	position: absolute;
-    right: 50px;
-    top:30px;
-    align-self: flex-end;
-    display: flex;
-    align-items: center;
-    gap:5px;
+	right: 50px;
+	top: 30px;
+	align-self: flex-end;
+	display: flex;
+	align-items: center;
+	gap: 2px;
 }
 
-.guestLikes p{
-    font-weight: initial;
+.commentLikes i {
+	cursor: pointer;
 }
 
-.commentLikes p{
+.commentLikes i:hover {
+	color: grey;
+}
+
+.commentBody > a > i {
+	cursor: pointer;
+}
+
+.commentBody > a > i:hover {
+	color: grey;
+}
+
+.guestLikes {
+	position: absolute;
+	right: 50px;
+	top: 30px;
+	align-self: flex-end;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.guestLikes p {
 	font-weight: initial;
 }
 
-.answers{
+.commentLikes p {
+	font-weight: initial;
+}
+
+.answers {
 	padding: 10px 20px 10px 20px;
 	border-radius: 10px;
 	border: 1px solid grey;
 	font-size: 14pt;
 }
 
-.answers:hover{
+.answers:hover {
 	background-color: grey;
 }
 
@@ -112,16 +112,28 @@
 		width: 50px;
 		height: 50px;
 	}
-    .commentLikes{
-        top:25px;
-    }
-	.guestLikes{
-        top:25px;
-    }
-	.answers{
+
+	.commentBody i{
 		font-size: 12pt;
 	}
-	#time{
+	.commentLikes {
+		right: 10px;
+		top: 27px;
+	}
+	.commentLikes p{
+		font-size: 12pt;
+	}
+	.guestLikes p{
+		font-size: 12pt;
+	}
+	.guestLikes {
+		right: 10px;
+		top: 27px;
+	}
+	.answers {
+		font-size: 12pt;
+	}
+	#time {
 		font-size: 12pt;
 	}
 }
@@ -134,19 +146,28 @@
 		width: 30px;
 		height: 30px;
 	}
-    .commentLikes{
-        right: 15px;
-        top:15px;
-    }
-	.guestLikes{
-        right: 15px;
-        top:15px;
-    }
-	.answers{
+	.commentBody i{
+		font-size: 10pt;
+	}
+	.commentLikes {
+		right: 5px;
+		top: 18px;
+	}
+	.commentLikes p{
+		font-size: 10pt;
+	}
+	.guestLikes p{
+		font-size: 10pt;
+	}
+	.guestLikes {
+		right: 5px;
+		top: 18px;
+	}
+	.answers {
 		padding: 5px 10px 5px 10px;
 		font-size: 10pt;
 	}
-	#time{
+	#time {
 		font-size: 10pt;
 	}
 }

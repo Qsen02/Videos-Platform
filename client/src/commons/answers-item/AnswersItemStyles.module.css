@@ -1,6 +1,6 @@
 .wrapperItem {
 	position: relative;
-	width: 80%;
+	width: 90%;
 	padding: 20px;
 	display: flex;
 	flex-direction: column;
@@ -10,7 +10,7 @@
 }
 
 .header {
-	width: 95%;
+	width: 100%;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -80,7 +80,8 @@
 		width: 50px;
 	}
 	.answerLikes{
-        top:37px;
+		right: 15px;
+        top:35px;
     }
 	#time{
 		font-size: 12pt;
@@ -94,7 +95,7 @@
 	}
 	.answerLikes{
         right: 15px;
-        top:30px;
+        top:28px;
     }
 	#time{
 		font-size: 10pt;
