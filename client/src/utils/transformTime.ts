@@ -6,7 +6,7 @@ export function transformTime(time: string) {
 	const minutes = Math.floor(diffDate / 60 / 1000);
 	const hours = Math.floor(minutes / 60);
 	const days = Math.floor(hours / 24);
-	const week = pastDate.getDate() * 7 * 24 * 60 * 60 * 1000;
+	const week = 7 * 24 * 60 * 60 * 1000;
 
 	if (minutes < 1) {
 		return "Now";
