@@ -1,8 +1,12 @@
-import { getUserData, removeUserTheme, removeUserData } from "../utils/userHelper";
+import {
+	getUserData,
+	removeUserTheme,
+	removeUserData,
+} from "../utils/userHelper";
 
 // const host = "http://localhost:3000/";
 
-const host="https://videos-platform-server.onrender.com/";
+const host = "https://videos-platform-server.onrender.com/";
 
 async function request(method: string, url: string, data?: object) {
 	const headers: Record<string, string> = {
@@ -48,14 +52,14 @@ export async function get(url: string) {
 	return await request("GET", host + url);
 }
 
-export async function post(url:string,data:object){
-    return await request("POST", host + url,data);
+export async function post(url: string, data: object) {
+	return await request("POST", host + url, data);
 }
 
-export async function del(url:string,){
-    return await request("DELETE", host + url);
+export async function del(url: string) {
+	return await request("DELETE", host + url);
 }
 
-export async function put(url:string,data:object){
-    return await request("PUT", host + url,data);
+export async function put(url: string, data: object) {
+	return await request("PUT", host + url, data);
 }
