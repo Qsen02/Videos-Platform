@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import { User } from "../types/users";
 
-const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema<User>(
 	{
 		username: {
 			type: String,
@@ -17,8 +18,14 @@ const userSchema = new mongoose.Schema(
 			require: true,
 		},
 		profileImage: {
-			type: String,
-			default: "",
+			imageUrl: {
+				type: String,
+				required: true,
+			},
+			publicId: {
+				type: String,
+				required: true,
+			},
 		},
 		followers: {
 			type: [mongoose.SchemaTypes.ObjectId],
@@ -26,7 +33,7 @@ const userSchema = new mongoose.Schema(
 			default: [],
 		},
 	},
-	{ timestamps: { createdAt: "created_at" } }
+	{ timestamps: { createdAt: "created_at" } },
 );
 
 const Users = mongoose.model("Users", userSchema);

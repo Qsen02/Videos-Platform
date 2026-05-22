@@ -1,5 +1,5 @@
 import { UserAttributes } from "../types/users";
-import { VideosType } from "../types/videos";
+import { FileType, VideosType } from "../types/videos";
 import { Comments } from "../models/comments";
 import { Videos } from "../models/videos";
 
@@ -57,16 +57,16 @@ export async function searchVideos(title: string) {
 
 export async function createVideo(
 	title: string,
-	videoUrl: string,
+	videoUrl: FileType | null,
 	description: string,
-	thumbnail: string,
-	user: UserAttributes | null | undefined
+	thumbnail: FileType | null,
+	user: UserAttributes | null | undefined,
 ) {
 	const newVideo = await Videos.create({
 		title: title,
-		videoUrl: videoUrl,
+		videoUrl: videoUrl ?? {},
 		description: description,
-		thumbnail: thumbnail,
+		thumbnail: thumbnail ?? {},
 		ownerId: user?._id,
 	});
 
@@ -79,13 +79,31 @@ export async function deleteVideo(videoId: string) {
 	await video?.deleteOne();
 }
 
-export async function editVideo(videoId: string, data: Partial<VideosType>) {
+export async function editVideo(
+	videoId: string,
+	data: Partial<VideosType>,
+	tumbnail: FileType | null,
+	video: FileType | null,
+) {
+	const videoData: any = {
+		title: data.title,
+		description: data.description,
+	};
+
+	if (tumbnail) { 
+		videoData.thumbnail = tumbnail;
+	}
+
+	if (video) { 
+		videoData.videoUrl = video;
+	}
+
 	const updatedVideos = await Videos.findByIdAndUpdate(
 		videoId,
 		{
-			$set: data,
+			$set: videoData,
 		},
-		{ new: true }
+		{ new: true },
 	)
 		.populate({
 			path: "comments",
@@ -102,14 +120,14 @@ export async function editVideo(videoId: string, data: Partial<VideosType>) {
 
 export async function likeVideo(
 	user: UserAttributes | null | undefined,
-	videoId: string
+	videoId: string,
 ) {
 	const updatedVideos = await Videos.findByIdAndUpdate(
 		videoId,
 		{
 			$push: { likes: user?._id },
 		},
-		{ new: true }
+		{ new: true },
 	)
 		.populate({
 			path: "comments",
@@ -125,14 +143,14 @@ export async function likeVideo(
 }
 export async function unlikeVideo(
 	user: UserAttributes | null | undefined,
-	videoId: string
+	videoId: string,
 ) {
 	const updatedVideos = await Videos.findByIdAndUpdate(
 		videoId,
 		{
 			$pull: { likes: user?._id },
 		},
-		{ new: true }
+		{ new: true },
 	)
 		.populate({
 			path: "comments",
@@ -148,14 +166,14 @@ export async function unlikeVideo(
 }
 export async function dislikeVideo(
 	user: UserAttributes | null | undefined,
-	videoId: string
+	videoId: string,
 ) {
 	const updatedVideos = await Videos.findByIdAndUpdate(
 		videoId,
 		{
 			$push: { dislikes: user?._id },
 		},
-		{ new: true }
+		{ new: true },
 	)
 		.populate({
 			path: "comments",
@@ -171,14 +189,14 @@ export async function dislikeVideo(
 }
 export async function undislikeVideo(
 	user: UserAttributes | null | undefined,
-	videoId: string
+	videoId: string,
 ) {
 	const updatedVideos = await Videos.findByIdAndUpdate(
 		videoId,
 		{
 			$pull: { dislikes: user?._id },
 		},
-		{ new: true }
+		{ new: true },
 	)
 		.populate({
 			path: "comments",

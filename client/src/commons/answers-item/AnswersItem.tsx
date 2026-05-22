@@ -59,7 +59,7 @@ export default function AnswersItem({
 		>
 			<div className={styles.header}>
 				<Link to={`/profiles/${owner._id}`}>
-					<img src={owner.profileImage} onError={errorProfileImage} />
+					<img src={owner.profileImage.imageUrl ?? "/assets/profile.png"} onError={errorProfileImage} />
 				</Link>
 				<h2>{owner.username}</h2>
 				<p id={styles.time}>{transformTime(time)}</p>

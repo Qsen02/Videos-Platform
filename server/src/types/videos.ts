@@ -1,15 +1,19 @@
-import { CommentType } from "./comments";
-import { User } from "./users";
+import { Types } from "mongoose";
 
-export interface VideosType{
-    _id:string;
-    title:string;
-    videoUrl:string;
-    description:string;
-    thumbnail:string;
-    likes:User[];
-    dislikes:User[];
-    comments:CommentType[];
-    ownerId:User;
-    created_at:string;
+export interface FileType {
+	imageUrl: string;
+	publicId: string;
+}
+
+export interface VideosType {
+	_id: string;
+	title: string;
+	videoUrl: FileType;
+	description: string;
+	thumbnail: FileType;
+	likes: Types.ObjectId[];
+	dislikes: Types.ObjectId[];
+	comments: Types.ObjectId[];
+	ownerId: Types.ObjectId;
+	created_at: string;
 }

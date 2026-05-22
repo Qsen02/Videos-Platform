@@ -17,6 +17,7 @@ import { errorParser } from "../utils/errorParsers";
 import { setToken } from "../services/token";
 import { isUser } from "../middlewares/guard";
 import { MyRequest } from "../types/express";
+import { deleteFromCloudinary, upload, uploadToCloudinary } from "../config/multer";
 
 const userRouter = Router();
 
@@ -73,28 +74,33 @@ userRouter.get("/follwedUsers/:userId", isUser(), async (req, res) => {
 
 userRouter.post(
 	"/register",
+	upload.single("profileImage"),
 	body("username")
 		.trim()
 		.isLength({ min: 3 })
 		.withMessage("Username must be at least 3 symbols long!"),
 	body("email").trim().isEmail().withMessage("Email must be valid!"),
-	body("profileImage")
-		.custom(
-			(value: string, { req }) =>
-				value.length == 0 || /^https?:\/\//.test(value)
-		)
-		.withMessage("Image must be valid URL!"),
 	body("password")
 		.trim()
 		.matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/)
 		.withMessage(
-			"Password must be at least 6 symbols ant must contain digits, letters and at least one capital letter and special symbol!"
+			"Password must be at least 6 symbols ant must contain digits, letters and at least one capital letter and special symbol!",
 		),
 	body("repass")
 		.trim()
 		.custom((value: string, { req }) => req.body.password == value)
 		.withMessage("Password must match!"),
 	async (req, res) => {
+		const file = req.file;
+		const imageResult = file
+			? await uploadToCloudinary(file, "videos-platform/profile-images")
+			: null;
+		const imageData = imageResult
+			? {
+					publicId: (imageResult as any).public_id,
+					imageUrl: (imageResult as any).secure_url,
+				}
+			: null;
 		const fields = req.body;
 		try {
 			const results = validationResult(req);
@@ -105,7 +111,7 @@ userRouter.post(
 				fields.username,
 				fields.email,
 				fields.password,
-				fields.profileImage
+				imageData,
 			);
 			const token = setToken(user);
 			res.status(201).json({
@@ -123,7 +129,7 @@ userRouter.post(
 			}
 			return;
 		}
-	}
+	},
 );
 
 userRouter.post(
@@ -136,7 +142,7 @@ userRouter.post(
 		.trim()
 		.matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/)
 		.withMessage(
-			"Password must be at least 6 symbols ant must contain digits, letters and at least one capital letter and special symbol!"
+			"Password must be at least 6 symbols ant must contain digits, letters and at least one capital letter and special symbol!",
 		),
 	async (req, res) => {
 		const fields = req.body;
@@ -162,7 +168,7 @@ userRouter.post(
 			}
 			return;
 		}
-	}
+	},
 );
 
 userRouter.post("/follow/:userId", isUser(), async (req: MyRequest, res) => {
@@ -192,18 +198,23 @@ userRouter.post("/unfollow/:userId", isUser(), async (req: MyRequest, res) => {
 userRouter.put(
 	"/edit/:userId",
 	isUser(),
+	upload.single("profileImage"),
 	body("username")
 		.trim()
 		.isLength({ min: 3 })
 		.withMessage("Username must be at least 3 symbols long!"),
 	body("email").trim().isEmail().withMessage("Email must be valid!"),
-	body("profileImage")
-		.custom(
-			(value: string, { req }) =>
-				value.length == 0 || /^https?:\/\//.test(value)
-		)
-		.withMessage("Image must be valid URL!"),
 	async (req, res) => {
+		const file = req.file;
+		const imageResult = file
+			? await uploadToCloudinary(file, "videos-platform/profile-images")
+			: null;
+		const imageData = imageResult
+			? {
+					publicId: (imageResult as any).public_id,
+					imageUrl: (imageResult as any).secure_url,
+				}
+			: null;
 		const fields = req.body;
 		const userId = req.params.userId;
 		const isValid = await checkUserId(userId);
@@ -211,12 +222,16 @@ userRouter.put(
 			res.status(404).json({ message: "Resource not found!" });
 			return;
 		}
+		const oldUser = await getUserById(userId);
+		if (oldUser && oldUser.profileImage.publicId) { 
+			await deleteFromCloudinary(oldUser.profileImage.publicId);
+		}
 		try {
 			const results = validationResult(req);
 			if (!results.isEmpty()) {
 				throw new Error(errorParser(results));
 			}
-			const updatedUser = await editUser(userId, fields);
+			const updatedUser = await editUser(userId, fields,imageData);
 			res.json(updatedUser);
 		} catch (err) {
 			if (err instanceof Error) {
@@ -226,7 +241,7 @@ userRouter.put(
 			}
 			return;
 		}
-	}
+	},
 );
 
 userRouter.put(
@@ -236,7 +251,7 @@ userRouter.put(
 		.trim()
 		.matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/)
 		.withMessage(
-			"Password must be at least 6 symbols ant must contain digits, letters and at least one capital letter and special symbol!"
+			"Password must be at least 6 symbols ant must contain digits, letters and at least one capital letter and special symbol!",
 		),
 	async (req, res) => {
 		const password = req.body.newPassword;
@@ -261,7 +276,7 @@ userRouter.put(
 			}
 			return;
 		}
-	}
+	},
 );
 
 export { userRouter };

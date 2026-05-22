@@ -12,19 +12,20 @@ export default function CreateVideo() {
 	const createVideo = useCreateVideo();
 	const [errMessage, setErrMessage] = useState("");
 	const [isErr, setIsErr] = useState(false);
-	const navigate=useNavigate();
+	const navigate = useNavigate();
+	const [isCreating,setIsCreating]=useState(false);
 
 	interface valuesType {
 		title: string;
-		videoUrl: string;
-		thumbnail: string;
+		videoUrl: File | null;
+		thumbnail: File | null;
 		description: string;
 	}
 
 	const initValues = {
 		title: "",
-		videoUrl: "",
-		thumbnail: "",
+		videoUrl: null,
+		thumbnail: null,
 		description: "",
 	};
 
@@ -33,30 +34,39 @@ export default function CreateVideo() {
 		actions: FormikHelpers<valuesType>
 	) {
 		try {
-			const title = values.title;
-			const videoUrl = values.videoUrl;
-			const thumbnail = values.thumbnail;
-			const description = values.description;
-			await createVideo({
-				title: title,
-				videoUrl: videoUrl,
-				thumbnail: thumbnail,
-				description: description,
-			});
+			setIsCreating(true);
+			if(!values.videoUrl || !values.thumbnail){
+				setIsErr(true);
+				setErrMessage("Video and thumbnail are required!");
+				return;
+			}
+			const formData = new FormData();
+			formData.append("title", values.title);
+			formData.append("video", values.videoUrl as Blob);
+			formData.append("thumbnail", values.thumbnail as Blob);	
+			formData.append("description", values.description);
+			await createVideo(formData);
 			actions.resetForm();
 			navigate("/");
 		} catch (err) {
 			setIsErr(true);
+			setIsCreating(false);
 			if (err instanceof Error) {
 				setErrMessage(err.message);
 			} else {
 				setErrMessage("Error occured!");
 			}
+		}finally{
+			setIsCreating(false);
 		}
 	}
 
 	return (
-		<Formik initialValues={initValues} onSubmit={onAdd} validationSchema={createVideoSchema}>
+		<Formik<valuesType>
+			initialValues={initValues}
+			onSubmit={onAdd}
+			validationSchema={createVideoSchema}
+		>
 			{(props) => (
 				<Form
 					className={`form ${
@@ -80,10 +90,9 @@ export default function CreateVideo() {
 					</p>
 					<p className="input">
 						<CustomInput
-							label="Video ID"
-							type="text"
+							label="Video"
+							type="file"
 							name="videoUrl"
-							placeholder="oAdEoFrGhTfg"
 							className={
 								theme == "dark"
 									? "darkTheme-light"
@@ -93,10 +102,9 @@ export default function CreateVideo() {
 					</p>
 					<p className="input">
 						<CustomInput
-							label="Thumbnail URL"
-							type="text"
+							label="Thumbnail"
+							type="file"
 							name="thumbnail"
-							placeholder="https://exmaple.com"
 							className={
 								theme == "dark"
 									? "darkTheme-light"
@@ -117,7 +125,12 @@ export default function CreateVideo() {
 							}
 						/>
 					</p>
-					<button type="submit">Submit</button>
+					{ 
+						isCreating && <span className="loader"></span>
+					}
+					<button type="submit" disabled={isCreating}>
+						{isCreating ? "Creating..." : "Submit"}
+					</button>
 				</Form>
 			)}
 		</Formik>

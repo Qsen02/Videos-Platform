@@ -115,6 +115,32 @@ main {
 	gap: 10px;
 }
 
+.form .input input[type="file"] {
+	position: relative;
+	width: 59%;
+	height: 50px;
+	border: none;
+	border-radius: 5px;
+	padding-left: 10px;
+	font-size: 14pt;
+}
+
+.form .input input[type="file"]::file-selector-button {
+	border: none;
+	border-radius: 20px;
+	padding: 10px 20px 10px 20px;
+	background-color: rgb(225, 0, 0);
+	color: white;
+	font-size: 14pt;
+	font-weight: bold;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.form .input input[type="file"]::file-selector-button:hover {
+	background-color: rgb(178, 1, 1);
+}
+
 .form .answerInput {
 	width: 80%;
 	display: flex;
@@ -194,6 +220,12 @@ main {
 	z-index: 1000;
 }
 
+@media(max-width:1200px){
+	.form .input input[type="file"] {
+		width: 70%;
+	}
+}
+
 @media (max-width: 950px) {
 	.form {
 		width: 60vw;
@@ -202,11 +234,28 @@ main {
 	.form .input i {
 		top: 39px;
 	}
+	.form .input input[type="file"] {
+		font-size: 12pt;
+	}
+	.form .input input[type="file"]::file-selector-button {
+		font-size: 12pt;
+	}
 	.form button {
 		font-size: 12pt;
 	}
 	.error {
 		font-size: 12pt;
+	}
+}
+
+@media(max-width: 600px){
+	.form .input input[type="file"] {
+		width: 90%;
+		font-size: 10pt;
+	}
+	.form .input input[type="file"]::file-selector-button {
+		padding: 5px 10px 5px 10px;
+		font-size: 10pt;
 	}
 }
 

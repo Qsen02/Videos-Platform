@@ -2,12 +2,13 @@ import { User, UserAttributes } from "../types/users";
 import { Users } from "../models/users";
 import bcrypt from "bcrypt";
 import { Videos } from "../models/videos";
+import { FileType } from "../types/videos";
 
 export async function register(
 	username: string,
 	email: string,
 	password: string,
-	profileImage?: string
+	profileImage: FileType | null,
 ) {
 	const isUsernameExist = await Users.findOne({ username: username }).lean();
 	if (isUsernameExist) {
@@ -21,7 +22,7 @@ export async function register(
 		username: username,
 		email: email,
 		password: await bcrypt.hash(password, 10),
-		profileImage: profileImage || "",
+		profileImage: profileImage ?? {},
 	});
 
 	return newUser;
@@ -42,12 +43,12 @@ export async function login(username: string, password: string) {
 
 export async function followUser(
 	curUser: UserAttributes | null | undefined,
-	followingUserId: string
+	followingUserId: string,
 ) {
 	const updatedUser = await Users.findByIdAndUpdate(
 		followingUserId,
 		{ $push: { followers: curUser?._id } },
-		{ new: true }
+		{ new: true },
 	).populate("followers");
 
 	return updatedUser;
@@ -55,19 +56,21 @@ export async function followUser(
 
 export async function unfollowUser(
 	curUser: UserAttributes | null | undefined,
-	unfollowingUserId: string
+	unfollowingUserId: string,
 ) {
 	const updatedUser = await Users.findByIdAndUpdate(
 		unfollowingUserId,
 		{ $pull: { followers: curUser?._id } },
-		{ new: true }
+		{ new: true },
 	).populate("followers");
 
 	return updatedUser;
 }
 
 export async function getCreatedVideos(userId: string) {
-	const videos = await Videos.find({ ownerId: userId }).populate("ownerId").lean();
+	const videos = await Videos.find({ ownerId: userId })
+		.populate("ownerId")
+		.lean();
 
 	return videos;
 }
@@ -89,13 +92,26 @@ export async function checkUserId(userId: string) {
 	return true;
 }
 
-export async function editUser(userId: string, data: Partial<User>) {
+export async function editUser(
+	userId: string,
+	data: Partial<User>,
+	profileImage: FileType | null,
+) {
+	const userData: any = {
+		username: data.username,
+		email: data.email,
+	};
+
+	if (profileImage) {
+		userData.profileImage = profileImage;
+	}
+
 	const updatedUser = await Users.findByIdAndUpdate(
 		userId,
 		{
-			$set: data,
+			$set: userData,
 		},
-		{ new: true }
+		{ new: true },
 	).lean();
 
 	return updatedUser;
@@ -112,7 +128,7 @@ export async function changePassword(userId: string, newPassword: string) {
 		{
 			$set: { password: await bcrypt.hash(newPassword, 10) },
 		},
-		{ new: true }
+		{ new: true },
 	).lean();
 
 	return updatedUser;
@@ -126,7 +142,7 @@ export async function searchUsers(name: string) {
 export async function getFollwedUsers(userId: string) {
 	const users = await Users.find().populate("followers").lean();
 	const follwedUsers = users.filter((el) =>
-		el.followers.map((el) => el._id.toString()).includes(userId)
+		el.followers.map((el) => el._id.toString()).includes(userId),
 	);
 	return follwedUsers;
 }

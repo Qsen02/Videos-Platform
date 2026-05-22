@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import { errorProfileImage } from "../../utils/errorVideoAndImage";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import styles from "./FollowerItemStyles.module.css";
+import { FileType } from "../../types/video";
 
 interface FollowerItemProps {
 	id: string;
-	profileImage: string;
+	profileImage: FileType;
 	username: string;
 }
 
@@ -23,7 +24,10 @@ export default function FollowerItem({
 			} ${user?._id == id ? styles.you : ""}`}
 		>
 			<Link to={`/profiles/${id}`}>
-				<img src={profileImage} onError={errorProfileImage} />
+				<img
+					src={profileImage.imageUrl ?? "/assets/profile.png"}
+					onError={errorProfileImage}
+				/>
 			</Link>
 			<p>{username}</p>
 		</article>

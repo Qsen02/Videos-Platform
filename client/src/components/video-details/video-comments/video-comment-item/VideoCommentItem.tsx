@@ -69,12 +69,12 @@ export default function VideoCommentItem({
 				{user ? (
 					<Link to={`/profiles/${owner._id}`}>
 						<img
-							src={owner.profileImage}
+							src={owner.profileImage.imageUrl ?? "/assets/profile.png"}
 							onError={errorProfileImage}
 						/>
 					</Link>
 				) : (
-					<img src={owner.profileImage} onError={errorProfileImage} />
+					<img src={owner.profileImage.imageUrl ?? "/assets/profile.png"} onError={errorProfileImage} />
 				)}
 				<p>{owner.username}</p>
 				<p id={styles.time}>{transformTime(time)}</p>

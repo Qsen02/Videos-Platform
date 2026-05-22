@@ -104,7 +104,7 @@ export default function Home() {
 										? "darkTheme-dark"
 										: "whiteTheme-light"
 								}
-								changeHandler={onChangeHandler}
+								changehandler={onChangeHandler}
 							/>
 							<button
 								type="submit"

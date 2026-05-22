@@ -7,11 +7,12 @@ import {
 	errorVideoImage,
 } from "../../utils/errorVideoAndImage";
 import { transformTime } from "../../utils/transformTime";
+import { FileType } from "../../types/video";
 
 interface HomeVideosProp {
 	id: string;
 	title: string;
-	thumbnail: string;
+	thumbnail: FileType;
 	owner: User;
 	isProfilePage: boolean;
 	time?: string;
@@ -36,13 +37,19 @@ export default function VideoItem({
 					{user ? (
 						<Link to={`/profiles/${owner._id}`}>
 							<img
-								src={owner.profileImage}
+								src={
+									owner.profileImage.imageUrl ??
+									"/assets/profile.png"
+								}
 								onError={errorProfileImage}
 							/>
 						</Link>
 					) : (
 						<img
-							src={owner.profileImage}
+							src={
+								owner.profileImage.imageUrl ??
+								"/assets/profile.png"
+							}
 							onError={errorProfileImage}
 						/>
 					)}
@@ -53,7 +60,14 @@ export default function VideoItem({
 				""
 			)}
 			<div className={styles.body}>
-				<img src={thumbnail} alt={title} onError={errorVideoImage} />
+				<img
+					src={
+						thumbnail.imageUrl ??
+						"/assets/video-300x300.png"
+					}
+					alt={title}
+					onError={errorVideoImage}
+				/>
 				<h2>{title}</h2>
 				<Link to={`/videos/${id}`}>Watch</Link>
 			</div>

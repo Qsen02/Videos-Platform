@@ -35,7 +35,9 @@ export default function Profile() {
 
 	return (
 		<>
-			<Outlet context={{setUserState:setUser,userId,loading,error }} />
+			<Outlet
+				context={{ setUserState: setUser, userId, loading, error }}
+			/>
 			{loading && !error ? (
 				<span className="loader"></span>
 			) : error ? (
@@ -47,7 +49,10 @@ export default function Profile() {
 					<section className={styles.profileHeader}>
 						<div className={styles.userInfo}>
 							<img
-								src={curUser?.profileImage}
+								src={
+									curUser?.profileImage.imageUrl ??
+									"/assets/profile.png"
+								}
 								onError={errorProfileImage}
 							/>
 							<h2>{curUser?.username}</h2>
@@ -55,8 +60,14 @@ export default function Profile() {
 						</div>
 						<div className={styles.followersWrapper}>
 							<div className={styles.followers}>
-								<Link to={`/profile/${curUser?._id}/followers`}><p>Followers: {curUser?.followers.length}</p></Link>
-								<Link to={`/profile/${curUser?._id}/followed`}><p>Followed: {follwedUsers.length}</p></Link>
+								<Link to={`/profile/${curUser?._id}/followers`}>
+									<p>
+										Followers: {curUser?.followers.length}
+									</p>
+								</Link>
+								<Link to={`/profile/${curUser?._id}/followed`}>
+									<p>Followed: {follwedUsers.length}</p>
+								</Link>
 							</div>
 							<div className={styles.buttons}>
 								{curUser?._id != user?._id ? (

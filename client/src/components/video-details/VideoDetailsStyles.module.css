@@ -11,7 +11,7 @@
     text-align: center;
 }
 
-#detailsWrapper iframe{
+#detailsWrapper video{
     width: 90%;
     height: 500px;
     border-radius: 7px;
@@ -60,7 +60,7 @@
         width: 80%;
     }
 
-    #detailsWrapper iframe{
+    #detailsWrapper video{
         height: 300px;
     }
 
@@ -79,7 +79,7 @@
         width: 90%;
     }
 
-    #detailsWrapper iframe{
+    #detailsWrapper video{
         height: 200px;
     }
 

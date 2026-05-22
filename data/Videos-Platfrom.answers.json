@@ -1,0 +1,100 @@
+[{
+  "_id": {
+    "$oid": "681f73955b5027dad335994f"
+  },
+  "content": "I'm glad to hear it.",
+  "ownerId": {
+    "$oid": "67f181bc16e303a311de48a4"
+  },
+  "commentId": {
+    "$oid": "6811dfe793bd3eea4b3e89d2"
+  },
+  "likes": [
+    {
+      "$oid": "67f185dad54777c435c6734d"
+    }
+  ],
+  "__v": 0,
+  "created_at": "2025-05-28T20:02:08.770+00:00",
+  "updatedAt": "2025-05-28T20:02:08.770+00:00"
+},
+{
+  "_id": {
+    "$oid": "6a104baf4b0cb7c665eca186"
+  },
+  "content": "Me too :)",
+  "ownerId": {
+    "$oid": "67f181bc16e303a311de48a4"
+  },
+  "commentId": {
+    "$oid": "6a10450b4b0cb7c665eca007"
+  },
+  "likes": [],
+  "created_at": {
+    "$date": "2026-05-22T12:27:27.627Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-22T12:27:27.627Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a104bc14b0cb7c665eca1b5"
+  },
+  "content": "Agree",
+  "ownerId": {
+    "$oid": "67f181bc16e303a311de48a4"
+  },
+  "commentId": {
+    "$oid": "6a1045474b0cb7c665eca021"
+  },
+  "likes": [],
+  "created_at": {
+    "$date": "2026-05-22T12:27:45.026Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-22T12:27:45.026Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a104c374b0cb7c665eca258"
+  },
+  "content": "Hahaha agree",
+  "ownerId": {
+    "$oid": "67f185dad54777c435c6734d"
+  },
+  "commentId": {
+    "$oid": "6a104be04b0cb7c665eca1cf"
+  },
+  "likes": [],
+  "created_at": {
+    "$date": "2026-05-22T12:29:43.503Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-22T12:29:43.503Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a104c954b0cb7c665eca307"
+  },
+  "content": "But this one is sweet",
+  "ownerId": {
+    "$oid": "67fcc48632f0f0e962b511fb"
+  },
+  "commentId": {
+    "$oid": "6a104c604b0cb7c665eca2a7"
+  },
+  "likes": [],
+  "created_at": {
+    "$date": "2026-05-22T12:31:17.947Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-22T12:31:17.947Z"
+  },
+  "__v": 0
+}]

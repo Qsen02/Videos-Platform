@@ -1,0 +1,72 @@
+[{
+  "_id": {
+    "$oid": "67f181bc16e303a311de48a4"
+  },
+  "username": "Qsen",
+  "email": "qsen@gmail.com",
+  "password": "$2b$10$urf.jFFr3q4v6SQ3Boi4VuCJ3bl3iWvZtOECZcE2opqYC9zfLfvwC",
+  "profileImage": {
+    "publicId": "videos-platform/profile-images/tc6frpusq2syjpdfnskg",
+    "imageUrl": "https://res.cloudinary.com/dr0ykfclu/image/upload/v1779450214/videos-platform/profile-images/tc6frpusq2syjpdfnskg.jpg"
+  },
+  "followers": [
+    {
+      "$oid": "67f185dad54777c435c6734d"
+    },
+    {
+      "$oid": "67fcc48632f0f0e962b511fb"
+    }
+  ],
+  "__v": 0,
+  "created_at": "2025-05-28T20:02:08.770+00:00",
+  "updatedAt": {
+    "$date": "2026-05-22T11:43:34.936Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67f185dad54777c435c6734d"
+  },
+  "username": "Pesho",
+  "email": "pesho@gmail.com",
+  "password": "$2b$10$qwGztxM228EMEQFZm9FWjuuTjNwBJUCMasbTDc3ne0PtRIdctyV.S",
+  "profileImage": {
+    "publicId": "videos-platform/profile-images/s36fdofcctir7e2ytk3q",
+    "imageUrl": "https://res.cloudinary.com/dr0ykfclu/image/upload/v1779450178/videos-platform/profile-images/s36fdofcctir7e2ytk3q.jpg"
+  },
+  "followers": [
+    {
+      "$oid": "67fcc48632f0f0e962b511fb"
+    },
+    {
+      "$oid": "67f181bc16e303a311de48a4"
+    }
+  ],
+  "__v": 0,
+  "created_at": "2025-05-28T20:02:08.770+00:00",
+  "updatedAt": {
+    "$date": "2026-05-22T11:42:59.263Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fcc48632f0f0e962b511fb"
+  },
+  "username": "Gosho",
+  "email": "gosho@gmail.com",
+  "password": "$2b$10$TDAJHPqrcyZp1ceogEZmRui0CSYIPGLBrv0Tz9AIBnaFtXKm1e9B.",
+  "profileImage": {
+    "publicId": "videos-platform/profile-images/thrcyrevrdolgfago9lk",
+    "imageUrl": "https://res.cloudinary.com/dr0ykfclu/image/upload/v1779450258/videos-platform/profile-images/thrcyrevrdolgfago9lk.jpg"
+  },
+  "followers": [
+    {
+      "$oid": "67f181bc16e303a311de48a4"
+    }
+  ],
+  "__v": 0,
+  "created_at": "2025-05-28T20:02:08.770+00:00",
+  "updatedAt": {
+    "$date": "2026-05-22T11:44:19.410Z"
+  }
+}]

@@ -1,14 +1,14 @@
 export interface EditFormTypes {
 	title: string;
-	videoUrl: string;
-	thumbnail: string;
+	videoUrl: File | null;
+	thumbnail: File | null;
 	description: string;
 }
 
 export interface RegisterFormTypes {
 	username: string;
 	email: string;
-	profileImage: string;
+	profileImage: File | null;
 	password: string;
 	repass: string;
 }
@@ -25,7 +25,7 @@ export interface CommentFormTypes{
 export interface EditUserFormTypes{
 	username:string | undefined;
 	email:string | undefined;
-	profileImage:string | undefined;
+	profileImage: File | null;
 }
 
 export interface ChangePasswordFormTypes{

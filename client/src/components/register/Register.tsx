@@ -15,65 +15,65 @@ export default function Register() {
 	const [errMessage, setErrMessage] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [showRepass, setShowRepass] = useState(false);
+	const [isRegistering, setIsRegistering] = useState(false);
 
 	const initialValues = {
 		username: "",
 		email: "",
-		profileImage: "",
+		profileImage: null,
 		password: "",
 		repass: "",
 	};
 
-	function onShowPassword(){
-		if(showPassword){
+	function onShowPassword() {
+		if (showPassword) {
 			setShowPassword(false);
-		}else{
+		} else {
 			setShowPassword(true);
 		}
 	}
 
-	function onShowRepass(){
-		if(showRepass){
+	function onShowRepass() {
+		if (showRepass) {
 			setShowRepass(false);
-		}else{
+		} else {
 			setShowRepass(true);
 		}
 	}
 
 	async function onRegister(
 		values: RegisterFormTypes,
-		actions: FormikHelpers<RegisterFormTypes>
+		actions: FormikHelpers<RegisterFormTypes>,
 	) {
 		try {
-			const username = values.username;
-			const email = values.email;
-			const profileImage = values.profileImage;
-			const password = values.password;
-			const repass = values.repass;
-			const user = await register({
-				username,
-				email,
-				profileImage,
-				password,
-				repass,
-			});
+			setIsRegistering(true);
+			const formData = new FormData();
+			formData.append("username", values.username);
+			formData.append("email", values.email);
+			formData.append("profileImage", values.profileImage as Blob);
+			formData.append("password", values.password);
+			formData.append("repass", values.repass);
+			const user = await register(formData);
 			if (setUser) {
 				setUser(user);
 			}
 			actions.resetForm();
 			navigate("/");
 		} catch (err) {
+			setIsRegistering(false);
 			setIsErr(true);
 			if (err instanceof Error) {
 				setErrMessage(err.message);
 			} else {
 				setErrMessage("Error occurd!");
 			}
+		} finally {
+			setIsRegistering(false);
 		}
 	}
 
 	return (
-		<Formik
+		<Formik<RegisterFormTypes>
 			initialValues={initialValues}
 			onSubmit={onRegister}
 			validationSchema={registerShema}
@@ -113,7 +113,7 @@ export default function Register() {
 					<p className="input">
 						<CustomInput
 							label="Profile image"
-							type="text"
+							type="file"
 							name="profileImage"
 							className={
 								theme == "dark"
@@ -134,9 +134,15 @@ export default function Register() {
 							}
 						/>
 						{showPassword ? (
-							<i className="fa-regular fa-eye" onClick={onShowPassword}></i>
+							<i
+								className="fa-regular fa-eye"
+								onClick={onShowPassword}
+							></i>
 						) : (
-							<i className="fa-regular fa-eye-slash" onClick={onShowPassword}></i>
+							<i
+								className="fa-regular fa-eye-slash"
+								onClick={onShowPassword}
+							></i>
 						)}
 					</p>
 					<p className="input">
@@ -151,12 +157,21 @@ export default function Register() {
 							}
 						/>
 						{showRepass ? (
-							<i className="fa-regular fa-eye" onClick={onShowRepass}></i>
+							<i
+								className="fa-regular fa-eye"
+								onClick={onShowRepass}
+							></i>
 						) : (
-							<i className="fa-regular fa-eye-slash" onClick={onShowRepass}></i>
+							<i
+								className="fa-regular fa-eye-slash"
+								onClick={onShowRepass}
+							></i>
 						)}
 					</p>
-					<button type="submit">Submit</button>
+					{isRegistering && <span className="loader"></span>}
+					<button type="submit" disabled={isRegistering}>
+						{isRegistering ? "Registering..." : "Submit"}
+					</button>
 					<p>
 						Already have account? You can{" "}
 						<Link to="/login">Login</Link> here.

@@ -2,40 +2,63 @@ import { useField, useFormikContext } from "formik";
 
 interface CustomInputProps {
 	label?: string;
-	placeholder?: string;
-	type: string;
 	name: string;
+	type: string;
 	className?: string;
-	changeHandler?: (values: {
+	value?: string;
+	id?: string;
+	placeholder?: string;
+	encType?: string;
+	autoComplete?: string;
+	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	changehandler?: (values: {
 		query: string;
-		criteria: "videos" | "users";
+		criteria: "videos" | "users" | "Videos";
 	}) => Promise<void>;
 }
 
 export default function CustomInput({
 	label,
-	changeHandler,
+	onChange,
+	changehandler,
 	...props
 }: CustomInputProps) {
-	const [field, meta] = useField(props);
+	const [field, meta, helpers] = useField(props);
+	function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+		const file = e.target.files?.[0] || null;
+		helpers.setValue(file);
+		if (onChange) onChange(e);
+	}
 	const { values } = useFormikContext<{
 		query: string;
-		criteria: "videos" | "users";
+		criteria: "videos" | "users" | "Videos";
 	}>();
 
 	async function change(event: React.ChangeEvent<HTMLInputElement>) {
 		field.onChange(event);
-		if (changeHandler) {
-			await changeHandler(values);
+		if (changehandler) {
+			await changehandler(values);
 		}
 	}
-
+	const inputProps =
+		props.type === "file"
+			? {
+					name: props.name,
+					id: props.id,
+					type: "file",
+					onChange: changeHandler,
+				}
+			: {
+					...field,
+					...props,
+					onChange: changehandler ? change : field.onChange,
+				};
 	return (
 		<>
-			{label ? <label>{label}</label> : ""}
-			<input {...props} {...field} onChange={change} />
+			{label ? <label htmlFor={props.id}>{label}</label> : ""}
+			<input {...inputProps} />
 			{meta.error && meta.touched ? (
-				<p className="error">{meta.error}</p>
+				<p className="inputError">{meta.error}</p>
 			) : (
 				""
 			)}

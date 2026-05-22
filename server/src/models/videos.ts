@@ -1,21 +1,35 @@
 import mongoose from "mongoose";
+import { VideosType } from "../types/videos";
 
-const videoSchema = new mongoose.Schema(
+const videoSchema = new mongoose.Schema<VideosType>(
 	{
 		title: {
 			type: String,
 			require: true,
 		},
 		videoUrl: {
-			type: String,
-			require: true,
+			imageUrl: {
+				type: String,
+				required: true,
+			},
+			publicId: {
+				type: String,
+				required: true,
+			},
 		},
 		description: {
 			type: String,
 			require: true,
 		},
 		thumbnail: {
-			type: String,
+			imageUrl: {
+				type: String,
+				required: true,
+			},
+			publicId: {
+				type: String,
+				required: true,
+			},
 		},
 		likes: {
 			type: [mongoose.SchemaTypes.ObjectId],
@@ -37,7 +51,7 @@ const videoSchema = new mongoose.Schema(
 			ref: "Users",
 		},
 	},
-	{ timestamps: { createdAt: "created_at" } }
+	{ timestamps: { createdAt: "created_at" } },
 );
 
 const Videos = mongoose.model("Videos", videoSchema);

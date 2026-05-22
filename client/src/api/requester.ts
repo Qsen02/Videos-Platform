@@ -9,9 +9,7 @@ import {
 const host = "https://videos-platform-server.onrender.com/";
 
 async function request(method: string, url: string, data?: object) {
-	const headers: Record<string, string> = {
-		"Content-Type": "application/json",
-	};
+	const headers: Record<string, string> = {};
 
 	const options: RequestInit = {
 		method: method,
@@ -24,7 +22,12 @@ async function request(method: string, url: string, data?: object) {
 	}
 
 	if (data) {
-		options.body = JSON.stringify(data);
+		if (data instanceof FormData) {
+			options.body = data;
+		} else {
+			headers["Content-Type"] = "application/json";
+			options.body = JSON.stringify(data);
+		}
 	}
 
 	try {

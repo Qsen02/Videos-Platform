@@ -9,9 +9,6 @@ export const registerShema = yup.object().shape({
 		.string()
 		.email("Email must be valid email!")
 		.required("Email is required!"),
-	profileImage: yup
-		.string()
-		.matches(/^https?:\/\//, "Profile image must be valid URL"),
 	password: yup
 		.string()
 		.matches(
@@ -44,14 +41,6 @@ export const createVideoSchema = yup.object().shape({
 		.string()
 		.min(3, "Title must be at least 3 symbols long!")
 		.required("Title is required!"),
-	videoUrl: yup
-		.string()
-		.min(11, "Video ID must be exactly 11 symbols!")
-		.max(11, "Video ID must be exactly 11 symbols!")
-		.required("Video ID is required!"),
-	thumbnail: yup
-		.string()
-		.matches(/^https?:\/\//, "Thumbnail URL must be valid URL!"),
 	description: yup
 		.string()
 		.min(10, "Descriprion mut be between 10 and 300 symbols!")
@@ -72,9 +61,6 @@ export const editUserSchema = yup.object().shape({
 		.string()
 		.email("Email must be valid email!")
 		.required("Email is required!"),
-	profileImage: yup
-		.string()
-		.matches(/^https?:\/\//, "Profile image must be valid URL")
 });
 
 export const changePasswordSchema=yup.object().shape({

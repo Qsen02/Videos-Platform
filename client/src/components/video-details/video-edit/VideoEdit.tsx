@@ -17,32 +17,33 @@ export default function VideoEdit() {
 	const [isErr, setIsErr] = useState(false);
 	const navigate = useNavigate();
 	const editVideo = useEditVideo();
+	const [isEditing, setIsEditing] = useState(false);
 
 	async function onEdit(
 		values: EditFormTypes,
-		actions: FormikHelpers<EditFormTypes>
+		actions: FormikHelpers<EditFormTypes>,
 	) {
 		try {
-			const title = values.title;
-			const videoUrl = values.videoUrl;
-			const thumbnail = values.thumbnail;
-			const description = values.description;
-			const updatedVideo = await editVideo(videoId, {
-				title: title,
-				videoUrl: videoUrl,
-				thumbnail: thumbnail,
-				description: description,
-			});
+			setIsEditing(true);
+			const formData = new FormData();
+			formData.append("title", values.title);
+			formData.append("description", values.description);
+			formData.append("video", values.videoUrl as Blob);
+			formData.append("thumbnail", values.thumbnail as Blob);
+			const updatedVideo = await editVideo(videoId, formData);
 			actions.resetForm();
 			setVideo(updatedVideo);
 			navigate(`/videos/${videoId}`);
 		} catch (err) {
+			setIsEditing(false);
 			setIsErr(true);
 			if (err instanceof Error) {
 				setErrMessage(err.message);
 			} else {
 				setErrMessage("Error occured!");
 			}
+		} finally {
+			setIsEditing(false);
 		}
 	}
 
@@ -55,12 +56,12 @@ export default function VideoEdit() {
 	}
 
 	return (
-		<Formik
+		<Formik<EditFormTypes>
 			initialValues={{
 				title: video.title,
 				description: video.description,
-				videoUrl: video.videoUrl,
-				thumbnail: video.thumbnail,
+				videoUrl: null,
+				thumbnail: null,
 			}}
 			onSubmit={onEdit}
 			validationSchema={createVideoSchema}
@@ -79,7 +80,8 @@ export default function VideoEdit() {
 							<span className="loader"></span>
 						) : error ? (
 							<h2>
-								Server is not responding, please try again later!
+								Server is not responding, please try again
+								later!
 							</h2>
 						) : (
 							<>
@@ -104,10 +106,9 @@ export default function VideoEdit() {
 								</p>
 								<p className="input">
 									<CustomInput
-										label="Video ID"
-										type="text"
+										label="Video"
+										type="file"
 										name="videoUrl"
-										placeholder="oAdEoFrGhTfg"
 										className={
 											theme == "dark"
 												? "darkTheme-light"
@@ -117,10 +118,9 @@ export default function VideoEdit() {
 								</p>
 								<p className="input">
 									<CustomInput
-										label="Thumbnail URL"
-										type="text"
+										label="Thumbnail"
+										type="file"
 										name="thumbnail"
-										placeholder="https://exmaple.com"
 										className={
 											theme == "dark"
 												? "darkTheme-light"
@@ -141,9 +141,21 @@ export default function VideoEdit() {
 										}
 									/>
 								</p>
+								{isEditing && <span className="loader"></span>}
 								<div className="buttons">
-									<button type="submit">Save</button>
-									<button onClick={onCancel}>Cancel</button>
+									{isEditing && (
+										<span className="loader"></span>
+									)}
+									<button type="submit" disabled={isEditing}>
+										{isEditing ? "Saving..." : "Save"}
+									</button>
+									<button
+										type="button"
+										onClick={onCancel}
+										disabled={isEditing}
+									>
+										Cancel
+									</button>
 								</div>
 							</>
 						)}

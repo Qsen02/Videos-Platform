@@ -13,9 +13,15 @@ export default function VideoDetails() {
 	const initValues = {
 		_id: "",
 		title: "",
-		videoUrl: "",
+		videoUrl: {
+			imageUrl: "",
+			publicId: "",
+		},
 		description: "",
-		thumbnail: "",
+		thumbnail: {
+			imageUrl: "",
+			publicId: "",
+		},
 		likes: [],
 		dislikes: [],
 		comments: [],
@@ -23,16 +29,19 @@ export default function VideoDetails() {
 			_id: "",
 			username: "",
 			email: "",
-			profileImage: "",
+			profileImage: {
+				imageUrl: "",
+				publicId: "",
+			},
 			password: "",
 			followers: [],
-			created_at:""
+			created_at: "",
 		},
-		created_at:""
+		created_at: "",
 	};
 	const { video, setVideo, loading, error } = useGetOneVideo(
 		initValues,
-		videoId
+		videoId,
 	);
 	return (
 		<>
@@ -50,27 +59,41 @@ export default function VideoDetails() {
 				) : (
 					<>
 						<h2>{video?.title}</h2>
-						<iframe
-							src={`https://www.youtube.com/embed/${video?.videoUrl}`}
-							allowFullScreen
-						></iframe>
+						<video controls>
+							<source
+								src={video?.videoUrl.imageUrl}
+								type="video/mp4"
+							/>
+							<source
+								src={video?.videoUrl.imageUrl}
+								type="video/ogg"
+							/>
+							Your browser does not support the video tag.
+						</video>
 						<section className={styles.descriptionWrapper}>
 							<div className={styles.owner}>
 								{user ? (
 									<Link to={`/profiles/${video.ownerId._id}`}>
 										<img
-											src={video?.ownerId.profileImage}
+											src={
+												video?.ownerId.profileImage
+													.imageUrl
+											}
 											onError={errorProfileImage}
 										/>
 									</Link>
 								) : (
 									<img
-										src={video?.ownerId.profileImage}
+										src={
+											video?.ownerId.profileImage.imageUrl
+										}
 										onError={errorProfileImage}
 									/>
 								)}
 								<p>{video?.ownerId.username}</p>
-								<p id={styles.time}>{transformTime(video.created_at)}</p>
+								<p id={styles.time}>
+									{transformTime(video.created_at)}
+								</p>
 							</div>
 							<p className={styles.description}>
 								{video?.description}

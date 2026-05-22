@@ -1,17 +1,22 @@
 import { Comment } from "./comment";
 import { User } from "./user";
 
+export interface FileType {
+	imageUrl: string;
+	publicId: string;
+}
+
 export interface Video {
 	_id: string;
 	title: string;
-	videoUrl: string;
+	videoUrl: FileType;
 	description: string;
-	thumbnail: string;
+	thumbnail: FileType;
 	likes: string[];
 	dislikes: string[];
 	comments: Comment[];
 	ownerId: User;
-	created_at:string;
+	created_at: string;
 }
 
 export type ActionType =
