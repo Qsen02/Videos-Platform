@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 export function setCors(){
     return function (req:Request,res:Response,next:NextFunction){
         const allowedOrigins = [
-			"https://videos-platform-client.onrender.com/",
+			"https://videos-platform-client.onrender.com",
 			"http://localhost:5173",
 		];
         const origin=req.headers.origin;
