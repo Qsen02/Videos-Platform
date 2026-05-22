@@ -143,9 +143,6 @@ export default function VideoEdit() {
 								</p>
 								{isEditing && <span className="loader"></span>}
 								<div className="buttons">
-									{isEditing && (
-										<span className="loader"></span>
-									)}
 									<button type="submit" disabled={isEditing}>
 										{isEditing ? "Saving..." : "Save"}
 									</button>
