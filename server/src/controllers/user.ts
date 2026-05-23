@@ -17,7 +17,7 @@ import { errorParser } from "../utils/errorParsers";
 import { setToken } from "../services/token";
 import { isUser } from "../middlewares/guard";
 import { MyRequest } from "../types/express";
-import { deleteFromCloudinary, upload, uploadToCloudinary } from "../config/multer";
+import { deleteFromCloudinary, upload } from "../config/multer";
 
 const userRouter = Router();
 
@@ -74,7 +74,14 @@ userRouter.get("/follwedUsers/:userId", isUser(), async (req, res) => {
 
 userRouter.post(
 	"/register",
-	upload.single("profileImage"),
+	body("profileImageUrl")
+		.isString()
+		.notEmpty()
+		.withMessage("Profile image url is required!"),
+	body("profileImageId")
+		.isString()
+		.notEmpty()
+		.withMessage("Profile image public id is required!"),
 	body("username")
 		.trim()
 		.isLength({ min: 3 })
@@ -91,17 +98,11 @@ userRouter.post(
 		.custom((value: string, { req }) => req.body.password == value)
 		.withMessage("Password must match!"),
 	async (req, res) => {
-		const file = req.file;
-		const imageResult = file
-			? await uploadToCloudinary(file, "videos-platform/profile-images")
-			: null;
-		const imageData = imageResult
-			? {
-					publicId: (imageResult as any).public_id,
-					imageUrl: (imageResult as any).secure_url,
-				}
-			: null;
 		const fields = req.body;
+		const imageData = {
+			publicId: fields.profileImageId,
+			imageUrl: fields.profileImageUrl,
+		};
 		try {
 			const results = validationResult(req);
 			if (!results.isEmpty()) {
@@ -198,23 +199,20 @@ userRouter.post("/unfollow/:userId", isUser(), async (req: MyRequest, res) => {
 userRouter.put(
 	"/edit/:userId",
 	isUser(),
-	upload.single("profileImage"),
 	body("username")
 		.trim()
 		.isLength({ min: 3 })
 		.withMessage("Username must be at least 3 symbols long!"),
 	body("email").trim().isEmail().withMessage("Email must be valid!"),
+	body("profileImageUrl")
+		.isString()
+		.notEmpty()
+		.withMessage("Profile image url is required!"),
+	body("profileImageId")
+		.isString()
+		.notEmpty()
+		.withMessage("Profile image public id is required!"),
 	async (req, res) => {
-		const file = req.file;
-		const imageResult = file
-			? await uploadToCloudinary(file, "videos-platform/profile-images")
-			: null;
-		const imageData = imageResult
-			? {
-					publicId: (imageResult as any).public_id,
-					imageUrl: (imageResult as any).secure_url,
-				}
-			: null;
 		const fields = req.body;
 		const userId = req.params.userId;
 		const isValid = await checkUserId(userId);
@@ -222,8 +220,12 @@ userRouter.put(
 			res.status(404).json({ message: "Resource not found!" });
 			return;
 		}
+		const imageData = {
+			publicId: fields.profileImageId,
+			imageUrl: fields.profileImageUrl,
+		};
 		const oldUser = await getUserById(userId);
-		if (oldUser && oldUser.profileImage.publicId) { 
+		if (oldUser && oldUser.profileImage.publicId) {
 			await deleteFromCloudinary(oldUser.profileImage.publicId);
 		}
 		try {
@@ -231,7 +233,7 @@ userRouter.put(
 			if (!results.isEmpty()) {
 				throw new Error(errorParser(results));
 			}
-			const updatedUser = await editUser(userId, fields,imageData);
+			const updatedUser = await editUser(userId, fields, imageData);
 			res.json(updatedUser);
 		} catch (err) {
 			if (err instanceof Error) {

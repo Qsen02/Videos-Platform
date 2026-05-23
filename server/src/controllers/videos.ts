@@ -17,11 +17,7 @@ import { isUser } from "../middlewares/guard";
 import { body, validationResult } from "express-validator";
 import { errorParser } from "../utils/errorParsers";
 import { MyRequest } from "../types/express";
-import {
-	deleteFromCloudinary,
-	upload,
-	uploadToCloudinary,
-} from "../config/multer";
+import { deleteFromCloudinary, upload } from "../config/multer";
 
 const videoRouter = Router();
 
@@ -63,10 +59,22 @@ videoRouter.get("/page/:pageNumber", async (req, res) => {
 videoRouter.post(
 	"/",
 	isUser(),
-	upload.fields([
-		{ name: "thumbnail", maxCount: 1 },
-		{ name: "video", maxCount: 1 },
-	]),
+	body("videoUrl")
+		.isString()
+		.notEmpty()
+		.withMessage("Video url is required!"),
+	body("videoId")
+		.isString()
+		.notEmpty()
+		.withMessage("Video public id is required!"),
+	body("thumbnailUrl")
+		.isString()
+		.notEmpty()
+		.withMessage("Thumbnail url is required!"),
+	body("thumbnailId")
+		.isString()
+		.notEmpty()
+		.withMessage("Thumbnail public id is required!"),
 	body("title")
 		.trim()
 		.isLength({ min: 3 })
@@ -76,37 +84,16 @@ videoRouter.post(
 		.isLength({ min: 10, max: 300 })
 		.withMessage("Descriprion mut be between 10 and 300 symbols!"),
 	async (req: MyRequest, res) => {
-		const files = req.files as {
-			thumbnail?: Express.Multer.File[];
-			video?: Express.Multer.File[];
-		};
-		const thumbnailFile = files?.thumbnail?.[0];
-		const videoFile = files?.video?.[0];
-
-		const thumbnailResult = thumbnailFile
-			? await uploadToCloudinary(
-					thumbnailFile,
-					"videos-platform/tumbnails",
-				)
-			: null;
-
-		const videoResult = videoFile
-			? await uploadToCloudinary(videoFile, "videos-platform/videos","video")
-			: null;
-		const thumbnailData = thumbnailResult
-			? {
-					publicId: (thumbnailResult as any).public_id,
-					imageUrl: (thumbnailResult as any).secure_url,
-				}
-			: null;
-
-		const videoData = videoResult
-			? {
-					publicId: (videoResult as any).public_id,
-					imageUrl: (videoResult as any).secure_url,
-				}
-			: null;
 		const fields = req.body;
+		const thumbnailData = {
+			publicId: fields.thumbnailId,
+			imageUrl: fields.thumbnailUrl,
+		};
+
+		const videoData = {
+			publicId: fields.videoId,
+			imageUrl: fields.videoUrl,
+		};
 		const user = req.user;
 		try {
 			const result = validationResult(req);
@@ -153,10 +140,22 @@ videoRouter.delete("/:videoId", isUser(), async (req, res) => {
 videoRouter.put(
 	"/:videoId",
 	isUser(),
-	upload.fields([
-		{ name: "thumbnail", maxCount: 1 },
-		{ name: "video", maxCount: 1 },
-	]),
+	body("videoUrl")
+		.isString()
+		.notEmpty()
+		.withMessage("Video url is required!"),
+	body("videoId")
+		.isString()
+		.notEmpty()
+		.withMessage("Video public id is required!"),
+	body("thumbnailUrl")
+		.isString()
+		.notEmpty()
+		.withMessage("Thumbnail url is required!"),
+	body("thumbnailId")
+		.isString()
+		.notEmpty()
+		.withMessage("Thumbnail public id is required!"),
 	body("title")
 		.trim()
 		.isLength({ min: 3 })
@@ -173,38 +172,16 @@ videoRouter.put(
 			res.status(404).json({ message: "Resource not found!" });
 			return;
 		}
-		const files = req.files as {
-			thumbnail?: Express.Multer.File[];
-			video?: Express.Multer.File[];
+		const thumbnailData = {
+			publicId: fields.thumbnailId,
+			imageUrl: fields.thumbnailUrl,
 		};
 
-		const thumbnailFile = files?.thumbnail?.[0];
-		const videoFile = files?.video?.[0];
-
-		const thumbnailResult = thumbnailFile
-			? await uploadToCloudinary(
-					thumbnailFile,
-					"videos-platform/tumbnails",
-				)
-			: null;
-
-		const videoResult = videoFile
-			? await uploadToCloudinary(videoFile, "videos-platform/videos", "video")
-			: null;
-
-		const thumbnailData = thumbnailResult
-			? {
-					publicId: (thumbnailResult as any).public_id,
-					imageUrl: (thumbnailResult as any).secure_url,
-				}
-			: null;
-
-		const videoData = videoResult
-			? {
-					publicId: (videoResult as any).public_id,
-					imageUrl: (videoResult as any).secure_url,
-				}
-			: null;
+		const videoData = {
+			publicId: fields.videoId,
+			imageUrl: fields.videoUrl,
+		};
+		
 		const oldVideo = await getVideoById(videoId);
 		if (oldVideo && oldVideo.thumbnail.publicId) {
 			await deleteFromCloudinary(oldVideo.thumbnail.publicId);
