@@ -8,6 +8,7 @@ import CustomTextarea from "../../../commons/custumTextarea";
 import { useEditVideo } from "../../../hooks/useVideos";
 import { VideoOutletContextType } from "../../../types/outletContext";
 import { EditFormTypes } from "../../../types/initialFormTypes";
+import { useUploadThumbnail, useUploadVideo } from "../../../hooks/useCloudinary";
 
 export default function VideoEdit() {
 	const { theme } = useUserThemeContext();
@@ -18,6 +19,8 @@ export default function VideoEdit() {
 	const navigate = useNavigate();
 	const editVideo = useEditVideo();
 	const [isEditing, setIsEditing] = useState(false);
+	const uploadVideo = useUploadVideo();
+	const uploadThumbnail = useUploadThumbnail();
 
 	async function onEdit(
 		values: EditFormTypes,
@@ -25,12 +28,22 @@ export default function VideoEdit() {
 	) {
 		try {
 			setIsEditing(true);
-			const formData = new FormData();
-			formData.append("title", values.title);
-			formData.append("description", values.description);
-			formData.append("video", values.videoUrl as Blob);
-			formData.append("thumbnail", values.thumbnail as Blob);
-			const updatedVideo = await editVideo(videoId, formData);
+			const videoData = await uploadVideo(values.videoUrl as File);
+			const thumbnailData = await uploadThumbnail(values.thumbnail as File);
+			const title = values.title;
+			const description = values.description;
+			const videoUrl = videoData.secure_url;
+			const thumbnailUrl = thumbnailData.secure_url;
+			const videoPublicId = videoData.public_id;
+			const thumbnailId = thumbnailData.public_id;
+			const updatedVideo = await editVideo(videoId, {
+				title,
+				description,
+				videoUrl,
+				thumbnailUrl,
+				videoId: videoPublicId,
+				thumbnailId,
+			});
 			actions.resetForm();
 			setVideo(updatedVideo);
 			navigate(`/videos/${videoId}`);

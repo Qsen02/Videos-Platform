@@ -7,6 +7,7 @@ import { editUserSchema } from "../../../schemas/validationShema";
 import { EditUserFormTypes } from "../../../types/initialFormTypes";
 import { useState } from "react";
 import { useEditUser } from "../../../hooks/useUsers";
+import { useUploadProfileImage } from "../../../hooks/useCloudinary";
 
 export default function ProfileEditUser() {
 	const { theme, user, setUser } = useUserThemeContext();
@@ -17,6 +18,7 @@ export default function ProfileEditUser() {
 	const navigate = useNavigate();
 	const editUser = useEditUser();
 	const [isEditing, setIsEditing] = useState(false);
+	const uploadProfileImage = useUploadProfileImage();
 
 	function onCancel() {
 		history.back();
@@ -28,11 +30,19 @@ export default function ProfileEditUser() {
 	) {
 		try {
 			setIsEditing(true);
-			const formData = new FormData();
-			formData.append("username", values.username ?? "");
-			formData.append("email", values.email ?? "");
-			formData.append("profileImage", values.profileImage as Blob);
-			const updatedUser = await editUser(userId, formData);
+			const profileImageData = await uploadProfileImage(
+				values.profileImage as File,
+			);
+			const username = values.username;
+			const email = values.email;
+			const profileImageUrl = profileImageData.secure_url;
+			const profileImageId = profileImageData.public_id;
+			const updatedUser = await editUser(userId, {
+				username,
+				email,
+				profileImageUrl,
+				profileImageId,
+			});
 			if (user && setUser) {
 				user.username = updatedUser.username;
 				user.email = updatedUser.email;

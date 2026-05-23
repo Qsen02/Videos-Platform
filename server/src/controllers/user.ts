@@ -75,12 +75,12 @@ userRouter.get("/follwedUsers/:userId", isUser(), async (req, res) => {
 userRouter.post(
 	"/register",
 	body("profileImageUrl")
+		.optional()
 		.isString()
-		.notEmpty()
 		.withMessage("Profile image url is required!"),
 	body("profileImageId")
+		.optional()
 		.isString()
-		.notEmpty()
 		.withMessage("Profile image public id is required!"),
 	body("username")
 		.trim()
@@ -100,8 +100,8 @@ userRouter.post(
 	async (req, res) => {
 		const fields = req.body;
 		const imageData = {
-			publicId: fields.profileImageId,
-			imageUrl: fields.profileImageUrl,
+			publicId: fields.profileImageId ?? "",
+			imageUrl: fields.profileImageUrl ?? "",
 		};
 		try {
 			const results = validationResult(req);

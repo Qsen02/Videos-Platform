@@ -6,6 +6,7 @@ import { useCreateVideo } from "../../hooks/useVideos";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createVideoSchema } from "../../schemas/validationShema";
+import { useUploadThumbnail, useUploadVideo } from "../../hooks/useCloudinary";
 
 export default function CreateVideo() {
 	const { theme } = useUserThemeContext();
@@ -13,7 +14,9 @@ export default function CreateVideo() {
 	const [errMessage, setErrMessage] = useState("");
 	const [isErr, setIsErr] = useState(false);
 	const navigate = useNavigate();
-	const [isCreating,setIsCreating]=useState(false);
+	const [isCreating, setIsCreating] = useState(false);
+	const uploadVideo = useUploadVideo();
+	const uploadThumbnail = useUploadThumbnail();
 
 	interface valuesType {
 		title: string;
@@ -31,21 +34,31 @@ export default function CreateVideo() {
 
 	async function onAdd(
 		values: valuesType,
-		actions: FormikHelpers<valuesType>
+		actions: FormikHelpers<valuesType>,
 	) {
 		try {
 			setIsCreating(true);
-			if(!values.videoUrl || !values.thumbnail){
+			if (!values.videoUrl || !values.thumbnail) {
 				setIsErr(true);
 				setErrMessage("Video and thumbnail are required!");
 				return;
 			}
-			const formData = new FormData();
-			formData.append("title", values.title);
-			formData.append("video", values.videoUrl as Blob);
-			formData.append("thumbnail", values.thumbnail as Blob);	
-			formData.append("description", values.description);
-			await createVideo(formData);
+			const videoData = await uploadVideo(values.videoUrl);
+			const thumbnailData = await uploadThumbnail(values.thumbnail);
+			const title = values.title;
+			const description = values.description;
+			const videoUrl = videoData.secure_url;
+			const thumbnailUrl = thumbnailData.secure_url;
+			const videoId = videoData.public_id;
+			const thumbnailId = thumbnailData.public_id;
+			await createVideo({
+				title,
+				description,
+				videoUrl,
+				thumbnailUrl,
+				videoId,
+				thumbnailId,
+			});
 			actions.resetForm();
 			navigate("/");
 		} catch (err) {
@@ -56,7 +69,7 @@ export default function CreateVideo() {
 			} else {
 				setErrMessage("Error occured!");
 			}
-		}finally{
+		} finally {
 			setIsCreating(false);
 		}
 	}
@@ -125,9 +138,7 @@ export default function CreateVideo() {
 							}
 						/>
 					</p>
-					{ 
-						isCreating && <span className="loader"></span>
-					}
+					{isCreating && <span className="loader"></span>}
 					<button type="submit" disabled={isCreating}>
 						{isCreating ? "Creating..." : "Submit"}
 					</button>

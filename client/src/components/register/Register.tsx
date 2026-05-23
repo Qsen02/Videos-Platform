@@ -6,6 +6,7 @@ import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import { registerShema } from "../../schemas/validationShema";
 import { useState } from "react";
 import { RegisterFormTypes } from "../../types/initialFormTypes";
+import { useUploadProfileImage } from "../../hooks/useCloudinary";
 
 export default function Register() {
 	const { setUser, theme } = useUserThemeContext();
@@ -16,6 +17,7 @@ export default function Register() {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showRepass, setShowRepass] = useState(false);
 	const [isRegistering, setIsRegistering] = useState(false);
+	const uploadProfileImage = useUploadProfileImage();
 
 	const initialValues = {
 		username: "",
@@ -47,13 +49,23 @@ export default function Register() {
 	) {
 		try {
 			setIsRegistering(true);
-			const formData = new FormData();
-			formData.append("username", values.username);
-			formData.append("email", values.email);
-			formData.append("profileImage", values.profileImage as Blob);
-			formData.append("password", values.password);
-			formData.append("repass", values.repass);
-			const user = await register(formData);
+			const profileImageData = await uploadProfileImage(
+				values.profileImage as File,
+			);
+			const username = values.username;
+			const email = values.email;
+			const password = values.password;
+			const repass = values.repass;
+			const profileImageUrl = profileImageData.secure_url;
+			const profileImageId = profileImageData.public_id;
+			const user = await register({
+				username,
+				email,
+				password,
+				profileImageUrl,
+				profileImageId,
+				repass,
+			});
 			if (setUser) {
 				setUser(user);
 			}

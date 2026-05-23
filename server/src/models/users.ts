@@ -20,11 +20,9 @@ const userSchema = new mongoose.Schema<User>(
 		profileImage: {
 			imageUrl: {
 				type: String,
-				required: true,
 			},
 			publicId: {
 				type: String,
-				required: true,
 			},
 		},
 		followers: {

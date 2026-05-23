@@ -141,20 +141,20 @@ videoRouter.put(
 	"/:videoId",
 	isUser(),
 	body("videoUrl")
+		.optional()
 		.isString()
-		.notEmpty()
 		.withMessage("Video url is required!"),
 	body("videoId")
+		.optional()
 		.isString()
-		.notEmpty()
 		.withMessage("Video public id is required!"),
 	body("thumbnailUrl")
+		.optional()
 		.isString()
-		.notEmpty()
 		.withMessage("Thumbnail url is required!"),
 	body("thumbnailId")
+		.optional()
 		.isString()
-		.notEmpty()
 		.withMessage("Thumbnail public id is required!"),
 	body("title")
 		.trim()
@@ -173,15 +173,15 @@ videoRouter.put(
 			return;
 		}
 		const thumbnailData = {
-			publicId: fields.thumbnailId,
-			imageUrl: fields.thumbnailUrl,
+			publicId: fields.thumbnailId ?? "",
+			imageUrl: fields.thumbnailUrl ?? "",
 		};
 
 		const videoData = {
-			publicId: fields.videoId,
-			imageUrl: fields.videoUrl,
+			publicId: fields.videoId ?? "",
+			imageUrl: fields.videoUrl ?? "",
 		};
-		
+
 		const oldVideo = await getVideoById(videoId);
 		if (oldVideo && oldVideo.thumbnail.publicId) {
 			await deleteFromCloudinary(oldVideo.thumbnail.publicId);

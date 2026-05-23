@@ -50,7 +50,7 @@ export default function Profile() {
 						<div className={styles.userInfo}>
 							<img
 								src={
-									curUser?.profileImage.imageUrl ??
+									curUser?.profileImage.imageUrl ||
 									"/assets/profile.png"
 								}
 								onError={errorProfileImage}

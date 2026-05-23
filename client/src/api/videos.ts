@@ -32,7 +32,8 @@ export async function deleteVideo(videoId:string){
     await del(`${endpoint}/${videoId}`);
 }
 
-export async function editVideo(videoId:string,data:object){
+export async function editVideo(videoId: string, data: object) {
+    console.log(videoId);
     const updatedVideo=await put(`${endpoint}/${videoId}`,data);
     return updatedVideo as Video;
 }
