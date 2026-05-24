@@ -1,12 +1,10 @@
-import { populate } from "dotenv";
 import { Answers } from "../models/answers";
 import { Comments } from "../models/comments";
 import { Videos } from "../models/videos";
 
 export async function getCommentById(commentId: string | undefined) {
 	const comment = await Comments.findById(commentId)
-		.populate("videoId")
-		.populate("ownerId")
+		.populate("ownerId","username profileImage")
 		.populate({
 			path: "answers",
 			populate: {
@@ -55,7 +53,7 @@ export async function createComment(
 				model: "Users",
 			},
 		})
-		.populate("ownerId")
+		.populate("ownerId","username profileImage")
 		.lean();
 
 	return updatedVideo;
@@ -75,7 +73,7 @@ export async function deleteComment(videoId: string, commentId: string) {
 				model: "Users",
 			},
 		})
-		.populate("ownerId")
+		.populate("ownerId","username profileImage")
 		.lean();
 	await Answers.deleteMany({ commentId: comment?._id });
 	await comment?.deleteOne();
@@ -90,8 +88,7 @@ export async function editComment(commentId: string, newContent: string) {
 		},
 		{ new: true }
 	)
-		.populate("videoId")
-		.populate("ownerId")
+		.populate("ownerId","username profileImage")
 		.lean();
 
 	return updatedComment;
@@ -108,8 +105,7 @@ export async function likeComment(
 		},
 		{ new: true }
 	)
-		.populate("videoId")
-		.populate("ownerId")
+		.populate("ownerId","username profileImage")
 		.lean();
 
 	return updatedComment;
@@ -126,8 +122,7 @@ export async function unlikeComment(
 		},
 		{ new: true }
 	)
-		.populate("videoId")
-		.populate("ownerId")
+		.populate("ownerId","username profileImage")
 		.lean();
 
 	return updatedComment;

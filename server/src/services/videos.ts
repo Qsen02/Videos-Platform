@@ -10,9 +10,10 @@ export async function getVideoById(videoId: string | undefined | null) {
 			populate: {
 				path: "ownerId",
 				model: "Users",
+				select: "username profileImage",
 			},
 		})
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.lean();
 
 	if (!video) {
@@ -32,7 +33,11 @@ export async function checkVideoId(videoId: string) {
 }
 
 export async function getAllVideos() {
-	const videos = await Videos.find().populate("ownerId").lean();
+	const videos = await Videos.find()
+		.select("title thumbnail ownerId created_at")
+		.sort({ created_at: -1 })
+		.populate("ownerId", "username profileImage")
+		.lean();
 
 	return videos;
 }
@@ -42,14 +47,17 @@ export async function pagination(page: number) {
 	const videos = await Videos.find()
 		.limit(3)
 		.skip(skipCount)
-		.populate("ownerId")
+		.select("title thumbnail ownerId created_at")
+		.sort({ created_at: -1 })
+		.populate("ownerId", "username profileImage")
 		.lean();
 	return videos;
 }
 
 export async function searchVideos(title: string) {
 	const videos = await Videos.find({ title: new RegExp(title, "i") })
-		.populate("ownerId")
+		.select("title thumbnail ownerId created_at")
+		.populate("ownerId", "username profileImage")
 		.lean();
 
 	return videos;
@@ -90,11 +98,11 @@ export async function editVideo(
 		description: data.description,
 	};
 
-	if (tumbnail) { 
+	if (tumbnail) {
 		videoData.thumbnail = tumbnail;
 	}
 
-	if (video) { 
+	if (video) {
 		videoData.videoUrl = video;
 	}
 
@@ -110,9 +118,10 @@ export async function editVideo(
 			populate: {
 				path: "ownerId",
 				model: "Users",
+				select: "username profileImage",
 			},
 		})
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.lean();
 
 	return updatedVideos;
@@ -134,9 +143,10 @@ export async function likeVideo(
 			populate: {
 				path: "ownerId",
 				model: "Users",
+				select: "username profileImage",
 			},
 		})
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.lean();
 
 	return updatedVideos;
@@ -157,9 +167,10 @@ export async function unlikeVideo(
 			populate: {
 				path: "ownerId",
 				model: "Users",
+				select: "username profileImage",
 			},
 		})
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.lean();
 
 	return updatedVideos;
@@ -180,9 +191,10 @@ export async function dislikeVideo(
 			populate: {
 				path: "ownerId",
 				model: "Users",
+				select: "username profileImage",
 			},
 		})
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.lean();
 
 	return updatedVideos;
@@ -203,9 +215,10 @@ export async function undislikeVideo(
 			populate: {
 				path: "ownerId",
 				model: "Users",
+				select: "username profileImage",
 			},
 		})
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.lean();
 
 	return updatedVideos;

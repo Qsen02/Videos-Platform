@@ -49,7 +49,7 @@ export async function followUser(
 		followingUserId,
 		{ $push: { followers: curUser?._id } },
 		{ new: true },
-	).populate("followers");
+	).populate("followers", "username profileImage");
 
 	return updatedUser;
 }
@@ -62,21 +62,22 @@ export async function unfollowUser(
 		unfollowingUserId,
 		{ $pull: { followers: curUser?._id } },
 		{ new: true },
-	).populate("followers");
+	).populate("followers", "username profileImage");
 
 	return updatedUser;
 }
 
 export async function getCreatedVideos(userId: string) {
 	const videos = await Videos.find({ ownerId: userId })
-		.populate("ownerId")
+		.select("title thumbnail ownerId created_at")
+		.populate("ownerId", "username profileImage")
 		.lean();
 
 	return videos;
 }
 
 export async function getUserById(userId: string) {
-	const user = await Users.findById(userId).populate("followers").lean();
+	const user = await Users.findById(userId).populate("followers", "username profileImage").lean();
 	if (!user) {
 		throw new Error("Resource not found!");
 	}
@@ -135,7 +136,7 @@ export async function changePassword(userId: string, newPassword: string) {
 }
 
 export async function searchUsers(name: string) {
-	const users = await Users.find({ username: new RegExp(name, "i") }).lean();
+	const users = await Users.find({ username: new RegExp(name, "i") }).select("username profileImage").lean();
 	return users;
 }
 

@@ -43,6 +43,7 @@ export default function VideoDetails() {
 		initValues,
 		videoId,
 	);
+	const optimizedVideo = `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/video/upload/f_mp4,q_auto/${video?.videoUrl.publicId ?? ""}.mp4`;
 	return (
 		<>
 			<Outlet context={{ videoId, video, setVideo, loading, error }} />
@@ -61,12 +62,8 @@ export default function VideoDetails() {
 						<h2>{video?.title}</h2>
 						<video controls>
 							<source
-								src={video?.videoUrl.imageUrl}
+								src={optimizedVideo}
 								type="video/mp4"
-							/>
-							<source
-								src={video?.videoUrl.imageUrl}
-								type="video/ogg"
 							/>
 							Your browser does not support the video tag.
 						</video>

@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema<User>(
 		password: {
 			type: String,
 			require: true,
+			select: false,
 		},
 		profileImage: {
 			imageUrl: {

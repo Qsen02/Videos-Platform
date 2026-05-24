@@ -3,8 +3,7 @@ import { Comments } from "../models/comments";
 
 export async function getAnswerById(answerId: string) {
 	const answer = await Answers.findById(answerId)
-		.populate("ownerId")
-		.populate("commentId")
+		.populate("ownerId", "username profileImage")
 		.lean();
 	if (!answer) {
 		throw new Error("Resource not found!");
@@ -35,9 +34,10 @@ export async function createAnswer(
 			populate: {
 				path: "ownerId",
 				model: "Users",
+				select: "username profileImage",
 			},
 		})
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.lean();
 
 	return updatedComment;
@@ -49,7 +49,7 @@ export async function editAnswer(answerId: string, content: string) {
 		{ $set: { content: content } },
 		{ new: true }
 	)
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.populate("commentId")
 		.lean();
 	return updatedAnswer;
@@ -64,7 +64,7 @@ export async function deleteAnswer(answerId: string, commentId: string) {
 		},
 		{ new: true }
 	)
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.populate("answers")
 		.lean();
 	return updatedComment;
@@ -78,7 +78,7 @@ export async function likeAnswer(userId: string | undefined, answerId: string) {
 		},
 		{ new: true }
 	)
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.populate("commentId")
 		.lean();
 	return updatedAnswer;
@@ -95,7 +95,7 @@ export async function unlikeAnswer(
 		},
 		{ new: true }
 	)
-		.populate("ownerId")
+		.populate("ownerId", "username profileImage")
 		.populate("commentId")
 		.lean();
 	return updatedAnswer;
