@@ -4,6 +4,7 @@ import { Comments } from "../models/comments";
 export async function getAnswerById(answerId: string) {
 	const answer = await Answers.findById(answerId)
 		.populate("ownerId", "username profileImage")
+		.populate("commentId")
 		.lean();
 	if (!answer) {
 		throw new Error("Resource not found!");
@@ -37,7 +38,7 @@ export async function createAnswer(
 				select: "username profileImage",
 			},
 		})
-		.populate("ownerId", "username profileImage")
+		.populate("ownerId")
 		.lean();
 
 	return updatedComment;
@@ -64,7 +65,7 @@ export async function deleteAnswer(answerId: string, commentId: string) {
 		},
 		{ new: true }
 	)
-		.populate("ownerId", "username profileImage")
+		.populate("ownerId")
 		.populate("answers")
 		.lean();
 	return updatedComment;

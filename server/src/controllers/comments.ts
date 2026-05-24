@@ -52,12 +52,12 @@ commentRouter.post(
 			if (!results.isEmpty()) {
 				throw new Error(errorParser(results));
 			}
-			const updatedVideo = await createComment(
+			const updatedComment = await createComment(
 				user?._id,
 				videoId,
 				content
 			);
-			res.status(201).json(updatedVideo);
+			res.status(201).json(updatedComment);
 		} catch (err) {
 			if (err instanceof Error) {
 				res.status(400).json({ message: err.message });
@@ -102,11 +102,8 @@ commentRouter.put(
 			if (!results.isEmpty()) {
 				throw new Error(errorParser(results));
 			}
-			const newComment = await editComment(commentId, content);
-			const updatedVideo = await getVideoById(
-				newComment?.videoId?._id.toString()
-			);
-			res.json(updatedVideo);
+			const updatedComment = await editComment(commentId, content);
+			res.json(updatedComment);
 		} catch (err) {
 			if (err instanceof Error) {
 				res.status(400).json({ message: err.message });
@@ -130,10 +127,7 @@ commentRouter.post(
 			return;
 		}
 		const updatedComment = await likeComment(user?._id, commentId);
-		const updatedVideo = await getVideoById(
-			updatedComment?.videoId?._id.toString()
-		);
-		res.json(updatedVideo);
+		res.json(updatedComment);
 	}
 );
 
@@ -149,10 +143,7 @@ commentRouter.post(
 			return;
 		}
 		const updatedComment = await unlikeComment(user?._id, commentId);
-		const updatedVideo = await getVideoById(
-			updatedComment?.videoId?._id.toString()
-		);
-		res.json(updatedVideo);
+		res.json(updatedComment);
 	}
 );
 

@@ -11,25 +11,25 @@ export async function getCommentById(commentId:string | undefined){
 
 export async function createComment(videoId:string,data:object){
     const comment=await post(`${endpoint}/in/${videoId}`,data);
-    return comment as Video;
+    return comment as Comment;
 }
 
 export async function deleteComment(videoId:string | undefined,commentId:string | undefined){
     const updatedVideo=await del(`${endpoint}/${commentId}/in/${videoId}`);
-    return updatedVideo as Video;
+    return updatedVideo as Comment;
 }
 
 export async function editComment(commentId:string | undefined,data:object){
     const updatedComment=await put(`${endpoint}/${commentId}`,data);
-    return updatedComment as Video;
+    return updatedComment as Comment;
 }
 
 export async function likeComment(commentId:string){
     const comment=await post(`${endpoint}/like/${commentId}`,{});
-    return comment as Video;
+    return comment as Comment;
 }
 
 export async function unlikeComment(commentId:string){
     const comment=await post(`${endpoint}/unlike/${commentId}`,{});
-    return comment as Video;
+    return comment as Comment;
 }

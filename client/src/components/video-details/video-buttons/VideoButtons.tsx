@@ -29,8 +29,8 @@ export default function VideoButtons({
 
 	async function onLike() {
 		try {
-			const updatedVideo = await likeVideo(video?._id);
-			setVideoHandler(updatedVideo);
+			const updatedLikes = await likeVideo(video?._id);
+			setVideoHandler((prev) => ({ ...prev, likes: updatedLikes }));
 		} catch (err) {
 			navigate("404");
 		}
@@ -38,8 +38,8 @@ export default function VideoButtons({
 
 	async function onUnlike() {
 		try {
-			const updatedVideo = await unlikeVideo(video?._id);
-			setVideoHandler(updatedVideo);
+			const updatedLikes = await unlikeVideo(video?._id);
+			setVideoHandler((prev) => ({ ...prev, likes: updatedLikes }));
 		} catch (err) {
 			navigate("404");
 		}
@@ -47,8 +47,8 @@ export default function VideoButtons({
 
 	async function onDislike() {
 		try {
-			const updatedVideo = await dislikeVideo(video?._id);
-			setVideoHandler(updatedVideo);
+			const updatedDislikes = await dislikeVideo(video?._id);
+			setVideoHandler((prev) => ({ ...prev, dislikes: updatedDislikes }));
 		} catch (err) {
 			navigate("404");
 		}
@@ -56,8 +56,8 @@ export default function VideoButtons({
 
 	async function onUndislike() {
 		try {
-			const updatedVideo = await undislikeVideo(video?._id);
-			setVideoHandler(updatedVideo);
+			const updatedDislikes = await undislikeVideo(video?._id);
+			setVideoHandler((prev) => ({ ...prev, dislikes: updatedDislikes }));
 		} catch (err) {
 			navigate("404");
 		}

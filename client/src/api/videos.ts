@@ -40,20 +40,20 @@ export async function editVideo(videoId: string, data: object) {
 
 export async function likeVideo(videoId:string | undefined | null){
     const  updatedVideo=await post(`${endpoint}/like/${videoId}`,{});
-    return updatedVideo as Video;
+    return updatedVideo as Video["likes"];
 }
 
 export async function unlikeVideo(videoId:string | undefined | null){
     const  updatedVideo=await post(`${endpoint}/unlike/${videoId}`,{});
-    return updatedVideo as Video;
+    return updatedVideo as Video["likes"];
 }
 
 export async function dislikeVideo(videoId:string | undefined | null){
     const  updatedVideo=await post(`${endpoint}/dislike/${videoId}`,{});
-    return updatedVideo as Video;
+    return updatedVideo as Video["dislikes"];
 }
 
 export async function undislikeVideo(videoId:string | undefined | null){
     const  updatedVideo=await post(`${endpoint}/undislike/${videoId}`,{});
-    return updatedVideo as Video;
+    return updatedVideo as Video["dislikes"];
 }

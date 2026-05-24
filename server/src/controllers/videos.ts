@@ -220,8 +220,8 @@ videoRouter.post("/like/:videoId", isUser(), async (req: MyRequest, res) => {
 		res.status(404).json({ message: "Resource not found!" });
 		return;
 	}
-	const updatedVideo = await likeVideo(user, videoId);
-	res.json(updatedVideo);
+	const updatedLikes = await likeVideo(user, videoId);
+	res.json(updatedLikes);
 });
 
 videoRouter.post("/unlike/:videoId", isUser(), async (req: MyRequest, res) => {
@@ -232,8 +232,8 @@ videoRouter.post("/unlike/:videoId", isUser(), async (req: MyRequest, res) => {
 		res.status(404).json({ message: "Resource not found!" });
 		return;
 	}
-	const updatedVideo = await unlikeVideo(user, videoId);
-	res.json(updatedVideo);
+	const updatedLikes = await unlikeVideo(user, videoId);
+	res.json(updatedLikes);
 });
 
 videoRouter.post("/dislike/:videoId", isUser(), async (req: MyRequest, res) => {
@@ -244,8 +244,8 @@ videoRouter.post("/dislike/:videoId", isUser(), async (req: MyRequest, res) => {
 		res.status(404).json({ message: "Resource not found!" });
 		return;
 	}
-	const updatedVideo = await dislikeVideo(user, videoId);
-	res.json(updatedVideo);
+	const updatedDislikes = await dislikeVideo(user, videoId);
+	res.json(updatedDislikes);
 });
 
 videoRouter.post(
@@ -259,8 +259,8 @@ videoRouter.post(
 			res.status(404).json({ message: "Resource not found!" });
 			return;
 		}
-		const updatedVideo = await undislikeVideo(user, videoId);
-		res.json(updatedVideo);
+		const updatedDislikes = await undislikeVideo(user, videoId);
+		res.json(updatedDislikes);
 	},
 );
 export { videoRouter };

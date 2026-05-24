@@ -21,7 +21,7 @@ interface VideoCommentItemProps {
 	likes: string[];
 	answers: Answer[];
 	setVideo: React.Dispatch<React.SetStateAction<Video>>;
-	time:string;
+	time: string;
 }
 
 export default function VideoCommentItem({
@@ -34,7 +34,7 @@ export default function VideoCommentItem({
 	likes,
 	answers,
 	setVideo,
-	time
+	time,
 }: VideoCommentItemProps) {
 	const likeComment = useLikeComment();
 	const unlikeComment = useUnlikeComment();
@@ -43,8 +43,13 @@ export default function VideoCommentItem({
 
 	async function onLike() {
 		try {
-			const updatedVideo = await likeComment(commentId);
-			setVideo(updatedVideo);
+			const updatedComment = await likeComment(commentId);
+			setVideo((prev) => ({
+				...prev,
+				comments: prev.comments.map((c) =>
+					c._id === commentId ? updatedComment : c,
+				),
+			}));
 		} catch (err) {
 			navigate("404");
 		}
@@ -52,8 +57,13 @@ export default function VideoCommentItem({
 
 	async function onUnlike() {
 		try {
-			const updatedVideo = await unlikeComment(commentId);
-			setVideo(updatedVideo);
+			const updatedComment = await unlikeComment(commentId);
+			setVideo((prev) => ({
+				...prev,
+				comments: prev.comments.map((c) =>
+					c._id === commentId ? updatedComment : c,
+				),
+			}));
 		} catch (err) {
 			navigate("404");
 		}
@@ -69,12 +79,21 @@ export default function VideoCommentItem({
 				{user ? (
 					<Link to={`/profiles/${owner._id}`}>
 						<img
-							src={owner.profileImage.imageUrl ?? "/assets/profile.png"}
+							src={
+								owner?.profileImage?.imageUrl ??
+								"/assets/profile.png"
+							}
 							onError={errorProfileImage}
 						/>
 					</Link>
 				) : (
-					<img src={owner.profileImage.imageUrl ?? "/assets/profile.png"} onError={errorProfileImage} />
+					<img
+						src={
+							owner?.profileImage?.imageUrl ??
+							"/assets/profile.png"
+						}
+						onError={errorProfileImage}
+					/>
 				)}
 				<p>{owner.username}</p>
 				<p id={styles.time}>{transformTime(time)}</p>

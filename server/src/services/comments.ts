@@ -39,45 +39,30 @@ export async function createComment(
 		content: content,
 	});
 
-	const updatedVideo = await Videos.findByIdAndUpdate(
+	await Videos.findByIdAndUpdate(
 		videoId,
 		{
 			$push: { comments: newComment._id },
-		},
-		{ new: true }
+		}
 	)
-		.populate({
-			path: "comments",
-			populate: {
-				path: "ownerId",
-				model: "Users",
-			},
-		})
-		.populate("ownerId","username profileImage")
+
+	const populatedComment = await Comments.findById(newComment._id)
+		.populate("ownerId", "username profileImage")
 		.lean();
 
-	return updatedVideo;
+	return populatedComment;
 }
 
 export async function deleteComment(videoId: string, commentId: string) {
 	const comment = await Comments.findById(commentId);
-	const updatedVideo = await Videos.findByIdAndUpdate(
+	await Videos.findByIdAndUpdate(
 		videoId,
 		{ $pull: { comments: commentId } },
 		{ new: true }
 	)
-		.populate({
-			path: "comments",
-			populate: {
-				path: "ownerId",
-				model: "Users",
-			},
-		})
-		.populate("ownerId","username profileImage")
-		.lean();
 	await Answers.deleteMany({ commentId: comment?._id });
 	await comment?.deleteOne();
-	return updatedVideo;
+	return comment;
 }
 
 export async function editComment(commentId: string, newContent: string) {

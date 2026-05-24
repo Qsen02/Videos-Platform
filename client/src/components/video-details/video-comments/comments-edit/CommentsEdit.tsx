@@ -30,9 +30,14 @@ export default function CommentEdit() {
 	) {
 		try {
 			const content = values.content;
-			const updatedVideo=await editComment(commentId, { content: content });
+			const updatedComment=await editComment(commentId, { content: content });
 			actions.resetForm();
-            setVideo(updatedVideo);
+            setVideo((prev) => ({
+				...prev,
+				comments: prev.comments.map((c) =>
+					c._id === commentId ? updatedComment : c,
+				),
+			}));
 			navigate(`/videos/${videoId}`);
 		} catch (err) {
 			setIsErr(true);

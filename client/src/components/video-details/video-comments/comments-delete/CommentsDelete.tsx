@@ -17,8 +17,11 @@ export default function CommentDelete() {
 
 	async function onDelete() {
 		try {
-			const updatedVideo=await deleteComment(videoId,commentId);
-            setVideo(updatedVideo);
+			await deleteComment(videoId,commentId);
+            setVideo((prev) => ({
+				...prev,
+				comments: prev.comments.filter((c) => c._id !== commentId),
+			}));
 			navigate(`/videos/${videoId}`);
 		} catch (err) {
             navigate("404");

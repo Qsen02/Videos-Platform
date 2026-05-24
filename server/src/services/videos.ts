@@ -134,22 +134,12 @@ export async function likeVideo(
 	const updatedVideos = await Videos.findByIdAndUpdate(
 		videoId,
 		{
-			$push: { likes: user?._id },
+			$addToSet: { likes: user?._id },
 		},
 		{ new: true },
-	)
-		.populate({
-			path: "comments",
-			populate: {
-				path: "ownerId",
-				model: "Users",
-				select: "username profileImage",
-			},
-		})
-		.populate("ownerId", "username profileImage")
-		.lean();
+	).select("likes").lean();
 
-	return updatedVideos;
+	return updatedVideos?.likes;
 }
 export async function unlikeVideo(
 	user: UserAttributes | null | undefined,
@@ -161,19 +151,9 @@ export async function unlikeVideo(
 			$pull: { likes: user?._id },
 		},
 		{ new: true },
-	)
-		.populate({
-			path: "comments",
-			populate: {
-				path: "ownerId",
-				model: "Users",
-				select: "username profileImage",
-			},
-		})
-		.populate("ownerId", "username profileImage")
-		.lean();
+	).select("likes").lean();
 
-	return updatedVideos;
+	return updatedVideos?.likes;
 }
 export async function dislikeVideo(
 	user: UserAttributes | null | undefined,
@@ -182,22 +162,14 @@ export async function dislikeVideo(
 	const updatedVideos = await Videos.findByIdAndUpdate(
 		videoId,
 		{
-			$push: { dislikes: user?._id },
+			$addToSet: { dislikes: user?._id },
 		},
 		{ new: true },
 	)
-		.populate({
-			path: "comments",
-			populate: {
-				path: "ownerId",
-				model: "Users",
-				select: "username profileImage",
-			},
-		})
-		.populate("ownerId", "username profileImage")
+		.select("dislikes")
 		.lean();
 
-	return updatedVideos;
+	return updatedVideos?.dislikes;
 }
 export async function undislikeVideo(
 	user: UserAttributes | null | undefined,
@@ -210,16 +182,8 @@ export async function undislikeVideo(
 		},
 		{ new: true },
 	)
-		.populate({
-			path: "comments",
-			populate: {
-				path: "ownerId",
-				model: "Users",
-				select: "username profileImage",
-			},
-		})
-		.populate("ownerId", "username profileImage")
+		.select("dislikes")
 		.lean();
 
-	return updatedVideos;
+	return updatedVideos?.dislikes;
 }

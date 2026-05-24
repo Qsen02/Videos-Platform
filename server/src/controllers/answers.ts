@@ -53,15 +53,12 @@ answerRouter.post(
 			if (!results.isEmpty()) {
 				throw new Error(errorParser(results));
 			}
-			const updatedComment = await createAnswer(
+			const updatedAnswer = await createAnswer(
 				user?._id,
 				commentId,
 				content
 			);
-			const video = await getVideoById(
-				updatedComment?.videoId?._id.toString()
-			);
-			res.status(201).json({ comment: updatedComment, video: video });
+			res.status(201).json(updatedAnswer);
 		} catch (err) {
 			if (err instanceof Error) {
 				res.status(400).json(err.message);

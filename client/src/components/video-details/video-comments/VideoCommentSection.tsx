@@ -25,11 +25,14 @@ export default function VideoCommentSection({
 
 	async function onComment(
 		values: CommentFormTypes,
-		actions: FormikHelpers<CommentFormTypes>
+		actions: FormikHelpers<CommentFormTypes>,
 	) {
 		const content = values.content;
-		const updatedVideo = await createComment(videoId, { content: content });
-		setVideoHandler(updatedVideo);
+		const newComment = await createComment(videoId, { content: content });
+		setVideoHandler((prev) => ({
+			...prev,
+			comments: [...prev.comments, newComment],
+		}));
 		actions.resetForm();
 	}
 
