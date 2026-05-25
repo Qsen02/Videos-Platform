@@ -138,9 +138,17 @@ export default function CreateVideo() {
 							}
 						/>
 					</p>
-					{isCreating && <span className="loader"></span>}
-					<button type="submit" disabled={isCreating}>
-						{isCreating ? "Creating..." : "Submit"}
+					<button
+						type="submit"
+						disabled={isCreating}
+						className={isCreating ? "disabled" : ""}
+					>
+						{isCreating ? "Creating" : "Submit"}{" "}
+						{isCreating ? (
+							<span className="smallLoader"></span>
+						) : (
+							""
+						)}
 					</button>
 				</Form>
 			)}

@@ -9,29 +9,37 @@ import { useEditAnswer, useGetOneAnswer } from "../../../hooks/useAnswers";
 
 export default function AnswerEdit() {
 	const { theme } = useUserThemeContext();
-	const { videoId,commentId,answerId } = useParams();
+	const { videoId, commentId, answerId } = useParams();
 	const [errMessage, setErrMessage] = useState("");
 	const [isErr, setIsErr] = useState(false);
 	const navigate = useNavigate();
-    const {answer,loading,error}=useGetOneAnswer({content:""},answerId);
-    const editAnswer=useEditAnswer();
+	const { answer, loading, error } = useGetOneAnswer(
+		{ content: "" },
+		answerId,
+	);
+	const editAnswer = useEditAnswer();
+	const [isEditing, setIsEditing] = useState(false);
 
 	async function onEdit(
 		values: CommentFormTypes,
-		actions: FormikHelpers<CommentFormTypes>
+		actions: FormikHelpers<CommentFormTypes>,
 	) {
 		try {
+			setIsEditing(true);
 			const content = values.content;
-		    await editAnswer(answerId, { content: content });
+			await editAnswer(answerId, { content: content });
 			actions.resetForm();
 			navigate(`/videos/${videoId}/comments/${commentId}/answers`);
 		} catch (err) {
+			setIsEditing(false);
 			setIsErr(true);
 			if (err instanceof Error) {
 				setErrMessage(err.message);
 			} else {
 				setErrMessage("Error occured!");
 			}
+		} finally {
+			setIsEditing(false);
 		}
 	}
 
@@ -65,11 +73,12 @@ export default function AnswerEdit() {
 							<span className="loader"></span>
 						) : error ? (
 							<h2>
-								Server is not responding, please try again later!
+								Server is not responding, please try again
+								later!
 							</h2>
 						) : (
 							<>
-								<h2>You can edit your comment</h2>
+								<h2>You can edit your answer</h2>
 								{isErr ? (
 									<p className="error">{errMessage}</p>
 								) : (
@@ -87,8 +96,23 @@ export default function AnswerEdit() {
 									/>
 								</p>
 								<div className="buttons">
-									<button type="submit">Save</button>
-									<button onClick={onCancel}>Cancel</button>
+									<button
+										type="submit"
+										disabled={isEditing}
+										className={isEditing ? "disabled" : ""}
+									>
+										{isEditing ? "Saving" : "Save"}{" "}
+										{isEditing && (
+											<span className="smallLoader"></span>
+										)}
+									</button>
+									<button
+										onClick={onCancel}
+										disabled={isEditing}
+										className={isEditing ? "disabled" : ""}
+									>
+										Cancel
+									</button>
 								</div>
 							</>
 						)}

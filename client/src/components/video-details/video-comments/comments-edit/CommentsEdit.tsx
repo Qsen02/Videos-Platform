@@ -20,19 +20,23 @@ export default function CommentEdit() {
 	const navigate = useNavigate();
 	const { comment, loading, error } = useGetOneComment(
 		{ content: "" },
-		commentId
+		commentId,
 	);
 	const editComment = useEditComment();
+	const [editing, setEditing] = useState(false);
 
 	async function onEdit(
 		values: CommentFormTypes,
-		actions: FormikHelpers<CommentFormTypes>
+		actions: FormikHelpers<CommentFormTypes>,
 	) {
 		try {
+			setEditing(true);
 			const content = values.content;
-			const updatedComment=await editComment(commentId, { content: content });
+			const updatedComment = await editComment(commentId, {
+				content: content,
+			});
 			actions.resetForm();
-            setVideo((prev) => ({
+			setVideo((prev) => ({
 				...prev,
 				comments: prev.comments.map((c) =>
 					c._id === commentId ? updatedComment : c,
@@ -40,12 +44,15 @@ export default function CommentEdit() {
 			}));
 			navigate(`/videos/${videoId}`);
 		} catch (err) {
+			setEditing(false);
 			setIsErr(true);
 			if (err instanceof Error) {
 				setErrMessage(err.message);
 			} else {
 				setErrMessage("Error occured!");
 			}
+		} finally {
+			setEditing(false);
 		}
 	}
 
@@ -79,7 +86,8 @@ export default function CommentEdit() {
 							<span className="loader"></span>
 						) : error ? (
 							<h2>
-								Server is not responding, please try again later!
+								Server is not responding, please try again
+								later!
 							</h2>
 						) : (
 							<>
@@ -101,8 +109,23 @@ export default function CommentEdit() {
 									/>
 								</p>
 								<div className="buttons">
-									<button type="submit">Save</button>
-									<button onClick={onCancel}>Cancel</button>
+									<button
+										type="submit"
+										disabled={editing}
+										className={editing ? "disabled" : ""}
+									>
+										{editing ? "Saving" : "Save"}{" "}
+										{editing && (
+											<span className="smallLoader"></span>
+										)}
+									</button>
+									<button
+										onClick={onCancel}
+										disabled={editing}
+										className={editing ? "disabled" : ""}
+									>
+										Cancel
+									</button>
 								</div>
 							</>
 						)}

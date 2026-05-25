@@ -8,29 +8,39 @@ import styles from "./AnswersSectionStyles.module.css";
 import { CommentFormTypes } from "../../../types/initialFormTypes";
 import { commentSchema } from "../../../schemas/validationShema";
 import { VideoOutletContextType } from "../../../types/outletContext";
+import { useState } from "react";
 
 export default function AnswersSection() {
-	const { commentId,videoId } = useParams();
+	const { commentId, videoId } = useParams();
 	const { theme } = useUserThemeContext();
 	const { comment, setComment, loading, error } = useGetAllAnswers(
 		null,
-		commentId
+		commentId,
 	);
-	const {setVideo}=useOutletContext<VideoOutletContextType>()
+	const { setVideo } = useOutletContext<VideoOutletContextType>();
 	const createAnswer = useCreateAnswer();
-	const navigate=useNavigate();
+	const navigate = useNavigate();
+	const [answering, setAnswering] = useState(false);
 
 	async function onAnswer(
 		values: CommentFormTypes,
-		actions: FormikHelpers<CommentFormTypes>
+		actions: FormikHelpers<CommentFormTypes>,
 	) {
-		const content = values.content;
-		const updatedData = await createAnswer(commentId, {
-			content: content,
-		});
-		setComment(updatedData.comment);
-		setVideo(updatedData.video)
-		actions.resetForm();
+		try {
+			setAnswering(true);
+			const content = values.content;
+			const updatedData = await createAnswer(commentId, {
+				content: content,
+			});
+			setComment(updatedData.comment);
+			setVideo(updatedData.video);
+			actions.resetForm();
+		} catch (err) {
+			setAnswering(false);
+			navigate("404");
+		} finally {
+			setAnswering(false);
+		}
 	}
 
 	function onBack() {
@@ -76,7 +86,9 @@ export default function AnswersSection() {
 											}
 										/>
 									</p>
-									<button type="submit">Submit</button>
+									<button type="submit" disabled={answering} className={answering ? "disabled" : ""}>
+										{answering ? "Answering" : "Submit"} {answering && <span className="smallLoader"></span>}
+									</button>
 								</Form>
 							)}
 						</Formik>

@@ -8,6 +8,7 @@ import { CommentFormTypes } from "../../../types/initialFormTypes";
 import { useCreateComment } from "../../../hooks/useComments";
 import { commentSchema } from "../../../schemas/validationShema";
 import { Video } from "../../../types/video";
+import { useState } from "react";
 
 interface VideoCommentSectionProps {
 	comments: Comment[] | null | undefined;
@@ -22,18 +23,28 @@ export default function VideoCommentSection({
 }: VideoCommentSectionProps) {
 	const { theme, user } = useUserThemeContext();
 	const createComment = useCreateComment();
+	const [commenting, setCommenting] = useState(false);
 
 	async function onComment(
 		values: CommentFormTypes,
 		actions: FormikHelpers<CommentFormTypes>,
 	) {
-		const content = values.content;
-		const newComment = await createComment(videoId, { content: content });
-		setVideoHandler((prev) => ({
-			...prev,
-			comments: [...prev.comments, newComment],
-		}));
-		actions.resetForm();
+		try {
+			setCommenting(true);
+			const content = values.content;
+			const newComment = await createComment(videoId, {
+				content: content,
+			});
+			setVideoHandler((prev) => ({
+				...prev,
+				comments: [...prev.comments, newComment],
+			}));
+			actions.resetForm();
+		} catch (err) {
+			setCommenting(false);
+		} finally {
+			setCommenting(false);
+		}
 	}
 
 	return (
@@ -57,7 +68,16 @@ export default function VideoCommentSection({
 										: "whiteTheme-darkWhite"
 								}
 							/>
-							<button type="submit">Comment</button>
+							<button
+								type="submit"
+								disabled={commenting}
+								className={commenting ? "disabled" : ""}
+							>
+								{commenting ? "Commenting" : "Comment"}{" "}
+								{commenting && (
+									<span className="smallLoader"></span>
+								)}
+							</button>
 						</Form>
 					)}
 				</Formik>

@@ -180,9 +180,8 @@ export default function Register() {
 							></i>
 						)}
 					</p>
-					{isRegistering && <span className="loader"></span>}
-					<button type="submit" disabled={isRegistering}>
-						{isRegistering ? "Registering..." : "Submit"}
+					<button type="submit" disabled={isRegistering} className={isRegistering ? "disabled" : ""}>
+						{isRegistering ? "Registering" : "Submit"} {isRegistering && <span className="smallLoader"></span>}
 					</button>
 					<p>
 						Already have account? You can{" "}

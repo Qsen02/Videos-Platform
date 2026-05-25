@@ -45,6 +45,10 @@
 	border-radius: 20px;
 	border: 1.5px solid grey;
     text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
 }
 
 .followers p:hover,.buttons p:hover {
@@ -66,6 +70,10 @@
 	color: white;
 	border: none;
 	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap:5px;
 }
 
 .buttons button:hover {

@@ -135,15 +135,15 @@ export default function ProfileEditUser() {
 										}
 									/>
 								</p>
-								{isEditing && <span className="loader"></span>}
 								<div className="buttons">
-									<button type="submit" disabled={isEditing}>
-										{isEditing ? "Saving..." : "Save"}
+									<button type="submit" disabled={isEditing} className={isEditing ? "disabled" : ""}>
+										{isEditing ? "Saving" : "Save"} {isEditing && <span className="smallLoader"></span>}
 									</button>
 									<button
 										type="button"
 										onClick={onCancel}
 										disabled={isEditing}
+										className={isEditing ? "disabled" : ""}
 									>
 										Cancel
 									</button>

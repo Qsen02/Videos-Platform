@@ -16,23 +16,28 @@ export default function ProfileChangePassword() {
 	const [isErr, setIsErr] = useState(false);
 	const changePassword = useChangePassword();
 	const navigate = useNavigate();
+	const [isChanging, setIsChanging] = useState(false);
 
 	async function onChangePassword(
 		values: ChangePasswordFormTypes,
 		actions: FormikHelpers<ChangePasswordFormTypes>
 	) {
 		try {
+			setIsChanging(true);
 			const newPassword = values.newPassword;
 			await changePassword(userId, { newPassword: newPassword });
 			actions.resetForm();
 			navigate(`/profile/${userId}/confirm`);
 		} catch (err) {
+			setIsChanging(false);
 			setIsErr(true);
 			if (err instanceof Error) {
 				setErrMessage(err.message);
 			} else {
 				setErrMessage("Error occurd!");
 			}
+		}finally {
+			setIsChanging(false);
 		}
 	}
 
@@ -92,8 +97,12 @@ export default function ProfileChangePassword() {
 							)}
 						</p>
 						<div className="buttons">
-							<button type="submit">Change</button>
-							<button onClick={onCancel}>Cancel</button>
+							<button type="submit" disabled={isChanging} className={isChanging ? "disabled" : ""}>
+								{isChanging ? "Changing" : "Change"} {isChanging && <span className="smallLoader"></span>}
+							</button>
+							<button onClick={onCancel} disabled={isChanging} className={isChanging ? "disabled" : ""}>
+								Cancel
+							</button>
 						</div>
 					</Form>
 				</div>

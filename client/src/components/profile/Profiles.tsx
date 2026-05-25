@@ -4,6 +4,7 @@ import { errorProfileImage } from "../../utils/errorVideoAndImage";
 import { useUserThemeContext } from "../../contexts/UserAndTheme";
 import styles from "./ProfileStyles.module.css";
 import VideoItem from "../../commons/video-item/VideoItem";
+import { useState } from "react";
 
 export default function Profile() {
 	const { userId } = useParams();
@@ -14,22 +15,31 @@ export default function Profile() {
 	const followUser = useFollow();
 	const unfollowUser = useUnfollow();
 	const navigate = useNavigate();
+	const [following, setFollowing] = useState(false);
 
 	async function onFollow() {
 		try {
+			setFollowing(true);
 			const updatedUser = await followUser(userId);
 			setUser(updatedUser);
 		} catch (err) {
+			setFollowing(false);
 			navigate("404");
+		} finally {
+			setFollowing(false);
 		}
 	}
 
 	async function onUnfollow() {
 		try {
+			setFollowing(true);
 			const updatedUser = await unfollowUser(userId);
 			setUser(updatedUser);
 		} catch (err) {
+			setFollowing(false);
 			navigate("404");
+		}finally {
+			setFollowing(false);
 		}
 	}
 
@@ -73,10 +83,10 @@ export default function Profile() {
 								{curUser?._id != user?._id ? (
 									user?._id &&
 									followersId?.includes(user?._id) ? (
-										<p onClick={onUnfollow}>Following!</p>
+										<p onClick={onUnfollow}>Following! {following && <span className="smallLoader"></span>}</p>
 									) : (
-										<button onClick={onFollow}>
-											Follow
+										<button onClick={onFollow} disabled={following} className={following ? "disabled" : ""}>
+											{following ? "Following" : "Follow"} {following && <span className="smallLoader"></span>}
 										</button>
 									)
 								) : (

@@ -14,6 +14,7 @@ export default function Login() {
 	const [isErr, setIsErr] = useState(false);
 	const [errMessage, setErrMessage] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
+	const [isLogging, setIsLogging] = useState(false);
 
 	const initialValues = {
 		username: "",
@@ -33,6 +34,7 @@ export default function Login() {
 		actions: FormikHelpers<LoginFormTypes>
 	) {
 		try {
+			setIsLogging(true);
 			const username = values.username;
 			const password = values.password;
 			const user = await login({
@@ -45,12 +47,15 @@ export default function Login() {
 			actions.resetForm();
 			navigate("/");
 		} catch (err) {
+			setIsLogging(false);
 			setIsErr(true);
 			if (err instanceof Error) {
 				setErrMessage(err.message);
 			} else {
 				setErrMessage("Error occurd!");
 			}
+		}finally {
+			setIsLogging(false);
 		}
 	}
 
@@ -97,7 +102,9 @@ export default function Login() {
 							<i className="fa-regular fa-eye-slash" onClick={onShowPassword}></i>
 						)}
 					</p>
-					<button type="submit">Submit</button>
+					<button type="submit" disabled={isLogging} className={isLogging ? "disabled" : ""}>
+						{isLogging ? "Logging in" : "Submit"} {isLogging && <span className="smallLoader"></span>}
+					</button>
 					<p>
 						Don't have account? You can{" "}
 						<Link to="/register">Register</Link> here.

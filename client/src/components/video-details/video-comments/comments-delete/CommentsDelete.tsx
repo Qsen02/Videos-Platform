@@ -1,15 +1,17 @@
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useUserThemeContext } from "../../../../contexts/UserAndTheme";
 import { VideoOutletContextType } from "../../../../types/outletContext";
-import styles from "./CommentDeleteStyles.module.css"
+import styles from "./CommentDeleteStyles.module.css";
 import { useDeleteComment } from "../../../../hooks/useComments";
+import { useState } from "react";
 
 export default function CommentDelete() {
 	const { theme } = useUserThemeContext();
-    const {commentId}=useParams();
+	const { commentId } = useParams();
 	const navigate = useNavigate();
 	const { videoId, setVideo } = useOutletContext<VideoOutletContextType>();
-    const deleteComment=useDeleteComment();
+	const deleteComment = useDeleteComment();
+	const [isDeleting, setIsDeleting] = useState(false);
 
 	function onCancel() {
 		history.back();
@@ -17,15 +19,19 @@ export default function CommentDelete() {
 
 	async function onDelete() {
 		try {
-			await deleteComment(videoId,commentId);
-            setVideo((prev) => ({
+			setIsDeleting(true);
+			await deleteComment(videoId, commentId);
+			setVideo((prev) => ({
 				...prev,
 				comments: prev.comments.filter((c) => c._id !== commentId),
 			}));
 			navigate(`/videos/${videoId}`);
 		} catch (err) {
-            navigate("404");
-        }
+			setIsDeleting(false);
+			navigate("404");
+		} finally {
+			setIsDeleting(false);
+		}
 	}
 
 	return (
@@ -38,8 +44,21 @@ export default function CommentDelete() {
 			>
 				<h2>Are you sure you want to delete this comment?</h2>
 				<div className={styles.buttons}>
-					<button onClick={onDelete}>Yes</button>
-					<button onClick={onCancel}>No</button>
+					<button
+						onClick={onDelete}
+						disabled={isDeleting}
+						className={isDeleting ? "disabled" : ""}
+					>
+						{isDeleting ? "Deleting" : "Yes"}{" "}
+						{isDeleting && <span className="smallLoader"></span>}
+					</button>
+					<button
+						onClick={onCancel}
+						disabled={isDeleting}
+						className={isDeleting ? "disabled" : ""}
+					>
+						No
+					</button>
 				</div>
 			</section>
 		</div>
