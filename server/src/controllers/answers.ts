@@ -58,7 +58,10 @@ answerRouter.post(
 				commentId,
 				content
 			);
-			res.status(201).json(updatedAnswer);
+			const video = await getVideoById(
+				updatedAnswer?.videoId?._id.toString()
+			);
+			res.status(201).json({comment: updatedAnswer, video: video});
 		} catch (err) {
 			if (err instanceof Error) {
 				res.status(400).json(err.message);
