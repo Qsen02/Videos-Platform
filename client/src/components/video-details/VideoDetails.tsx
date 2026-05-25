@@ -60,11 +60,8 @@ export default function VideoDetails() {
 				) : (
 					<>
 						<h2>{video?.title}</h2>
-						<video controls>
-							<source
-								src={optimizedVideo}
-								type="video/mp4"
-							/>
+						<video controls preload="metadata">
+							<source src={optimizedVideo} type="video/mp4" />
 							Your browser does not support the video tag.
 						</video>
 						<section className={styles.descriptionWrapper}>

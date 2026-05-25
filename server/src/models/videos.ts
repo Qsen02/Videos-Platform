@@ -34,17 +34,17 @@ const videoSchema = new mongoose.Schema<VideosType>(
 		likes: {
 			type: [mongoose.SchemaTypes.ObjectId],
 			ref: "Users",
-			deafult: [],
+			default: [],
 		},
 		dislikes: {
 			type: [mongoose.SchemaTypes.ObjectId],
 			ref: "Users",
-			deafult: [],
+			dеfault: [],
 		},
 		comments: {
 			type: [mongoose.SchemaTypes.ObjectId],
 			ref: "Comments",
-			deafult: [],
+			default: [],
 		},
 		ownerId: {
 			type: mongoose.SchemaTypes.ObjectId,
