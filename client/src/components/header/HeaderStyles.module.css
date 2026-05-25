@@ -1,9 +1,12 @@
 .header {
-	padding: 20px;
+	padding: 10px;
 	display: flex;
 	gap: 20px;
 	align-items: center;
 	background-color: rgb(225, 0, 0);
+    position: sticky;
+    top: 0;
+    z-index: 500;
 }
 
 .navigation {
@@ -16,9 +19,14 @@
     margin-left: 50px;
 }
 
+#subMenu {
+    display: none;
+}
+
 #logo {
 	font-size: 50pt;
 	color: white;
+    cursor: pointer;
 }
 
 #whiteTheme{
@@ -57,19 +65,22 @@
 }
 
 @media(max-width:550px){
-    .header{
-        padding: 10px;
-        flex-direction: column;
-        align-items: center;
-        gap:10px;
+    .header {
+        justify-content: space-between;
+        gap: 10px;
+        padding-left:20px;
+        padding-right:20px;
     }
     .navigation{
-        flex-direction: column;
-        align-items:center;
-        margin-left: 0;
-        gap:10px;
-        margin-bottom: 10px;
-        margin-top: 10px;
+        display: none;
+    }
+    #subMenu{
+        display: flex;
+        font-size: 16pt;
+        color: white;
+        padding: 5px 10px 5px 10px;
+        border: 2px solid white;
+        border-radius: 10px;
     }
 }
 

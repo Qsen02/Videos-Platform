@@ -232,12 +232,17 @@ main {
 .modal {
 	position: fixed;
 	background-color: rgba(0, 0, 0, 0.7);
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	padding: 1000px;
-	border-radius: 10px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	inset: 0;
+	z-index: 1000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.menuModal{
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.7);
+	inset: 0;
 	z-index: 1000;
 }
 
