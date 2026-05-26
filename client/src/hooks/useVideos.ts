@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { ActionType, Video } from "../types/video";
 import { useLoadingError } from "./useLoadingError";
 import {
@@ -20,13 +20,13 @@ import { User } from "../types/user";
 export function useGetAllVideos(initialValue: []) {
 	const [videos, setVideos] = useReducer<React.Reducer<Video[], ActionType>>(
 		homeReducer,
-		initialValue
+		initialValue,
 	);
 	const [pages, setPages] = useState(1);
 	const [users, setUsers] = useState<User[] | null>(null);
 	const { loading, setLoading, error, setError } = useLoadingError(
 		false,
-		false
+		false,
 	);
 	const [isSearched, setIsSearched] = useState(false);
 	const [isOver, setIsOver] = useState(false);
@@ -36,6 +36,7 @@ export function useGetAllVideos(initialValue: []) {
 	const pagesRef = useRef(pages);
 	const isOverRef = useRef(isOver);
 	const isSearchedRef = useRef(isSearched);
+	const isFetching = useRef(false);
 
 	useEffect(() => {
 		pagesRef.current = pages;
@@ -49,14 +50,15 @@ export function useGetAllVideos(initialValue: []) {
 		isSearchedRef.current = isSearched;
 	}, [isSearched]);
 
-	async function onScroll() {
+	const onScroll = useCallback(async () => {
 		const curPosition = window.innerHeight + window.scrollY;
 		const max = document.documentElement.scrollHeight;
 		if (curPosition >= max) {
-			if (!isOverRef.current && !isSearchedRef.current) {
+			if (!isOverRef.current && !isSearchedRef.current && !isFetching.current) {
 				try {
 					setPages((value) => value + 1);
 					setLoading(true);
+					isFetching.current = true;
 					const nexVideos = await pagination(pagesRef.current);
 					if (nexVideos.length == 0) {
 						setIsOver(true);
@@ -73,10 +75,12 @@ export function useGetAllVideos(initialValue: []) {
 				} catch (err) {
 					setLoading(false);
 					setError(true);
+				}finally {
+					isFetching.current = false;
 				}
 			}
 		}
-	}
+	}, []);
 
 	useEffect(() => {
 		(async () => {
@@ -131,12 +135,12 @@ export function useCreateVideo() {
 
 export function useGetOneVideo(
 	initialValue: Video,
-	videoId: string | undefined
+	videoId: string | undefined,
 ) {
 	const [video, setVideo] = useState<Video>(initialValue);
 	const { loading, setLoading, error, setError } = useLoadingError(
 		false,
-		false
+		false,
 	);
 
 	useEffect(() => {

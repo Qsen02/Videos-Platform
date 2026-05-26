@@ -9,6 +9,7 @@ import CustomSelect from "../../commons/customSelect";
 import UserItem from "../../commons/user-item/UserItem";
 import TypedVideoItem from "../../commons/typed-video-item/TypedVideoItem";
 import TypedUserItem from "../../commons/typed-user-item/TypedUserItem";
+import { useRef } from "react";
 
 export default function Home() {
 	const { theme } = useUserThemeContext();
@@ -32,6 +33,7 @@ export default function Home() {
 	} = useGetAllVideos([]);
 	const searchVideos = useSearchVideos();
 	const searchUsers = useSearchUsers();
+	const timeoutRef = useRef<number | null>(null);
 
 	async function onSearch(values: { query: string; criteria: string }) {
 		try {
@@ -62,28 +64,33 @@ export default function Home() {
 		query: string;
 		criteria: "videos" | "users" | "Videos";
 	}) {
-		try {
-			setLoading(true);
-			setTyped(true);
-			let query = values.query;
-			if (query == "") {
-				query = "No value";
-			}
-			const criteria = values.criteria;
-			if (criteria == "videos" || criteria == "Videos") {
-				const videos = await searchVideos(query);
-				setTypedVideos(videos);
-				setTypedUsers([]);
-			} else {
-				const users = await searchUsers(query);
-				setTypedUsers(users);
-			}
-			setLoading(false);
-		} catch (err) {
-			setTyped(false);
-			setError(true);
-			setLoading(false);
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
 		}
+		timeoutRef.current = window.setTimeout(async () => {
+			try {
+				setLoading(true);
+				setTyped(true);
+				let query = values.query;
+				if (query == "") {
+					query = "No value";
+				}
+				const criteria = values.criteria;
+				if (criteria == "videos" || criteria == "Videos") {
+					const videos = await searchVideos(query);
+					setTypedVideos(videos);
+					setTypedUsers([]);
+				} else {
+					const users = await searchUsers(query);
+					setTypedUsers(users);
+				}
+				setLoading(false);
+			} catch (err) {
+				setTyped(false);
+				setError(true);
+				setLoading(false);
+			}
+		}, 500);
 	}
 
 	return (
@@ -129,7 +136,7 @@ export default function Home() {
 							/>
 						</p>
 						{typed ? (
-							typedVideos.length > 0 && typedUsers.length==0? (
+							typedVideos.length > 0 && typedUsers.length == 0 ? (
 								<section
 									className={styles.typedSearchContainer}
 								>
@@ -141,7 +148,7 @@ export default function Home() {
 										/>
 									))}
 								</section>
-							) : typedUsers.length > 0? (
+							) : typedUsers.length > 0 ? (
 								<section
 									className={styles.typedSearchContainer}
 								>
@@ -169,9 +176,15 @@ export default function Home() {
 			<section className={styles.videoContainer}>
 				{!error && loading ? (
 					<span className="loader"></span>
-				) : videos.length == 0 && !isSearchedRef.current && !error  && !typed? (
+				) : videos.length == 0 &&
+				  !isSearchedRef.current &&
+				  !error &&
+				  !typed ? (
 					<h2>No videos yet.</h2>
-				) : isSearchedRef.current && videos.length == 0 && !error && !typed ? (
+				) : isSearchedRef.current &&
+				  videos.length == 0 &&
+				  !error &&
+				  !typed ? (
 					<h2>No results.</h2>
 				) : error ? (
 					<h2>Server is not responding, please try again later!</h2>
@@ -184,7 +197,7 @@ export default function Home() {
 							username={el.username}
 						/>
 					))
-				) : users?.length == 0 && !typed? (
+				) : users?.length == 0 && !typed ? (
 					<h2>No users yet</h2>
 				) : !typed ? (
 					videos.map((el) => (
