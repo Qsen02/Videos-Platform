@@ -172,21 +172,21 @@ videoRouter.put(
 			res.status(404).json({ message: "Resource not found!" });
 			return;
 		}
-		const thumbnailData = {
-			publicId: fields.thumbnailId ?? "",
-			imageUrl: fields.thumbnailUrl ?? "",
-		};
+		const thumbnailData = fields.thumbnailId && fields.thumbnailUrl? {
+			publicId: fields.thumbnailId,
+			imageUrl: fields.thumbnailUrl,
+		}: null;
 
-		const videoData = {
-			publicId: fields.videoId ?? "",
-			imageUrl: fields.videoUrl ?? "",
-		};
+		const videoData = fields.videoId && fields.videoUrl? {
+			publicId: fields.videoId,
+			imageUrl: fields.videoUrl,
+		}: null;
 
 		const oldVideo = await getVideoById(videoId);
-		if (oldVideo && oldVideo.thumbnail.publicId) {
+		if (oldVideo && oldVideo.thumbnail.publicId && thumbnailData) {
 			await deleteFromCloudinary(oldVideo.thumbnail.publicId);
 		}
-		if (oldVideo && oldVideo.videoUrl.publicId) {
+		if (oldVideo && oldVideo.videoUrl.publicId && videoData) {
 			await deleteFromCloudinary(oldVideo.videoUrl.publicId, "video");
 		}
 		try {

@@ -17,7 +17,7 @@ import { errorParser } from "../utils/errorParsers";
 import { setToken } from "../services/token";
 import { isUser } from "../middlewares/guard";
 import { MyRequest } from "../types/express";
-import { deleteFromCloudinary, upload } from "../config/multer";
+import { deleteFromCloudinary } from "../config/multer";
 
 const userRouter = Router();
 
@@ -99,10 +99,13 @@ userRouter.post(
 		.withMessage("Password must match!"),
 	async (req, res) => {
 		const fields = req.body;
-		const imageData = {
-			publicId: fields.profileImageId ?? "",
-			imageUrl: fields.profileImageUrl ?? "",
-		};
+		const imageData =
+			fields.profileImageId && fields.profileImageUrl
+				? {
+						publicId: fields.profileImageId,
+						imageUrl: fields.profileImageUrl,
+					}
+				: null;
 		try {
 			const results = validationResult(req);
 			if (!results.isEmpty()) {
@@ -205,10 +208,12 @@ userRouter.put(
 		.withMessage("Username must be at least 3 symbols long!"),
 	body("email").trim().isEmail().withMessage("Email must be valid!"),
 	body("profileImageUrl")
+		.optional()
 		.isString()
 		.notEmpty()
 		.withMessage("Profile image url is required!"),
 	body("profileImageId")
+		.optional()
 		.isString()
 		.notEmpty()
 		.withMessage("Profile image public id is required!"),
@@ -220,12 +225,15 @@ userRouter.put(
 			res.status(404).json({ message: "Resource not found!" });
 			return;
 		}
-		const imageData = {
-			publicId: fields.profileImageId,
-			imageUrl: fields.profileImageUrl,
-		};
+		const imageData =
+			fields.profileImageId && fields.profileImageUrl
+				? {
+						publicId: fields.profileImageId,
+						imageUrl: fields.profileImageUrl,
+					}
+				: null;
 		const oldUser = await getUserById(userId);
-		if (oldUser && oldUser.profileImage.publicId) {
+		if (oldUser && oldUser.profileImage.publicId && imageData) {
 			await deleteFromCloudinary(oldUser.profileImage.publicId);
 		}
 		try {
