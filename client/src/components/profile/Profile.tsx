@@ -16,6 +16,7 @@ export default function Profile() {
 	const unfollowUser = useUnfollow();
 	const navigate = useNavigate();
 	const [following, setFollowing] = useState(false);
+	const [unfollowing, setUnfollowing] = useState(false);
 
 	async function onFollow() {
 		try {
@@ -25,21 +26,21 @@ export default function Profile() {
 		} catch (err) {
 			setFollowing(false);
 			navigate("404");
-		}finally {
+		} finally {
 			setFollowing(false);
 		}
 	}
 
 	async function onUnfollow() {
 		try {
-			setFollowing(true);
+			setUnfollowing(true);
 			const updatedUser = await unfollowUser(userId);
 			setUser(updatedUser);
 		} catch (err) {
-			setFollowing(false);
+			setUnfollowing(false);
 			navigate("404");
-		}finally {
-			setFollowing(false);
+		} finally {
+			setUnfollowing(false);
 		}
 	}
 
@@ -83,10 +84,26 @@ export default function Profile() {
 								{curUser?._id != user?._id ? (
 									user?._id &&
 									followersId?.includes(user?._id) ? (
-													<p onClick={onUnfollow}>Following! {following && <span className="smallLoader"></span>}</p>
+										<p onClick={onUnfollow}>
+											{unfollowing
+												? "Unfollowing"
+												: "Following!"}{" "}
+											{unfollowing && (
+												<span className="smallLoader"></span>
+											)}
+										</p>
 									) : (
-										<button onClick={onFollow} disabled={following} className={following ? "disabled" : ""}>
-											{following ? "Following" : "Follow"} {following && <span className="smallLoader"></span>}
+										<button
+											onClick={onFollow}
+											disabled={following}
+											className={
+												following ? "disabled" : ""
+											}
+										>
+											{following ? "Following" : "Follow"}{" "}
+											{following && (
+												<span className="smallLoader"></span>
+											)}
 										</button>
 									)
 								) : (

@@ -58,7 +58,7 @@ export default function CustomInput({
 			{label ? <label htmlFor={props.id}>{label}</label> : ""}
 			<input {...inputProps} />
 			{meta.error && meta.touched ? (
-				<p className="inputError">{meta.error}</p>
+				<p className="error">{meta.error}</p>
 			) : (
 				""
 			)}
