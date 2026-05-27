@@ -11,7 +11,11 @@ export function routerConfig(app: Express) {
 
     app.use("/comments",commentRouter);
 
-    app.use("/answers",answerRouter);
+    app.use("/answers", answerRouter);
+    
+    app.get("/health", (req, res) => {
+        res.status(200).send("OK");
+    });
 
     app.use((req, res) => {
         res.status(404).json({ message: "Resource not found!" });
