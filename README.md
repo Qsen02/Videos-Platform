@@ -10,7 +10,7 @@ This is platfrom for posting videos, searching and watching videos.
 # How to start client and server
 - Client: First you can install all dependencies with command `npm i` and next you can start client with command `npm run dev`.
 - Server: You can install all dependencies with command `npm i` and nex you can start server with nodemon with command `npm run debug` or start server with node with command `npm start`.
-- DB: In server/src/config/mongoose.ts in mongoose.connect() add localDB constant.
+- DB: In folder data you have test data. You can add these data to your local database.
 # Deployment link:
 https://videos-platform-client.onrender.com
 
