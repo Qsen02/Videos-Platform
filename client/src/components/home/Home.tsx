@@ -90,7 +90,7 @@ export default function Home() {
 				setError(true);
 				setLoading(false);
 			}
-		}, 500);
+		}, 300);
 	}
 
 	return (

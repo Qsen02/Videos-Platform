@@ -61,7 +61,7 @@
 .typedSearchContainer {
     position: absolute;
 	padding-top:20px ;
-    top:170px;
+    top:155px;
     left:50%;
     transform: translate(-65%);
 	width: 393px;
@@ -76,6 +76,12 @@
 	transition: all 0.5s ease-in-out;
 }
 
+@media(max-width:950px){
+	.typedSearchContainer{
+		top:140px;
+	}
+}
+
 @media (max-width: 700px) {
 	.videoContainer {
 		flex-direction: column;
@@ -88,8 +94,8 @@
 	.typedSearchContainer{
 		width: 250px;
 		font-size: 12pt;
-		transform: translate(-74.5%);
-		top:155px;
+		transform: translate(-74%);
+		top:140px;
 	}
 }
 
@@ -116,6 +122,6 @@
 		width: 245px;
 		font-size: 10pt;
 		transform: translate(-50%);
-		top:385px;
+		top:200px;
 	}
 }
